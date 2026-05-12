@@ -424,7 +424,95 @@
   border-radius: var(--radius-full);
   color: var(--text-primary);
   transition: background-color var(--duration-fast) var(--easing-base);
+  position: relative;
 }
+
+/* ============ CART BADGE ============ */
+.cart-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background-color: var(--pink-500);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: 0.6875rem;
+  font-weight: var(--font-bold);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface-page);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  animation: cartBadgeIn 220ms var(--easing-editorial);
+}
+
+.cart-badge[style*="display: none"],
+.cart-badge[style*="display:none"] { display: none !important; }
+
+@keyframes cartBadgeIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ============ QTY STEPPER ============ */
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--surface-card);
+}
+
+.qty-stepper__btn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--easing-base);
+}
+
+.qty-stepper__btn:hover:not(:disabled) {
+  background-color: var(--action-ghost-hover);
+  color: var(--pink-500);
+}
+
+.qty-stepper__btn:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.qty-stepper__input {
+  width: 48px;
+  height: 36px;
+  border: 0;
+  border-left: 1px solid var(--border-default);
+  border-right: 1px solid var(--border-default);
+  background: transparent;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+
+.qty-stepper__input::-webkit-outer-spin-button,
+.qty-stepper__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.qty-stepper__input:focus { outline: none; background-color: var(--surface-muted); }
 
 .icon-btn:hover {
   background-color: var(--action-ghost-hover);
