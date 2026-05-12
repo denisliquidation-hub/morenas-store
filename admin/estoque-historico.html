@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Histórico de Estoque · Admin Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <script>document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
+
+  <style>
+    .mov-row__tipo {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.6875rem;
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+    }
+    .mov-row__tipo--entrada { background: hsla(150, 45%, 38%, 0.15); color: var(--status-success); }
+    .mov-row__tipo--saida { background: hsla(0, 72%, 50%, 0.15); color: var(--status-error); }
+    .mov-row__tipo--ajuste { background: hsla(335, 75%, 48%, 0.15); color: var(--pink-500); }
+
+    .mov-qty {
+      font-family: var(--font-mono);
+      font-weight: var(--font-semibold);
+      font-variant-numeric: tabular-nums;
+    }
+    .mov-qty--pos { color: var(--status-success); }
+    .mov-qty--neg { color: var(--status-error); }
+
+    .mov-flow {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .mov-flow strong { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <header class="dash__topbar">
+      <a href="/admin/dashboard.html" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge auth-badge--admin">Admin</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/admin/dashboard.html" class="dash__signout">Dashboard</a>
+        <a href="/admin/estoque.html" class="dash__signout">Estoque</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <div class="adm-pagehead">
+        <div>
+          <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-2)">Auditoria</div>
+          <h1 class="adm-pagehead__title">Histórico de Movimentações</h1>
+          <p class="adm-pagehead__sub" id="countLabel">Carregando…</p>
+        </div>
+        <a class="btn btn--pink" href="/admin/estoque.html">← Voltar ao estoque</a>
+      </div>
+
+      <div class="adm-toolbar">
+        <input type="search" class="input adm-toolbar__search" id="searchInput" placeholder="Buscar produto ou observação…" />
+        <select class="input adm-toolbar__select" id="filterTipo">
+          <option value="">Todos tipos</option>
+          <option value="entrada">Entradas</option>
+          <option value="saida">Saídas</option>
+          <option value="ajuste">Ajustes</option>
+        </select>
+        <select class="input adm-toolbar__select" id="filterPeriodo">
+          <option value="">Todo período</option>
+          <option value="7">Últimos 7 dias</option>
+          <option value="30">Últimos 30 dias</option>
+          <option value="90">Últimos 90 dias</option>
+        </select>
+      </div>
+
+      <div class="adm-table-wrap">
+        <table class="adm-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Produto</th>
+              <th>Tipo</th>
+              <th>Qtd</th>
+              <th>Antes → Depois</th>
+              <th>Motivo</th>
+              <th>Observação</th>
+            </tr>
+          </thead>
+          <tbody id="movBody"></tbody>
+        </table>
+        <div class="adm-empty" id="emptyState" style="display: none">
+          <p>Nenhuma movimentação encontrada.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+
+    const { session, profile } = await getSessionAndProfile();
+    if (!session) { window.location.href = '/admin/login.html'; throw new Error('redirecting'); }
+    if (profile?.role !== 'admin') { window.location.href = '/cliente/conta.html'; throw new Error('not admin'); }
+
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+
+    function escapeHtml(s) {
+      if (s == null) return '';
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function fmtDataHora(dt) {
+      if (!dt) return '—';
+      const d = new Date(dt);
+      const dia = d.toLocaleDateString('pt-BR');
+      const hora = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      return `${dia} · ${hora}`;
+    }
+
+    const MOTIVO_LABELS = {
+      'compra-fornecedor': 'Compra de fornecedor',
+      'devolucao-cliente': 'Devolução de cliente',
+      'transferencia-entrada': 'Transferência (entrada)',
+      'inventario-encontro': 'Inventário (encontro)',
+      'venda': 'Venda',
+      'perda': 'Perda',
+      'avaria': 'Avaria',
+      'transferencia-saida': 'Transferência (saída)',
+      'inventario-perda': 'Inventário (perda)',
+      'consumo-interno': 'Consumo interno',
+      'ajuste-inventario': 'Ajuste de inventário',
+      'correcao': 'Correção',
+    };
+
+    const TIPO_LABELS = { entrada: 'Entrada', saida: 'Saída', ajuste: 'Ajuste' };
+
+    // ===== Carregar movimentações com join no produto =====
+    let movData = [];
+
+    async function carregar() {
+      const { data, error } = await supabase
+        .from('movimentacoes_estoque')
+        .select(`
+          id, created_at, tipo, quantidade, motivo, observacao,
+          estoque_antes, estoque_depois,
+          produto:produtos ( id, slug, nome, sku )
+        `)
+        .order('created_at', { ascending: false })
+        .limit(500);
+      if (error) { console.error(error); return; }
+      movData = data || [];
+      render();
+    }
+
+    function render() {
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const tipo = document.getElementById('filterTipo').value;
+      const periodo = document.getElementById('filterPeriodo').value;
+
+      let filtered = movData;
+      if (search) {
+        filtered = filtered.filter(m =>
+          (m.produto?.nome || '').toLowerCase().includes(search) ||
+          (m.produto?.sku || '').toLowerCase().includes(search) ||
+          (m.observacao || '').toLowerCase().includes(search)
+        );
+      }
+      if (tipo) filtered = filtered.filter(m => m.tipo === tipo);
+      if (periodo) {
+        const dias = parseInt(periodo, 10);
+        const cutoff = new Date(Date.now() - dias * 86400000);
+        filtered = filtered.filter(m => new Date(m.created_at) >= cutoff);
+      }
+
+      const totalEntradas = filtered.filter(m => m.tipo === 'entrada').reduce((s, m) => s + Math.abs(m.quantidade), 0);
+      const totalSaidas = filtered.filter(m => m.tipo === 'saida').reduce((s, m) => s + Math.abs(m.quantidade), 0);
+
+      document.getElementById('countLabel').textContent =
+        `${filtered.length} movimentações · +${totalEntradas} entradas · −${totalSaidas} saídas`;
+
+      const body = document.getElementById('movBody');
+      const empty = document.getElementById('emptyState');
+
+      if (filtered.length === 0) {
+        body.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      body.innerHTML = filtered.map(m => {
+        const qtdCls = m.quantidade > 0 ? 'mov-qty--pos' : 'mov-qty--neg';
+        const qtdStr = m.quantidade > 0 ? `+${m.quantidade}` : `${m.quantidade}`;
+        return `
+          <tr>
+            <td><span class="adm-cell-sub" style="font-family: var(--font-mono)">${fmtDataHora(m.created_at)}</span></td>
+            <td>
+              <div class="adm-cell-main">${escapeHtml(m.produto?.nome || '—')}</div>
+              <div class="adm-cell-sub">${escapeHtml(m.produto?.sku || m.produto?.slug || '')}</div>
+            </td>
+            <td><span class="mov-row__tipo mov-row__tipo--${m.tipo}">${TIPO_LABELS[m.tipo]}</span></td>
+            <td><span class="mov-qty ${qtdCls}">${qtdStr}</span></td>
+            <td>
+              <span class="mov-flow">${m.estoque_antes} → <strong>${m.estoque_depois}</strong></span>
+            </td>
+            <td>${escapeHtml(MOTIVO_LABELS[m.motivo] || m.motivo)}</td>
+            <td><span class="adm-cell-sub">${escapeHtml(m.observacao || '—')}</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', render);
+    document.getElementById('filterTipo').addEventListener('change', render);
+    document.getElementById('filterPeriodo').addEventListener('change', render);
+
+    await carregar();
+
+    document.getElementById('dash').style.display = '';
+    const loader = document.getElementById('loading');
+    loader.classList.add('auth-loading--hide');
+    setTimeout(() => loader.remove(), 300);
+  </script>
+</body>
+</html>

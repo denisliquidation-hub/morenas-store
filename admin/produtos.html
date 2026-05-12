@@ -194,7 +194,25 @@
               ? `<div class="adm-cell-sub" style="text-decoration: line-through">R$ ${Number(p.preco_antigo).toFixed(2).replace('.', ',')}</div>`
               : ''}
           </td>
-          <td>${p.estoque}</td>
+          <td>
+            ${(() => {
+              const estoque = p.estoque ?? 0;
+              const min = p.estoque_minimo ?? 0;
+              let cor = '';
+              let alerta = '';
+              if (estoque === 0) {
+                cor = 'color: var(--status-error); font-weight: var(--font-bold)';
+                alerta = ' · Esgotado';
+              } else if (estoque <= min) {
+                cor = 'color: var(--status-warning); font-weight: var(--font-bold)';
+                alerta = ' · Baixo';
+              }
+              return `
+                <div style="font-family: var(--font-mono); ${cor}">${estoque}<span style="font-size: 0.6875rem; font-weight: 400; opacity: 0.7">${alerta}</span></div>
+                <div class="adm-cell-sub">mín ${min}</div>
+              `;
+            })()}
+          </td>
           <td>
             ${p.ativo
               ? '<span class="adm-pill adm-pill--success">Ativo</span>'

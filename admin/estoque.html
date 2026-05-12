@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estoque · Admin Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <script>document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
+
+  <style>
+    /* KPI cards (overview no topo) */
+    .stk-kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    .stk-kpi {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .stk-kpi__eyebrow {
+      font-size: 0.6875rem;
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-2);
+    }
+    .stk-kpi__value {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-black);
+      line-height: 1;
+      letter-spacing: var(--tracking-tight);
+    }
+    .stk-kpi__hint {
+      margin-top: var(--space-2);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    .stk-kpi--alert { border-color: hsla(35, 90%, 50%, 0.35); background: hsla(35, 90%, 50%, 0.04); }
+    .stk-kpi--alert .stk-kpi__value { color: var(--status-warning); }
+    .stk-kpi--danger { border-color: hsla(0, 72%, 50%, 0.35); background: hsla(0, 72%, 50%, 0.04); }
+    .stk-kpi--danger .stk-kpi__value { color: var(--status-error); }
+    .stk-kpi--money .stk-kpi__value { color: var(--pink-500); }
+
+    /* Status pill */
+    .stk-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.6875rem;
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+    }
+    .stk-status::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .stk-status--ok { background: hsla(150, 45%, 38%, 0.15); color: var(--status-success); }
+    .stk-status--ok::before { background: var(--status-success); }
+    .stk-status--atencao { background: hsla(35, 90%, 50%, 0.15); color: var(--status-warning); }
+    .stk-status--atencao::before { background: var(--status-warning); }
+    .stk-status--baixo { background: hsla(35, 90%, 50%, 0.2); color: var(--status-warning); font-weight: var(--font-bold); }
+    .stk-status--baixo::before { background: var(--status-warning); animation: pulse 1.6s infinite; }
+    .stk-status--esgotado { background: hsla(0, 72%, 50%, 0.18); color: var(--status-error); font-weight: var(--font-bold); }
+    .stk-status--esgotado::before { background: var(--status-error); animation: pulse 1.6s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.4); }
+    }
+
+    /* Estoque display */
+    .stk-qty {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      font-weight: var(--font-semibold);
+      font-variant-numeric: tabular-nums;
+    }
+    .stk-qty--low { color: var(--status-warning); }
+    .stk-qty--out { color: var(--status-error); }
+    .stk-qty__min {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-weight: var(--font-regular);
+    }
+
+    /* Modal */
+    .mov-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+    .mov-modal--open { display: flex; }
+    .mov-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(2px);
+    }
+    .mov-modal__panel {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8) var(--space-7);
+      box-shadow: var(--shadow-xl);
+    }
+    .mov-modal__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-5);
+      gap: var(--space-3);
+    }
+    .mov-modal__title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-black);
+      letter-spacing: var(--tracking-tight);
+      line-height: 1.1;
+    }
+    .mov-modal__product {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    .mov-modal__close {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      color: var(--text-primary);
+      transition: background-color var(--duration-fast) var(--easing-base);
+    }
+    .mov-modal__close:hover { background: var(--action-ghost-hover); }
+
+    .mov-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+      margin-bottom: var(--space-5);
+      padding: 4px;
+      background: var(--surface-muted);
+      border-radius: var(--radius-md);
+    }
+    .mov-tab {
+      padding: 10px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      background: transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--duration-fast) var(--easing-base);
+    }
+    .mov-tab--active {
+      background: var(--surface-card);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-xs);
+    }
+    .mov-tab--entrada.mov-tab--active { color: var(--status-success); }
+    .mov-tab--saida.mov-tab--active { color: var(--status-error); }
+    .mov-tab--ajuste.mov-tab--active { color: var(--pink-500); }
+
+    .mov-preview {
+      background: var(--surface-muted);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .mov-preview__from { font-family: var(--font-mono); color: var(--text-secondary); }
+    .mov-preview__arrow { color: var(--pink-500); }
+    .mov-preview__to { font-family: var(--font-mono); font-weight: var(--font-bold); }
+    .mov-preview__to--warn { color: var(--status-warning); }
+    .mov-preview__to--err { color: var(--status-error); }
+  </style>
+</head>
+<body>
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <header class="dash__topbar">
+      <a href="/admin/dashboard.html" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge auth-badge--admin">Admin</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/admin/dashboard.html" class="dash__signout">Dashboard</a>
+        <a href="/admin/produtos.html" class="dash__signout">Produtos</a>
+        <a href="/admin/estoque-historico.html" class="dash__signout">Histórico</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <div class="adm-pagehead">
+        <div>
+          <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-2)">Controle</div>
+          <h1 class="adm-pagehead__title">Estoque</h1>
+          <p class="adm-pagehead__sub" id="countLabel">Carregando…</p>
+        </div>
+        <a class="btn btn--secondary" href="/admin/estoque-historico.html">Histórico de movimentações →</a>
+      </div>
+
+      <!-- KPIs -->
+      <section class="stk-kpis" id="kpis"></section>
+
+      <!-- Filtros -->
+      <div class="adm-toolbar">
+        <input type="search" class="input adm-toolbar__search" id="searchInput" placeholder="Buscar por nome ou SKU…" />
+        <select class="input adm-toolbar__select" id="filterStatus">
+          <option value="">Todos status</option>
+          <option value="esgotado">Esgotado</option>
+          <option value="baixo">Baixo (≤ mínimo)</option>
+          <option value="atencao">Atenção (≤ 2× mínimo)</option>
+          <option value="ok">Ok</option>
+        </select>
+        <select class="input adm-toolbar__select" id="filterCategoria">
+          <option value="">Todas categorias</option>
+        </select>
+      </div>
+
+      <!-- Tabela -->
+      <div class="adm-table-wrap">
+        <table class="adm-table">
+          <thead>
+            <tr>
+              <th class="adm-table__th--img">Foto</th>
+              <th>Produto</th>
+              <th>Categoria</th>
+              <th>Estoque</th>
+              <th>Status</th>
+              <th>Valor em estoque</th>
+              <th>Última mov.</th>
+              <th class="adm-table__th--actions">Mover</th>
+            </tr>
+          </thead>
+          <tbody id="estoqueBody"></tbody>
+        </table>
+        <div class="adm-empty" id="emptyState" style="display: none">
+          <p>Nenhum produto encontrado.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL DE MOVIMENTAÇÃO -->
+  <div class="mov-modal" id="movModal" role="dialog" aria-modal="true" aria-labelledby="movTitle">
+    <div class="mov-modal__backdrop" data-mov-close></div>
+    <div class="mov-modal__panel">
+      <div class="mov-modal__head">
+        <div>
+          <h2 class="mov-modal__title" id="movTitle">Movimentar estoque</h2>
+          <p class="mov-modal__product" id="movProduct">—</p>
+        </div>
+        <button class="mov-modal__close" aria-label="Fechar" data-mov-close>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="auth-alert auth-alert--error" id="movError" role="alert" style="margin-bottom: var(--space-4)"></div>
+
+      <div class="mov-tabs" role="tablist">
+        <button class="mov-tab mov-tab--entrada mov-tab--active" data-tipo="entrada" type="button">Entrada</button>
+        <button class="mov-tab mov-tab--saida" data-tipo="saida" type="button">Saída</button>
+        <button class="mov-tab mov-tab--ajuste" data-tipo="ajuste" type="button">Ajuste</button>
+      </div>
+
+      <form id="movForm">
+        <div class="adm-field">
+          <label class="input-label" for="movQuantidade" id="qtdLabel">Quantidade</label>
+          <input type="number" id="movQuantidade" class="input" min="1" step="1" required placeholder="10" />
+          <span class="adm-field__hint" id="qtdHint">Quantos itens estão entrando no estoque.</span>
+        </div>
+
+        <div class="adm-field">
+          <label class="input-label" for="movMotivo">Motivo</label>
+          <select id="movMotivo" class="input" required>
+            <!-- options populadas via JS conforme tipo -->
+          </select>
+        </div>
+
+        <div class="adm-field">
+          <label class="input-label" for="movObservacao">Observação (opcional)</label>
+          <textarea id="movObservacao" class="input" rows="2" placeholder="Nota de fornecedor, número da NF, etc." style="resize: vertical; font-family: var(--font-body); padding: 10px 14px;"></textarea>
+        </div>
+
+        <div class="mov-preview" id="movPreview" style="display: none">
+          <span class="mov-preview__from">Atual: <strong id="movEstoqueAtual">0</strong></span>
+          <span class="mov-preview__arrow">→</span>
+          <span class="mov-preview__to" id="movEstoqueDepois">0</span>
+        </div>
+
+        <div class="adm-form-footer" style="margin-top: var(--space-5); padding-top: var(--space-5)">
+          <button type="button" class="btn btn--secondary" data-mov-close>Cancelar</button>
+          <button type="submit" class="btn btn--pink btn--lg" id="movSubmit">Registrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+
+    const { session, profile } = await getSessionAndProfile();
+    if (!session) { window.location.href = '/admin/login.html'; throw new Error('redirecting'); }
+    if (profile?.role !== 'admin') { window.location.href = '/cliente/conta.html'; throw new Error('not admin'); }
+
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+
+    // ===== Helpers =====
+    function escapeHtml(s) {
+      if (s == null) return '';
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function fmtBRL(n) {
+      return 'R$ ' + Number(n || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function fmtData(dt) {
+      if (!dt) return '—';
+      const d = new Date(dt);
+      const hoje = new Date();
+      const diff = Math.floor((hoje - d) / (1000 * 60 * 60 * 24));
+      if (diff === 0) return 'hoje';
+      if (diff === 1) return 'ontem';
+      if (diff < 7) return `${diff}d atrás`;
+      return d.toLocaleDateString('pt-BR');
+    }
+    const STATUS_LABELS = {
+      'ok': 'Ok',
+      'atencao': 'Atenção',
+      'baixo': 'Baixo',
+      'esgotado': 'Esgotado',
+    };
+
+    const MOTIVOS_POR_TIPO = {
+      entrada: [
+        ['compra-fornecedor', 'Compra de fornecedor'],
+        ['devolucao-cliente', 'Devolução de cliente'],
+        ['transferencia-entrada', 'Transferência (entrada)'],
+        ['inventario-encontro', 'Inventário (encontro)'],
+      ],
+      saida: [
+        ['venda', 'Venda'],
+        ['perda', 'Perda'],
+        ['avaria', 'Avaria'],
+        ['transferencia-saida', 'Transferência (saída)'],
+        ['inventario-perda', 'Inventário (perda)'],
+        ['consumo-interno', 'Consumo interno'],
+      ],
+      ajuste: [
+        ['ajuste-inventario', 'Ajuste de inventário'],
+        ['correcao', 'Correção'],
+      ],
+    };
+
+    // ===== Carregar categorias =====
+    const { data: categorias } = await supabase
+      .from('categorias').select('id, nome, parent_id').order('ordem');
+    const catMap = new Map((categorias || []).map(c => [c.id, c]));
+
+    const filterCat = document.getElementById('filterCategoria');
+    const catsByParent = new Map();
+    categorias?.forEach(c => {
+      const k = c.parent_id ?? 'root';
+      if (!catsByParent.has(k)) catsByParent.set(k, []);
+      catsByParent.get(k).push(c);
+    });
+    (function appendCats(parentKey, prefix = '') {
+      (catsByParent.get(parentKey) || []).forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = prefix + c.nome;
+        filterCat.appendChild(opt);
+        appendCats(c.id, prefix + '— ');
+      });
+    })('root');
+
+    // ===== Carregar dados de estoque =====
+    let estoqueData = [];
+
+    async function carregarEstoque() {
+      const { data, error } = await supabase
+        .from('v_estoque_status')
+        .select('*')
+        .eq('ativo', true)
+        .order('nome');
+
+      if (error) { console.error(error); return; }
+      estoqueData = data || [];
+      renderKpis();
+      renderTabela();
+    }
+
+    function renderKpis() {
+      const total = estoqueData.length;
+      const esgotados = estoqueData.filter(p => p.status_estoque === 'esgotado').length;
+      const baixo = estoqueData.filter(p => p.status_estoque === 'baixo').length;
+      const atencao = estoqueData.filter(p => p.status_estoque === 'atencao').length;
+      const unidadesTotal = estoqueData.reduce((s, p) => s + p.estoque, 0);
+      const valorTotal = estoqueData.reduce((s, p) => s + Number(p.valor_estoque || 0), 0);
+
+      const kpis = [
+        { eye: 'Produtos ativos', val: total, hint: `${unidadesTotal} unidades em estoque` },
+        { eye: 'Valor em estoque', val: fmtBRL(valorTotal), hint: 'a preço de custo (ou venda se vazio)', cls: 'stk-kpi--money' },
+        { eye: 'Em alerta', val: baixo, hint: `${atencao} em atenção`, cls: baixo > 0 ? 'stk-kpi--alert' : '' },
+        { eye: 'Esgotados', val: esgotados, hint: esgotados > 0 ? 'Precisam de reposição' : 'Tudo em ordem', cls: esgotados > 0 ? 'stk-kpi--danger' : '' },
+      ];
+
+      document.getElementById('kpis').innerHTML = kpis.map(k => `
+        <div class="stk-kpi ${k.cls || ''}">
+          <div class="stk-kpi__eyebrow">${k.eye}</div>
+          <div class="stk-kpi__value">${k.val}</div>
+          <div class="stk-kpi__hint">${k.hint}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderTabela() {
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const status = document.getElementById('filterStatus').value;
+      const catId = document.getElementById('filterCategoria').value;
+
+      let filtered = estoqueData;
+      if (search) filtered = filtered.filter(p =>
+        p.nome.toLowerCase().includes(search) ||
+        (p.sku || '').toLowerCase().includes(search) ||
+        p.slug.toLowerCase().includes(search)
+      );
+      if (status) filtered = filtered.filter(p => p.status_estoque === status);
+      if (catId) filtered = filtered.filter(p => p.categoria_id === catId);
+
+      document.getElementById('countLabel').textContent =
+        `${filtered.length} de ${estoqueData.length} produtos`;
+
+      const body = document.getElementById('estoqueBody');
+      const empty = document.getElementById('emptyState');
+
+      if (filtered.length === 0) {
+        body.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      body.innerHTML = filtered.map(p => {
+        const qtyCls = p.status_estoque === 'esgotado'
+          ? 'stk-qty--out'
+          : (p.status_estoque === 'baixo' ? 'stk-qty--low' : '');
+
+        return `
+          <tr>
+            <td>
+              <div class="adm-thumb">
+                ${p.imagem_url
+                  ? `<img src="${escapeHtml(p.imagem_url)}" alt="" loading="lazy" />`
+                  : '<span class="adm-thumb__empty">—</span>'}
+              </div>
+            </td>
+            <td>
+              <div class="adm-cell-main">${escapeHtml(p.nome)}</div>
+              <div class="adm-cell-sub">${p.sku ? escapeHtml(p.sku) : escapeHtml(p.slug)}</div>
+            </td>
+            <td>${escapeHtml(p.categoria_nome || '—')}</td>
+            <td>
+              <div class="stk-qty ${qtyCls}">${p.estoque}</div>
+              <div class="stk-qty__min">mín ${p.estoque_minimo}</div>
+            </td>
+            <td>
+              <span class="stk-status stk-status--${p.status_estoque}">${STATUS_LABELS[p.status_estoque]}</span>
+            </td>
+            <td>
+              <div class="adm-cell-main">${fmtBRL(p.valor_estoque)}</div>
+              <div class="adm-cell-sub">${p.estoque} × ${fmtBRL(p.custo || p.preco)}</div>
+            </td>
+            <td><span class="adm-cell-sub">${fmtData(p.ultima_movimentacao)}</span></td>
+            <td>
+              <div class="adm-actions">
+                <button class="adm-action" data-mov="${p.id}" data-nome="${escapeHtml(p.nome)}" data-estoque="${p.estoque}" data-tipo="entrada" title="Entrada">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                </button>
+                <button class="adm-action" data-mov="${p.id}" data-nome="${escapeHtml(p.nome)}" data-estoque="${p.estoque}" data-tipo="saida" title="Saída">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      body.querySelectorAll('[data-mov]').forEach(btn => {
+        btn.addEventListener('click', () => abrirMov(btn.dataset.mov, btn.dataset.nome, parseInt(btn.dataset.estoque), btn.dataset.tipo));
+      });
+    }
+
+    // ===== Modal =====
+    const modal = document.getElementById('movModal');
+    let movProdutoId = null;
+    let movEstoqueAtual = 0;
+    let movTipo = 'entrada';
+
+    function abrirMov(produtoId, nome, estoque, tipoInicial) {
+      movProdutoId = produtoId;
+      movEstoqueAtual = estoque;
+      movTipo = tipoInicial || 'entrada';
+      document.getElementById('movProduct').textContent = `${nome} · ${estoque} em estoque`;
+      document.getElementById('movQuantidade').value = '';
+      document.getElementById('movObservacao').value = '';
+      document.getElementById('movError').classList.remove('auth-alert--show');
+      document.getElementById('movPreview').style.display = 'none';
+
+      // Set tab ativa
+      document.querySelectorAll('.mov-tab').forEach(t => {
+        t.classList.toggle('mov-tab--active', t.dataset.tipo === movTipo);
+      });
+      atualizarMotivos();
+      atualizarHints();
+
+      modal.classList.add('mov-modal--open');
+      setTimeout(() => document.getElementById('movQuantidade').focus(), 100);
+    }
+    function fecharMov() {
+      modal.classList.remove('mov-modal--open');
+    }
+    modal.querySelectorAll('[data-mov-close]').forEach(el =>
+      el.addEventListener('click', fecharMov)
+    );
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.classList.contains('mov-modal--open')) fecharMov();
+    });
+
+    document.querySelectorAll('.mov-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        movTipo = tab.dataset.tipo;
+        document.querySelectorAll('.mov-tab').forEach(t =>
+          t.classList.toggle('mov-tab--active', t === tab));
+        atualizarMotivos();
+        atualizarHints();
+        atualizarPreview();
+      });
+    });
+
+    function atualizarMotivos() {
+      const sel = document.getElementById('movMotivo');
+      sel.innerHTML = '';
+      MOTIVOS_POR_TIPO[movTipo].forEach(([value, label]) => {
+        const o = document.createElement('option');
+        o.value = value;
+        o.textContent = label;
+        sel.appendChild(o);
+      });
+    }
+
+    function atualizarHints() {
+      const qtdInput = document.getElementById('movQuantidade');
+      const hint = document.getElementById('qtdHint');
+      if (movTipo === 'entrada') {
+        hint.textContent = 'Quantos itens estão entrando no estoque.';
+        qtdInput.min = '1';
+      } else if (movTipo === 'saida') {
+        hint.textContent = 'Quantos itens estão saindo do estoque.';
+        qtdInput.min = '1';
+      } else {
+        hint.innerHTML = 'Use <strong>número positivo</strong> pra adicionar ou <strong>negativo</strong> pra remover (ex: <code>-2</code>).';
+        qtdInput.min = '';
+      }
+    }
+
+    document.getElementById('movQuantidade').addEventListener('input', atualizarPreview);
+    function atualizarPreview() {
+      const qtd = parseInt(document.getElementById('movQuantidade').value, 10);
+      const preview = document.getElementById('movPreview');
+      if (isNaN(qtd) || qtd === 0) {
+        preview.style.display = 'none';
+        return;
+      }
+      let novo;
+      if (movTipo === 'entrada') novo = movEstoqueAtual + Math.abs(qtd);
+      else if (movTipo === 'saida') novo = movEstoqueAtual - Math.abs(qtd);
+      else novo = movEstoqueAtual + qtd;
+
+      document.getElementById('movEstoqueAtual').textContent = movEstoqueAtual;
+      const toEl = document.getElementById('movEstoqueDepois');
+      toEl.textContent = novo;
+      toEl.className = 'mov-preview__to' + (novo < 0 ? ' mov-preview__to--err' : (novo === 0 ? ' mov-preview__to--warn' : ''));
+      preview.style.display = 'flex';
+    }
+
+    document.getElementById('movForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errBox = document.getElementById('movError');
+      errBox.classList.remove('auth-alert--show');
+      const submit = document.getElementById('movSubmit');
+      submit.disabled = true;
+      submit.textContent = 'Registrando…';
+
+      try {
+        let qtd = parseInt(document.getElementById('movQuantidade').value, 10);
+        if (isNaN(qtd) || qtd === 0) throw new Error('Quantidade inválida.');
+
+        const motivo = document.getElementById('movMotivo').value;
+        const obs = document.getElementById('movObservacao').value.trim() || null;
+
+        // Server-side trigger normaliza, mas mandamos o sinal correto
+        let qtdEnvio = qtd;
+        if (movTipo === 'saida') qtdEnvio = -Math.abs(qtd);
+        if (movTipo === 'entrada') qtdEnvio = Math.abs(qtd);
+
+        const { error } = await supabase.from('movimentacoes_estoque').insert({
+          produto_id: movProdutoId,
+          tipo: movTipo,
+          quantidade: qtdEnvio,
+          motivo,
+          observacao: obs,
+          // estoque_antes / estoque_depois são preenchidos pelo trigger
+          estoque_antes: 0,
+          estoque_depois: 0,
+        });
+        if (error) throw error;
+
+        fecharMov();
+        await carregarEstoque();
+      } catch (err) {
+        errBox.textContent = err.message || 'Erro ao registrar';
+        errBox.classList.add('auth-alert--show');
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Registrar';
+      }
+    });
+
+    // ===== Filtros reativos =====
+    document.getElementById('searchInput').addEventListener('input', renderTabela);
+    document.getElementById('filterStatus').addEventListener('change', renderTabela);
+    document.getElementById('filterCategoria').addEventListener('change', renderTabela);
+
+    await carregarEstoque();
+
+    document.getElementById('dash').style.display = '';
+    const loader = document.getElementById('loading');
+    loader.classList.add('auth-loading--hide');
+    setTimeout(() => loader.remove(), 300);
+  </script>
+</body>
+</html>
