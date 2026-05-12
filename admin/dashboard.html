@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard · Admin Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <script>
+    document.documentElement.classList.add('dark');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+</head>
+<body>
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <header class="dash__topbar">
+      <a href="/" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge auth-badge--admin">Admin</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/" class="dash__signout">Ver loja</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <section class="dash__welcome">
+        <h1>Painel <em id="userName">admin</em>.</h1>
+        <p>Gerencie produtos, pedidos e clientes da Morenas Store. Cada bloco abaixo terá CRUD próprio nas próximas fases.</p>
+      </section>
+
+      <section class="dash__cards">
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Catálogo</span>
+          <h3 class="dash__card-title">Produtos</h3>
+          <p class="dash__card-text">Cadastrar, editar e remover modelos. Preços, fotos, descrições, estoque.</p>
+          <span class="dash__card-soon">Em breve · CRUD</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Vendas</span>
+          <h3 class="dash__card-title">Pedidos</h3>
+          <p class="dash__card-text">Acompanhar pedidos do varejo e do atacado em um só lugar.</p>
+          <span class="dash__card-soon">Em breve · Listagem</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Clientes</span>
+          <h3 class="dash__card-title">Base de clientes</h3>
+          <p class="dash__card-text">Lista de clientes cadastrados, segmentar varejo e atacado, exportar.</p>
+          <span class="dash__card-soon">Em breve · Lista</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Promoções</span>
+          <h3 class="dash__card-title">Cupons</h3>
+          <p class="dash__card-text">Criar códigos promocionais (MORENAS10, frete grátis, etc).</p>
+          <span class="dash__card-soon">Em breve · CRUD</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Mídia</span>
+          <h3 class="dash__card-title">Fotos de produtos</h3>
+          <p class="dash__card-text">Upload e organização de imagens. Crop, ordem, alt text.</p>
+          <span class="dash__card-soon">Em breve · Storage</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Relatórios</span>
+          <h3 class="dash__card-title">Métricas</h3>
+          <p class="dash__card-text">Vendas por período, ticket médio, produtos mais vendidos, clientes top.</p>
+          <span class="dash__card-soon">Em breve · Charts</span>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+
+    const { session, profile } = await getSessionAndProfile();
+
+    if (!session) {
+      window.location.href = '/admin/login.html';
+      throw new Error('redirecting');
+    }
+
+    if (profile?.role !== 'admin') {
+      // Não é admin — kicka pra área de cliente
+      window.location.href = '/cliente/conta.html';
+      throw new Error('not admin');
+    }
+
+    const primeiroNome = (profile?.nome || session.user.email || '').split(' ')[0];
+    document.getElementById('userName').textContent = primeiroNome;
+
+    document.getElementById('dash').style.display = '';
+    const loader = document.getElementById('loading');
+    loader.classList.add('auth-loading--hide');
+    setTimeout(() => loader.remove(), 300);
+
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+  </script>
+</body>
+</html>

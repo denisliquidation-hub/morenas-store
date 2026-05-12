@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Criar conta · Morenas Store</title>
+  <meta name="description" content="Crie sua conta na Morenas Store e ganhe 10% OFF na primeira compra." />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
+
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('morenas-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (_) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <header class="auth-page__nav">
+      <a href="/" class="auth-page__brand" aria-label="Morenas Store">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="auth-page__brand-name">Morenas Store</span>
+      </a>
+      <a href="/" class="auth-page__back">← Voltar à loja</a>
+    </header>
+
+    <main class="auth-page__main">
+      <section class="auth-card">
+        <div class="auth-card__eyebrow">Nova cliente · 10% OFF</div>
+        <h1 class="auth-card__title">Crie sua conta na <em>Morenas</em>.</h1>
+        <p class="auth-card__sub">Cadastro grátis em 1 minuto. Receba 10% OFF na sua primeira compra.</p>
+
+        <div class="auth-alert auth-alert--error" id="error" role="alert"></div>
+        <div class="auth-alert auth-alert--success" id="success" role="status"></div>
+
+        <form class="auth-form" id="signupForm" novalidate>
+          <div class="auth-form__field">
+            <label class="input-label" for="nome">Nome completo</label>
+            <input type="text" id="nome" class="input" placeholder="Maria Silva" required autocomplete="name" minlength="2" />
+          </div>
+
+          <div class="auth-form__field">
+            <label class="input-label" for="email">E-mail</label>
+            <input type="email" id="email" class="input" placeholder="seu@email.com" required autocomplete="email" />
+          </div>
+
+          <div class="auth-form__field">
+            <label class="input-label" for="telefone">WhatsApp <span style="font-weight: 400; color: var(--text-muted)">(opcional)</span></label>
+            <input type="tel" id="telefone" class="input" placeholder="(99) 99999-9999" autocomplete="tel" />
+          </div>
+
+          <div class="auth-form__field">
+            <label class="input-label" for="senha">Senha</label>
+            <input type="password" id="senha" class="input" placeholder="Mínimo 6 caracteres" required autocomplete="new-password" minlength="6" />
+          </div>
+
+          <div class="auth-form__cta">
+            <button type="submit" class="btn btn--pink btn--lg" id="submitBtn">Criar conta</button>
+          </div>
+        </form>
+
+        <div class="auth-card__divider"></div>
+
+        <p class="auth-card__footer">
+          Já tem conta? <a href="/cliente/login.html" class="auth-form__link">Entrar</a>
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile } from '/js/supabase-client.js';
+
+    const { session } = await getSessionAndProfile();
+    if (session) window.location.href = '/cliente/conta.html';
+
+    const form = document.getElementById('signupForm');
+    const errorBox = document.getElementById('error');
+    const successBox = document.getElementById('success');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function showError(msg) {
+      successBox.classList.remove('auth-alert--show');
+      errorBox.textContent = msg;
+      errorBox.classList.add('auth-alert--show');
+    }
+    function showSuccess(msg) {
+      errorBox.classList.remove('auth-alert--show');
+      successBox.textContent = msg;
+      successBox.classList.add('auth-alert--show');
+    }
+    function clearAlerts() {
+      errorBox.classList.remove('auth-alert--show');
+      successBox.classList.remove('auth-alert--show');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlerts();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Criando conta…';
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const telefone = document.getElementById('telefone').value.trim();
+      const senha = document.getElementById('senha').value;
+
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password: senha,
+        options: {
+          data: { nome, telefone: telefone || null },
+          emailRedirectTo: window.location.origin + '/cliente/conta.html',
+        },
+      });
+
+      if (error) {
+        const msg = error.message.includes('already registered')
+          ? 'Este e-mail já está cadastrado. Faça login.'
+          : error.message;
+        showError(msg);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Criar conta';
+        return;
+      }
+
+      // Se confirmação por email está ativa, session vem null
+      if (!data.session) {
+        showSuccess('Conta criada! Verifique seu e-mail pra confirmar e fazer login.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Criar conta';
+        return;
+      }
+
+      window.location.href = '/cliente/conta.html';
+    });
+  </script>
+</body>
+</html>

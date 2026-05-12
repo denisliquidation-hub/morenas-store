@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel Admin · Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <script>
+    // Admin sempre em dark mode (estética de painel)
+    document.documentElement.classList.add('dark');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+</head>
+<body>
+  <div class="auth-page">
+    <header class="auth-page__nav">
+      <a href="/" class="auth-page__brand" aria-label="Morenas Store">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="auth-page__brand-name">Morenas Store</span>
+      </a>
+      <a href="/" class="auth-page__back">← Voltar à loja</a>
+    </header>
+
+    <main class="auth-page__main">
+      <section class="auth-card auth-card--admin">
+        <div class="auth-card__eyebrow">Acesso restrito</div>
+        <h1 class="auth-card__title">Painel <em>Admin</em>.</h1>
+        <p class="auth-card__sub">Acesso exclusivo da equipe Morenas Store.</p>
+
+        <div class="auth-alert auth-alert--error" id="error" role="alert"></div>
+
+        <form class="auth-form" id="loginForm" novalidate>
+          <div class="auth-form__field">
+            <label class="input-label" for="email">E-mail</label>
+            <input type="email" id="email" class="input" placeholder="admin@morenasstore.com" required autocomplete="email" />
+          </div>
+
+          <div class="auth-form__field">
+            <label class="input-label" for="senha">Senha</label>
+            <input type="password" id="senha" class="input" placeholder="••••••••" required autocomplete="current-password" minlength="6" />
+          </div>
+
+          <div class="auth-form__cta">
+            <button type="submit" class="btn btn--pink btn--lg" id="submitBtn">Entrar no painel</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile } from '/js/supabase-client.js';
+
+    // Se já tem sessão de admin, vai direto pro dashboard
+    const { session, profile } = await getSessionAndProfile();
+    if (session && profile?.role === 'admin') {
+      window.location.href = '/admin/dashboard.html';
+    }
+
+    const form = document.getElementById('loginForm');
+    const errorBox = document.getElementById('error');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('auth-alert--show');
+    }
+    function clearError() {
+      errorBox.classList.remove('auth-alert--show');
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Entrando…';
+
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+
+      const { error: loginErr } = await supabase.auth.signInWithPassword({ email, password: senha });
+
+      if (loginErr) {
+        const msg = loginErr.message === 'Invalid login credentials'
+          ? 'E-mail ou senha incorretos.'
+          : loginErr.message;
+        showError(msg);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Entrar no painel';
+        return;
+      }
+
+      // Verifica role
+      const { profile: prof } = await getSessionAndProfile();
+      if (prof?.role !== 'admin') {
+        await supabase.auth.signOut();
+        showError('Esta conta não tem permissão de admin.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Entrar no painel';
+        return;
+      }
+
+      window.location.href = '/admin/dashboard.html';
+    });
+  </script>
+</body>
+</html>

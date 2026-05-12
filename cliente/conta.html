@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Minha conta · Morenas Store</title>
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
+
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('morenas-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (_) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+</head>
+<body>
+  <!-- Loading inicial (esconde até auth resolver) -->
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <header class="dash__topbar">
+      <a href="/" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge">Cliente</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/" class="dash__signout" style="border-color: hsla(0,0%,100%,0.15)">Voltar à loja</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <section class="dash__welcome">
+        <h1>Olá, <em id="userName">cliente</em>.</h1>
+        <p>Sua área pessoal na Morenas Store. Em breve você vai poder gerenciar pedidos, endereços e favoritos por aqui.</p>
+      </section>
+
+      <section class="dash__cards">
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Meus pedidos</span>
+          <h3 class="dash__card-title">Acompanhar compras</h3>
+          <p class="dash__card-text">Veja o status de cada pedido, código de rastreio e histórico completo.</p>
+          <span class="dash__card-soon">Em breve</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Endereços</span>
+          <h3 class="dash__card-title">Endereços salvos</h3>
+          <p class="dash__card-text">Cadastre endereços para finalizar a compra em segundos.</p>
+          <span class="dash__card-soon">Em breve</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Favoritos</span>
+          <h3 class="dash__card-title">Sua wishlist</h3>
+          <p class="dash__card-text">Salve os modelos que você ama pra comprar depois.</p>
+          <span class="dash__card-soon">Em breve</span>
+        </article>
+
+        <article class="dash__card">
+          <span class="dash__card-eyebrow">Perfil</span>
+          <h3 class="dash__card-title">Meus dados</h3>
+          <p class="dash__card-text" id="profileText">Carregando perfil…</p>
+          <span class="dash__card-soon">Em breve · editar</span>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+
+    const { session, profile } = await getSessionAndProfile();
+
+    // Sem sessão → manda pra login
+    if (!session) {
+      window.location.href = '/cliente/login.html';
+      throw new Error('redirecting');
+    }
+
+    // Se for admin tentando acessar conta cliente, redireciona pro admin (opcional)
+    // if (profile?.role === 'admin') {
+    //   window.location.href = '/admin/dashboard.html';
+    // }
+
+    // Popula UI
+    const primeiroNome = (profile?.nome || session.user.email || '').split(' ')[0];
+    document.getElementById('userName').textContent = primeiroNome;
+    document.getElementById('profileText').textContent =
+      `${profile?.nome || '—'} · ${session.user.email}` +
+      (profile?.telefone ? ` · ${profile.telefone}` : '');
+
+    // Mostra UI, esconde loader
+    document.getElementById('dash').style.display = '';
+    const loader = document.getElementById('loading');
+    loader.classList.add('auth-loading--hide');
+    setTimeout(() => loader.remove(), 300);
+
+    // Logout
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+  </script>
+</body>
+</html>
