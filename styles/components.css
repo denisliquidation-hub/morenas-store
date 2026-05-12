@@ -32,8 +32,15 @@
   background-color: var(--action-primary);
   color: var(--text-on-accent);
 }
-.btn--pink:hover {
+.btn--pink:hover,
+.btn--pink:focus-visible {
   background-color: var(--action-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px hsla(335, 75%, 48%, 0.32);
+}
+.btn--pink:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px hsla(335, 75%, 48%, 0.25);
 }
 
 .btn--secondary {
@@ -197,6 +204,50 @@
   text-decoration: line-through;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
+}
+
+.product__desire {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.product__cta {
+  margin-top: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 100%;
+  padding: 10px var(--space-3);
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  transition: all var(--duration-fast) var(--easing-base);
+}
+
+.product__cta::after {
+  content: "→";
+  transition: transform var(--duration-fast) var(--easing-base);
+}
+
+.product:hover .product__cta {
+  background-color: var(--action-primary);
+  color: var(--text-on-accent);
+  border-color: var(--action-primary);
+}
+
+.product:hover .product__cta::after {
+  transform: translateX(3px);
 }
 
 /* ============ INPUT ============ */
