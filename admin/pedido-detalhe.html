@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detalhe do pedido · Admin Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <script>document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
+
+  <style>
+    .det-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--space-6);
+      align-items: flex-start;
+    }
+    @media (max-width: 1000px) {
+      .det-layout { grid-template-columns: 1fr; }
+    }
+
+    .det-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .det-card + .det-card { margin-top: var(--space-4); }
+
+    .det-card__title {
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .det-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-6);
+    }
+    .det-numero {
+      font-family: var(--font-mono, monospace);
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+      margin-bottom: var(--space-1);
+    }
+    .det-numero strong {
+      color: var(--text-primary);
+      font-weight: var(--font-semibold);
+    }
+    .det-title {
+      font-family: var(--font-display);
+      font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+      font-weight: var(--font-black);
+      letter-spacing: var(--tracking-tight);
+      line-height: 1.05;
+    }
+    .det-title em { font-style: italic; color: var(--pink-500); }
+    .det-meta {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-top: var(--space-2);
+    }
+
+    .det-item {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      align-items: center;
+    }
+    .det-item + .det-item { border-top: 1px solid var(--border-subtle); }
+    .det-item__img {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--surface-muted);
+    }
+    .det-item__img img { width: 100%; height: 100%; object-fit: cover; }
+    .det-item__name {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: var(--font-bold);
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+    .det-item__name a { color: inherit; transition: color var(--duration-fast); }
+    .det-item__name a:hover { color: var(--pink-500); }
+    .det-item__sub {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .det-item__price {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .det-item__price-now {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: var(--font-bold);
+      color: var(--text-primary);
+    }
+    .det-item__price-unit {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .det-totals {
+      display: grid;
+      gap: var(--space-2);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: var(--space-3);
+    }
+    .det-totals__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .det-totals__row strong { color: var(--text-primary); font-weight: var(--font-medium); font-variant-numeric: tabular-nums; }
+    .det-totals__final {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: var(--space-2);
+    }
+    .det-totals__final-label {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+    }
+    .det-totals__final-val {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-black);
+      color: var(--pink-500);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .det-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      font-size: var(--text-sm);
+    }
+    .det-row + .det-row { border-top: 1px solid var(--border-subtle); }
+    .det-row__label {
+      font-size: 0.6875rem;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: var(--font-medium);
+      padding-top: 2px;
+    }
+    .det-row__val { color: var(--text-primary); word-break: break-word; }
+
+    .det-status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+    }
+
+    .det-select-status {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--surface-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      font-weight: var(--font-medium);
+      margin-top: var(--space-3);
+    }
+    .det-select-status:focus { outline: none; border-color: var(--pink-500); }
+
+    .det-textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--surface-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      resize: vertical;
+      min-height: 80px;
+    }
+    .det-textarea:focus { outline: none; border-color: var(--pink-500); }
+
+    .det-input {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--surface-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+    }
+    .det-input:focus { outline: none; border-color: var(--pink-500); }
+
+    .det-save-msg {
+      font-size: var(--text-xs);
+      color: hsl(146, 64%, 50%);
+      margin-top: var(--space-2);
+      display: none;
+    }
+    .det-save-msg.show { display: block; }
+    .det-save-msg--error { color: var(--status-error); }
+
+    .det-wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: 12px;
+      background: hsl(146, 64%, 42%);
+      color: white;
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      transition: all 200ms var(--easing-base);
+    }
+    .det-wa-btn:hover {
+      background: hsl(146, 70%, 46%);
+      transform: translateY(-1px);
+    }
+
+    .det-back {
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      letter-spacing: var(--tracking-wide);
+      border-bottom: 2px solid var(--pink-500);
+      padding-bottom: 2px;
+      transition: color var(--duration-fast);
+    }
+    .det-back:hover { color: var(--pink-500); }
+
+    .det-loading-msg, .det-error-msg {
+      text-align: center;
+      padding: var(--space-20) var(--space-6);
+      color: var(--text-muted);
+    }
+    .det-error-msg { color: var(--status-error); }
+
+    .det-danger-btn {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      color: var(--status-error);
+      border: 1px solid var(--status-error);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      transition: all 200ms var(--easing-base);
+      margin-top: var(--space-4);
+    }
+    .det-danger-btn:hover {
+      background: hsla(0, 72%, 50%, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <header class="dash__topbar">
+      <a href="/admin/dashboard.html" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge auth-badge--admin">Admin</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/admin/pedidos.html" class="dash__signout">Pedidos</a>
+        <a href="/admin/dashboard.html" class="dash__signout">Dashboard</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <a class="det-back" href="/admin/pedidos.html">← Voltar à lista</a>
+
+      <div id="content" style="margin-top: var(--space-6)">
+        <div class="det-loading-msg" id="loadingMsg">Carregando pedido…</div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+    import { STATUS_LABELS, STATUS_ORDER, STATUS_COLORS, FORMA_PAGAMENTO_LABELS, fmtBRL, fmtData, telefoneParaWa } from '/js/pedidos.js';
+
+    const { session, profile } = await getSessionAndProfile();
+    if (!session) {
+      window.location.href = '/admin/login.html';
+      throw new Error('redirecting');
+    }
+    if (profile?.role !== 'admin') {
+      window.location.href = '/cliente/conta.html';
+      throw new Error('not admin');
+    }
+
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+
+    function escapeHtml(s) {
+      if (s == null) return '';
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    const pedidoId = new URLSearchParams(location.search).get('id');
+    if (!pedidoId) {
+      document.getElementById('content').innerHTML = '<div class="det-error-msg">ID do pedido não informado.</div>';
+      finalizarLoading();
+      throw new Error('no id');
+    }
+
+    const { data: pedido, error } = await supabase
+      .from('pedidos')
+      .select(`
+        *,
+        itens:itens_pedido(*)
+      `)
+      .eq('id', pedidoId)
+      .single();
+
+    if (error || !pedido) {
+      console.error(error);
+      document.getElementById('content').innerHTML =
+        `<div class="det-error-msg">Pedido não encontrado.<br><small>${escapeHtml(error?.message || '')}</small></div>`;
+      finalizarLoading();
+      throw new Error('not found');
+    }
+
+    renderPedido();
+    finalizarLoading();
+
+    function finalizarLoading() {
+      document.getElementById('dash').style.display = '';
+      const loader = document.getElementById('loading');
+      loader.classList.add('auth-loading--hide');
+      setTimeout(() => loader.remove(), 300);
+    }
+
+    function renderPedido() {
+      const color = STATUS_COLORS[pedido.status] || { bg: 'transparent', fg: 'inherit' };
+      const waUrl = `https://wa.me/${telefoneParaWa(pedido.cliente_telefone)}`;
+
+      const itensHtml = (pedido.itens || []).map(i => {
+        const snap = i.produto_snapshot || {};
+        const tam = i.tamanho ? ` · Tam ${escapeHtml(i.tamanho)}` : '';
+        const subtotal = Number(i.preco_unitario) * Number(i.quantidade);
+        const linkProduto = snap.slug ? `/produto.html?slug=${encodeURIComponent(snap.slug)}` : null;
+        return `
+          <div class="det-item">
+            <div class="det-item__img">
+              ${snap.imagem_url
+                ? `<img src="${escapeHtml(snap.imagem_url)}" alt="" loading="lazy" style="object-position: ${escapeHtml(snap.imagem_position || 'center')}" />`
+                : ''}
+            </div>
+            <div>
+              <div class="det-item__name">
+                ${linkProduto
+                  ? `<a href="${linkProduto}" target="_blank">${escapeHtml(snap.nome || '—')}</a>`
+                  : escapeHtml(snap.nome || '—')}
+              </div>
+              <div class="det-item__sub">${escapeHtml(snap.categoria_nome || '—')}${tam} · x${i.quantidade}</div>
+            </div>
+            <div class="det-item__price">
+              <div class="det-item__price-now">${fmtBRL(subtotal)}</div>
+              <div class="det-item__price-unit">${fmtBRL(i.preco_unitario)} cada</div>
+            </div>
+          </div>
+        `;
+      }).join('') || '<p style="color: var(--text-muted); padding: var(--space-3) 0">Nenhum item no pedido.</p>';
+
+      document.getElementById('content').innerHTML = `
+        <header class="det-head">
+          <div>
+            <div class="det-numero">Pedido <strong>${escapeHtml(pedido.numero_pedido)}</strong></div>
+            <h1 class="det-title">${escapeHtml(pedido.cliente_nome)}</h1>
+            <p class="det-meta">Criado em ${escapeHtml(fmtData(pedido.created_at))}${pedido.updated_at !== pedido.created_at ? ` · Atualizado em ${escapeHtml(fmtData(pedido.updated_at))}` : ''}</p>
+          </div>
+          <span class="det-status-pill" style="background: ${color.bg}; color: ${color.fg}">
+            ${escapeHtml(STATUS_LABELS[pedido.status] || pedido.status)}
+          </span>
+        </header>
+
+        <div class="det-layout">
+          <div>
+            <!-- Itens -->
+            <div class="det-card">
+              <div class="det-card__title">Itens do pedido</div>
+              ${itensHtml}
+              <div class="det-totals">
+                <div class="det-totals__row">
+                  <span>Subtotal</span>
+                  <strong>${fmtBRL(pedido.subtotal)}</strong>
+                </div>
+                <div class="det-totals__row">
+                  <span>Frete</span>
+                  <strong>${pedido.frete != null ? fmtBRL(pedido.frete) : 'A combinar'}</strong>
+                </div>
+                <div class="det-totals__final">
+                  <span class="det-totals__final-label">Total</span>
+                  <span class="det-totals__final-val">${fmtBRL(pedido.total)}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cliente -->
+            <div class="det-card">
+              <div class="det-card__title">Cliente</div>
+              <div class="det-row">
+                <span class="det-row__label">Nome</span>
+                <span class="det-row__val">${escapeHtml(pedido.cliente_nome)}</span>
+              </div>
+              <div class="det-row">
+                <span class="det-row__label">WhatsApp</span>
+                <span class="det-row__val">
+                  <a href="${waUrl}" target="_blank" rel="noopener" style="color: hsl(146, 64%, 50%); text-decoration: underline">${escapeHtml(pedido.cliente_telefone || '—')}</a>
+                </span>
+              </div>
+              ${pedido.cliente_email ? `
+                <div class="det-row">
+                  <span class="det-row__label">E-mail</span>
+                  <span class="det-row__val">${escapeHtml(pedido.cliente_email)}</span>
+                </div>
+              ` : ''}
+              ${pedido.cliente_id ? `
+                <div class="det-row">
+                  <span class="det-row__label">Cadastro</span>
+                  <span class="det-row__val" style="color: var(--text-muted)">Cliente logado</span>
+                </div>
+              ` : `
+                <div class="det-row">
+                  <span class="det-row__label">Cadastro</span>
+                  <span class="det-row__val" style="color: var(--text-muted)">Guest checkout</span>
+                </div>
+              `}
+              ${pedido.observacoes_cliente ? `
+                <div class="det-row">
+                  <span class="det-row__label">Obs cliente</span>
+                  <span class="det-row__val">${escapeHtml(pedido.observacoes_cliente)}</span>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Observações admin -->
+            <div class="det-card">
+              <div class="det-card__title">Observações internas</div>
+              <textarea class="det-textarea" id="obsAdmin" placeholder="Notas internas pro time: cliente preferiu PIX, mandar carta personalizada, etc.">${escapeHtml(pedido.observacoes_admin || '')}</textarea>
+              <button class="btn btn--pink" type="button" id="saveObsBtn" style="margin-top: var(--space-3)">Salvar observação</button>
+              <p class="det-save-msg" id="obsSaveMsg">Observação salva.</p>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside>
+            <!-- Mudança de status -->
+            <div class="det-card">
+              <div class="det-card__title">Status do pedido</div>
+              <select class="det-select-status" id="statusSelect">
+                ${STATUS_ORDER.map(s => `
+                  <option value="${s}" ${s === pedido.status ? 'selected' : ''}>${escapeHtml(STATUS_LABELS[s])}</option>
+                `).join('')}
+              </select>
+              <p style="font-size: 0.6875rem; color: var(--text-muted); margin-top: var(--space-2)">
+                Marcar como <strong>Pago</strong> baixa o estoque automaticamente.
+              </p>
+              <p class="det-save-msg" id="statusSaveMsg">Status atualizado.</p>
+            </div>
+
+            <!-- Forma de pagamento + rastreio -->
+            <div class="det-card">
+              <div class="det-card__title">Pagamento e entrega</div>
+
+              <div class="det-row" style="display: block; grid-template-columns: none; padding: 0 0 var(--space-3) 0">
+                <label class="det-row__label" style="display: block; margin-bottom: 6px">Forma de pagamento</label>
+                <select class="det-input" id="formaPagamento">
+                  <option value="">Não definida</option>
+                  ${Object.entries(FORMA_PAGAMENTO_LABELS).map(([v, l]) => `
+                    <option value="${v}" ${pedido.forma_pagamento === v ? 'selected' : ''}>${escapeHtml(l)}</option>
+                  `).join('')}
+                </select>
+              </div>
+
+              <div class="det-row" style="display: block; grid-template-columns: none; padding: var(--space-3) 0 0 0; border-top: 1px solid var(--border-subtle)">
+                <label class="det-row__label" style="display: block; margin-bottom: 6px">Código de rastreio</label>
+                <input type="text" class="det-input" id="codigoRastreio" placeholder="Ex: BR123456789BR" value="${escapeHtml(pedido.codigo_rastreio || '')}" />
+              </div>
+
+              <button class="btn btn--pink" type="button" id="savePagamentoBtn" style="margin-top: var(--space-4); width: 100%">Salvar</button>
+              <p class="det-save-msg" id="pagamentoSaveMsg">Atualizado.</p>
+            </div>
+
+            <!-- WhatsApp direto -->
+            <div class="det-card">
+              <div class="det-card__title">Atalhos</div>
+              <a href="${waUrl}" target="_blank" rel="noopener" class="det-wa-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9s-.5-.2-.7.2c-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6 0-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5l-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.1.2 2.1 3.2 5.2 4.5 1.9.8 2.7.9 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+                Chamar no WhatsApp
+              </a>
+              ${pedido.whatsapp_message_sent_at ? `
+                <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-2)">
+                  Cliente abriu WhatsApp em ${escapeHtml(fmtData(pedido.whatsapp_message_sent_at))}
+                </p>
+              ` : ''}
+              <button class="det-danger-btn" type="button" id="deleteBtn">Excluir pedido</button>
+            </div>
+          </aside>
+        </div>
+      `;
+
+      bindActions();
+    }
+
+    function showMsg(id, ok, txt) {
+      const el = document.getElementById(id);
+      el.textContent = txt;
+      el.classList.toggle('det-save-msg--error', !ok);
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2500);
+    }
+
+    function bindActions() {
+      // Status
+      document.getElementById('statusSelect').addEventListener('change', async (e) => {
+        const novo = e.target.value;
+        if (novo === pedido.status) return;
+        const confirma = novo === 'pago'
+          ? confirm('Marcar como PAGO vai baixar o estoque dos produtos automaticamente. Continuar?')
+          : true;
+        if (!confirma) {
+          e.target.value = pedido.status;
+          return;
+        }
+        const { error: err } = await supabase
+          .from('pedidos')
+          .update({ status: novo })
+          .eq('id', pedido.id);
+        if (err) {
+          showMsg('statusSaveMsg', false, err.message);
+          e.target.value = pedido.status;
+          return;
+        }
+        pedido.status = novo;
+        showMsg('statusSaveMsg', true, 'Status atualizado.');
+        // re-renderiza pra atualizar pill
+        setTimeout(() => location.reload(), 800);
+      });
+
+      // Observações admin
+      document.getElementById('saveObsBtn').addEventListener('click', async () => {
+        const obs = document.getElementById('obsAdmin').value;
+        const { error: err } = await supabase
+          .from('pedidos')
+          .update({ observacoes_admin: obs || null })
+          .eq('id', pedido.id);
+        if (err) {
+          showMsg('obsSaveMsg', false, err.message);
+          return;
+        }
+        showMsg('obsSaveMsg', true, 'Observação salva.');
+      });
+
+      // Pagamento + rastreio
+      document.getElementById('savePagamentoBtn').addEventListener('click', async () => {
+        const forma = document.getElementById('formaPagamento').value || null;
+        const rastreio = document.getElementById('codigoRastreio').value.trim() || null;
+        const { error: err } = await supabase
+          .from('pedidos')
+          .update({ forma_pagamento: forma, codigo_rastreio: rastreio })
+          .eq('id', pedido.id);
+        if (err) {
+          showMsg('pagamentoSaveMsg', false, err.message);
+          return;
+        }
+        showMsg('pagamentoSaveMsg', true, 'Atualizado.');
+      });
+
+      // Delete
+      document.getElementById('deleteBtn').addEventListener('click', async () => {
+        if (!confirm(`Excluir o pedido ${pedido.numero_pedido}? Esta ação não pode ser desfeita e remove também os itens.`)) return;
+        const { error: err } = await supabase
+          .from('pedidos')
+          .delete()
+          .eq('id', pedido.id);
+        if (err) {
+          alert('Erro ao excluir: ' + err.message);
+          return;
+        }
+        window.location.href = '/admin/pedidos.html';
+      });
+    }
+  </script>
+</body>
+</html>

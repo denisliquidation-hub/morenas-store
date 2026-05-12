@@ -349,6 +349,120 @@
       transition: color var(--duration-fast) var(--easing-base);
     }
     .cart-actions__clear:hover { color: var(--status-error); }
+
+    /* CHECKOUT FORM (dentro do summary) */
+    .checkout-form {
+      display: grid;
+      gap: var(--space-3);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .checkout-form__title {
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .checkout-form__field {
+      display: grid;
+      gap: 4px;
+    }
+    .checkout-form__field label {
+      font-size: 0.6875rem;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: var(--font-medium);
+    }
+    .checkout-form__field input,
+    .checkout-form__field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--surface-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      transition: border-color var(--duration-fast) var(--easing-base);
+    }
+    .checkout-form__field input:focus,
+    .checkout-form__field textarea:focus {
+      outline: none;
+      border-color: var(--pink-500);
+    }
+    .checkout-form__field textarea {
+      resize: vertical;
+      min-height: 70px;
+      font-family: var(--font-body);
+    }
+    .checkout-form__hint {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      margin-top: -2px;
+    }
+    .checkout-form__error {
+      font-size: var(--text-xs);
+      color: var(--status-error);
+      padding: 8px 10px;
+      background: hsla(0, 72%, 50%, 0.08);
+      border-radius: var(--radius-sm);
+      display: none;
+    }
+    .checkout-form__error.show { display: block; }
+
+    /* CONFIRMATION SUCCESS */
+    .checkout-success {
+      text-align: center;
+      padding: var(--space-10) var(--space-6);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .checkout-success__icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: hsla(146, 64%, 42%, 0.15);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: hsl(146, 64%, 42%);
+      margin-bottom: var(--space-5);
+    }
+    .checkout-success h2 {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-black);
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: var(--space-2);
+    }
+    .checkout-success h2 em { font-style: italic; color: var(--pink-500); }
+    .checkout-success__numero {
+      font-family: var(--font-mono, monospace);
+      font-size: var(--text-base);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-5);
+      letter-spacing: var(--tracking-wide);
+    }
+    .checkout-success__numero strong {
+      color: var(--text-primary);
+      font-weight: var(--font-semibold);
+    }
+    .checkout-success p {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-6);
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .checkout-success__actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
@@ -435,10 +549,32 @@
         </div>
         <p class="cart-summary__hint">Frete calculado no atendimento. Para Imperatriz - MA frete fixo R$ 15,00. Brasil inteiro via WhatsApp.</p>
 
-        <a class="cart-summary__wa" id="waCheckout" href="#" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9s-.5-.2-.7.2c-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6 0-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5l-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.1.2 2.1 3.2 5.2 4.5 1.9.8 2.7.9 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-          Finalizar pelo WhatsApp
-        </a>
+        <form class="checkout-form" id="checkoutForm" novalidate>
+          <div class="checkout-form__title">Seus dados</div>
+
+          <div class="checkout-form__field">
+            <label for="formNome">Nome completo</label>
+            <input id="formNome" name="nome" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="checkout-form__field">
+            <label for="formTelefone">WhatsApp</label>
+            <input id="formTelefone" name="telefone" type="tel" autocomplete="tel" placeholder="(99) 98250-8435" required />
+            <span class="checkout-form__hint">Vamos te chamar nesse número pra fechar a entrega.</span>
+          </div>
+
+          <div class="checkout-form__field">
+            <label for="formObs">Observação <span style="text-transform: none; opacity: 0.7">(opcional)</span></label>
+            <textarea id="formObs" name="observacoes" placeholder="Tamanho, cor, presente..."></textarea>
+          </div>
+
+          <div class="checkout-form__error" id="formError"></div>
+
+          <button class="cart-summary__wa" type="submit" id="finalizarBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9s-.5-.2-.7.2c-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6 0-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5l-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.1.2 2.1 3.2 5.2 4.5 1.9.8 2.7.9 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+            <span id="finalizarBtnText">Finalizar pelo WhatsApp</span>
+          </button>
+        </form>
 
         <div class="cart-trust">
           <div class="cart-trust__item">
@@ -456,12 +592,29 @@
         </div>
       </aside>
     </div>
+
+    <!-- SUCCESS STATE -->
+    <section class="checkout-success" id="successState" style="display: none">
+      <div class="checkout-success__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <h2>Pedido <em>recebido</em>!</h2>
+      <p class="checkout-success__numero">Número: <strong id="successNumero">—</strong></p>
+      <p>Te chamamos no WhatsApp pra confirmar tamanho, endereço de entrega e forma de pagamento. Fique de olho nas notificações.</p>
+      <div class="checkout-success__actions">
+        <a class="btn btn--pink btn--lg" id="successWaBtn" href="#" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        <a class="btn btn--ghost btn--lg" href="/">Continuar comprando</a>
+      </div>
+    </section>
   </main>
 
   <script type="module" src="/js/cart.js"></script>
   <script type="module">
     import * as Cart from '/js/cart.js';
-    import { getSessionAndProfile } from '/js/supabase-client.js';
+    import { supabase, getSessionAndProfile } from '/js/supabase-client.js';
+    import { criarPedidoDoCarrinho, marcarWhatsappEnviado, gerarMensagemWhatsapp, telefoneParaWa } from '/js/pedidos.js';
+
+    const WA_LOJA = '5599982508435';
 
     function escapeHtml(s) {
       if (s == null) return '';
@@ -474,19 +627,30 @@
     const itemsEl = document.getElementById('cartItems');
     const emptyEl = document.getElementById('emptyState');
     const layoutEl = document.getElementById('cartLayout');
+    const successEl = document.getElementById('successState');
     const subtitleEl = document.getElementById('subtitle');
 
-    // ===== Sessão (pra prefill nome + telefone no WA) =====
-    let userInfo = { nome: null, telefone: null };
+    // ===== Sessão (pra prefill nome + telefone + cliente_id) =====
+    let userInfo = { id: null, nome: null, telefone: null, email: null };
     try {
-      const { profile } = await getSessionAndProfile();
-      if (profile) {
+      const { session, profile } = await getSessionAndProfile();
+      if (session && profile) {
+        userInfo.id = session.user.id;
         userInfo.nome = profile.nome || null;
         userInfo.telefone = profile.telefone || null;
+        userInfo.email = session.user.email || null;
+        // prefill form
+        if (userInfo.nome) document.getElementById('formNome').value = userInfo.nome;
+        if (userInfo.telefone) document.getElementById('formTelefone').value = userInfo.telefone;
       }
     } catch (_) {}
 
     function render(cart) {
+      // se já passou pelo checkout (success state visível), não re-renderiza pra evitar piscar
+      if (successEl.style.display !== 'none' && successEl.style.display !== '') {
+        // não faz nada — usuário já finalizou
+      }
+
       const items = cart.items;
 
       if (items.length === 0) {
@@ -573,15 +737,6 @@
           }
         });
       });
-
-      // WhatsApp checkout link
-      const msg = Cart.toWhatsappMessage({
-        nome: userInfo.nome,
-        telefone: userInfo.telefone,
-        link: window.location.origin + '/',
-      });
-      document.getElementById('waCheckout').href =
-        `https://wa.me/5599982508435?text=${encodeURIComponent(msg)}`;
     }
 
     Cart.onChange(render);
@@ -589,6 +744,93 @@
     // Esvaziar
     document.getElementById('clearBtn').addEventListener('click', () => {
       if (confirm('Esvaziar todo o carrinho?')) Cart.clear();
+    });
+
+    // ===== Submit do checkout =====
+    const form = document.getElementById('checkoutForm');
+    const errorEl = document.getElementById('formError');
+    const btn = document.getElementById('finalizarBtn');
+    const btnText = document.getElementById('finalizarBtnText');
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.classList.add('show');
+    }
+    function hideError() {
+      errorEl.classList.remove('show');
+      errorEl.textContent = '';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const nome = document.getElementById('formNome').value.trim();
+      const telefone = document.getElementById('formTelefone').value.trim();
+      const observacoes = document.getElementById('formObs').value.trim();
+
+      if (!nome || nome.length < 2) {
+        showError('Digite seu nome completo.');
+        document.getElementById('formNome').focus();
+        return;
+      }
+      const telDigits = telefone.replace(/\D/g, '');
+      if (telDigits.length < 10 || telDigits.length > 13) {
+        showError('Digite um WhatsApp válido com DDD (ex: 99 98250-8435).');
+        document.getElementById('formTelefone').focus();
+        return;
+      }
+
+      const cart = Cart.getCart();
+      if (!cart.items.length) {
+        showError('Seu carrinho está vazio.');
+        return;
+      }
+
+      btn.disabled = true;
+      btnText.textContent = 'Registrando pedido…';
+
+      const { pedido, error } = await criarPedidoDoCarrinho(supabase, {
+        cliente_id: userInfo.id,
+        cliente_nome: nome,
+        cliente_telefone: telefone,
+        cliente_email: userInfo.email,
+        observacoes_cliente: observacoes || null,
+        items: cart.items,
+        subtotal: Cart.getSubtotal(),
+        frete: null,
+      });
+
+      if (error || !pedido) {
+        console.error('Erro ao criar pedido:', error);
+        btn.disabled = false;
+        btnText.textContent = 'Finalizar pelo WhatsApp';
+        showError('Não consegui registrar seu pedido agora. Tente novamente em alguns segundos ou nos chame direto no WhatsApp.');
+        return;
+      }
+
+      // Gera mensagem e marca timestamp (fire and forget)
+      const msg = gerarMensagemWhatsapp(pedido, cart.items, { link: window.location.origin + '/' });
+      const waUrl = `https://wa.me/${WA_LOJA}?text=${encodeURIComponent(msg)}`;
+      marcarWhatsappEnviado(supabase, pedido.id);
+
+      // Limpa carrinho
+      Cart.clear();
+
+      // Mostra success
+      layoutEl.style.display = 'none';
+      emptyEl.style.display = 'none';
+      successEl.style.display = '';
+      document.getElementById('successNumero').textContent = pedido.numero_pedido;
+      const successWa = document.getElementById('successWaBtn');
+      successWa.href = waUrl;
+      subtitleEl.textContent = 'Pedido registrado';
+
+      // Atualiza header
+      document.querySelector('.cart-page__title').innerHTML = 'Tudo <em>certo</em>.';
+
+      // Abre WhatsApp em nova aba automaticamente
+      window.open(waUrl, '_blank', 'noopener');
     });
 
     // Account link

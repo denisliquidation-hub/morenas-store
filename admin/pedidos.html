@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pedidos · Admin Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <script>document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
+
+  <style>
+    .ped-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    .ped-stat {
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+    .ped-stat__label {
+      font-size: 0.6875rem;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: var(--font-medium);
+    }
+    .ped-stat__value {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-black);
+      color: var(--text-primary);
+      line-height: 1.05;
+      margin-top: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+    .ped-stat__value--pink { color: var(--pink-500); }
+    .ped-stat__value--warn { color: hsl(35, 90%, 55%); }
+    .ped-stat__value--success { color: hsl(146, 64%, 50%); }
+
+    .ped-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .ped-num {
+      font-family: var(--font-mono, monospace);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+    .ped-num strong {
+      color: var(--text-primary);
+      font-weight: var(--font-semibold);
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <header class="dash__topbar">
+      <a href="/admin/dashboard.html" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge auth-badge--admin">Admin</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/admin/dashboard.html" class="dash__signout">Dashboard</a>
+        <a href="/" class="dash__signout">Ver loja</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <div class="adm-pagehead">
+        <div>
+          <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-2)">Vendas</div>
+          <h1 class="adm-pagehead__title">Pedidos</h1>
+          <p class="adm-pagehead__sub" id="countLabel">Carregando…</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <section class="ped-stats">
+        <div class="ped-stat">
+          <div class="ped-stat__label">Aguardando</div>
+          <div class="ped-stat__value ped-stat__value--warn" id="statAguardando">—</div>
+        </div>
+        <div class="ped-stat">
+          <div class="ped-stat__label">Pagos</div>
+          <div class="ped-stat__value ped-stat__value--success" id="statPagos">—</div>
+        </div>
+        <div class="ped-stat">
+          <div class="ped-stat__label">Em rota</div>
+          <div class="ped-stat__value" id="statRota">—</div>
+        </div>
+        <div class="ped-stat">
+          <div class="ped-stat__label">Total no mês</div>
+          <div class="ped-stat__value ped-stat__value--pink" id="statReceita">—</div>
+        </div>
+      </section>
+
+      <!-- Filtros -->
+      <div class="adm-toolbar">
+        <input type="search" class="input adm-toolbar__search" id="searchInput" placeholder="Buscar por nº, nome ou telefone…" />
+        <select class="input adm-toolbar__select" id="filterStatus">
+          <option value="">Todos status</option>
+          <option value="aguardando-confirmacao">Aguardando confirmação</option>
+          <option value="confirmado">Confirmado</option>
+          <option value="pago">Pago</option>
+          <option value="separando">Separando</option>
+          <option value="enviado">Enviado</option>
+          <option value="entregue">Entregue</option>
+          <option value="cancelado">Cancelado</option>
+        </select>
+        <select class="input adm-toolbar__select" id="filterPeriodo">
+          <option value="">Todos períodos</option>
+          <option value="hoje">Hoje</option>
+          <option value="7d">Últimos 7 dias</option>
+          <option value="30d">Últimos 30 dias</option>
+          <option value="ano">Este ano</option>
+        </select>
+      </div>
+
+      <!-- Tabela -->
+      <div class="adm-table-wrap">
+        <table class="adm-table" id="pedidosTable">
+          <thead>
+            <tr>
+              <th>Nº · Data</th>
+              <th>Cliente</th>
+              <th>Itens</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th class="adm-table__th--actions">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="pedidosBody"></tbody>
+        </table>
+        <div class="adm-empty" id="emptyState" style="display: none">
+          <p>Nenhum pedido encontrado.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+    import { STATUS_LABELS, STATUS_COLORS, fmtBRL, fmtData, telefoneParaWa } from '/js/pedidos.js';
+
+    const { session, profile } = await getSessionAndProfile();
+    if (!session) {
+      window.location.href = '/admin/login.html';
+      throw new Error('redirecting');
+    }
+    if (profile?.role !== 'admin') {
+      window.location.href = '/cliente/conta.html';
+      throw new Error('not admin');
+    }
+
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+
+    function escapeHtml(s) {
+      if (s == null) return '';
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    let allPedidos = [];
+
+    async function carregarPedidos() {
+      const { data, error } = await supabase
+        .from('pedidos')
+        .select(`
+          id, numero_pedido, cliente_nome, cliente_telefone, cliente_email,
+          subtotal, frete, total, status, forma_pagamento, codigo_rastreio,
+          observacoes_cliente, observacoes_admin, whatsapp_message_sent_at,
+          created_at, updated_at,
+          itens:itens_pedido(id, quantidade, preco_unitario)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+      allPedidos = data || [];
+      renderStats();
+      renderPedidos();
+    }
+
+    function renderStats() {
+      const aguardando = allPedidos.filter(p => p.status === 'aguardando-confirmacao').length;
+      const pagos = allPedidos.filter(p => p.status === 'pago').length;
+      const rota = allPedidos.filter(p => p.status === 'separando' || p.status === 'enviado').length;
+
+      const inicioMes = new Date();
+      inicioMes.setDate(1); inicioMes.setHours(0, 0, 0, 0);
+      const receitaMes = allPedidos
+        .filter(p => new Date(p.created_at) >= inicioMes && p.status !== 'cancelado')
+        .reduce((s, p) => s + Number(p.total || 0), 0);
+
+      document.getElementById('statAguardando').textContent = aguardando;
+      document.getElementById('statPagos').textContent = pagos;
+      document.getElementById('statRota').textContent = rota;
+      document.getElementById('statReceita').textContent = fmtBRL(receitaMes);
+    }
+
+    function renderPedidos() {
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const status = document.getElementById('filterStatus').value;
+      const periodo = document.getElementById('filterPeriodo').value;
+
+      let filtered = allPedidos;
+
+      if (search) {
+        filtered = filtered.filter(p =>
+          p.numero_pedido.toLowerCase().includes(search) ||
+          p.cliente_nome.toLowerCase().includes(search) ||
+          (p.cliente_telefone || '').includes(search)
+        );
+      }
+      if (status) filtered = filtered.filter(p => p.status === status);
+
+      if (periodo) {
+        const now = new Date();
+        let cutoff = new Date(0);
+        if (periodo === 'hoje') {
+          cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        } else if (periodo === '7d') {
+          cutoff = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        } else if (periodo === '30d') {
+          cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        } else if (periodo === 'ano') {
+          cutoff = new Date(now.getFullYear(), 0, 1);
+        }
+        filtered = filtered.filter(p => new Date(p.created_at) >= cutoff);
+      }
+
+      document.getElementById('countLabel').textContent =
+        `${filtered.length} de ${allPedidos.length} pedidos`;
+
+      const body = document.getElementById('pedidosBody');
+      const empty = document.getElementById('emptyState');
+      body.innerHTML = '';
+
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      filtered.forEach(p => {
+        const tr = document.createElement('tr');
+        const totalItens = (p.itens || []).reduce((s, i) => s + (i.quantidade || 0), 0);
+        const color = STATUS_COLORS[p.status] || { bg: 'transparent', fg: 'inherit' };
+        const waUrl = `https://wa.me/${telefoneParaWa(p.cliente_telefone)}`;
+
+        tr.innerHTML = `
+          <td>
+            <div class="ped-num"><strong>${escapeHtml(p.numero_pedido)}</strong></div>
+            <div class="adm-cell-sub">${escapeHtml(fmtData(p.created_at))}</div>
+          </td>
+          <td>
+            <div class="adm-cell-main">${escapeHtml(p.cliente_nome)}</div>
+            <div class="adm-cell-sub">${escapeHtml(p.cliente_telefone || '—')}</div>
+          </td>
+          <td>
+            <div class="adm-cell-main">${totalItens} ${totalItens === 1 ? 'item' : 'itens'}</div>
+          </td>
+          <td>
+            <div class="adm-cell-main" style="font-variant-numeric: tabular-nums">${fmtBRL(p.total)}</div>
+          </td>
+          <td>
+            <span class="ped-pill" style="background: ${color.bg}; color: ${color.fg}">
+              ${escapeHtml(STATUS_LABELS[p.status] || p.status)}
+            </span>
+          </td>
+          <td>
+            <div class="adm-actions">
+              <a class="adm-action" href="/admin/pedido-detalhe.html?id=${p.id}" title="Ver detalhes">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </a>
+              <a class="adm-action" href="${waUrl}" target="_blank" rel="noopener" title="Chamar no WhatsApp" style="color: hsl(146, 64%, 42%)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9s-.5-.2-.7.2c-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6 0-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5l-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.1.2 2.1 3.2 5.2 4.5 1.9.8 2.7.9 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+              </a>
+            </div>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderPedidos);
+    document.getElementById('filterStatus').addEventListener('change', renderPedidos);
+    document.getElementById('filterPeriodo').addEventListener('change', renderPedidos);
+
+    await carregarPedidos();
+
+    document.getElementById('dash').style.display = '';
+    const loader = document.getElementById('loading');
+    loader.classList.add('auth-loading--hide');
+    setTimeout(() => loader.remove(), 300);
+  </script>
+</body>
+</html>

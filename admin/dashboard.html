@@ -62,12 +62,12 @@
           <span class="adm-pill adm-pill--success" style="width: fit-content" id="estoquePill">Ativo</span>
         </a>
 
-        <article class="dash__card">
+        <a class="dash__card" href="/admin/pedidos.html" style="text-decoration: none; cursor: pointer; transition: all var(--duration-base) var(--easing-base)" onmouseover="this.style.borderColor='var(--pink-500)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor=''; this.style.transform=''">
           <span class="dash__card-eyebrow">Vendas</span>
-          <h3 class="dash__card-title">Pedidos</h3>
-          <p class="dash__card-text">Acompanhar pedidos do varejo e do atacado em um só lugar.</p>
-          <span class="dash__card-soon">Em breve · Listagem</span>
-        </article>
+          <h3 class="dash__card-title">Pedidos →</h3>
+          <p class="dash__card-text" id="pedidosResumo">Carregando resumo de pedidos…</p>
+          <span class="adm-pill adm-pill--success" style="width: fit-content" id="pedidosPill">Ativo</span>
+        </a>
 
         <article class="dash__card">
           <span class="dash__card-eyebrow">Clientes</span>
@@ -151,6 +151,41 @@
         pill.style.color = 'var(--status-warning)';
       } else {
         pill.textContent = 'Tudo em ordem';
+      }
+    })();
+
+    // ===== Resumo de pedidos pro card =====
+    (async () => {
+      const { data, error } = await supabase
+        .from('pedidos')
+        .select('status, total, created_at');
+
+      const resumo = document.getElementById('pedidosResumo');
+      const pill = document.getElementById('pedidosPill');
+
+      if (error) {
+        resumo.textContent = 'Não consegui carregar resumo agora.';
+        return;
+      }
+
+      const aguardando = (data || []).filter(p => p.status === 'aguardando-confirmacao').length;
+      const total = (data || []).length;
+
+      const inicioMes = new Date();
+      inicioMes.setDate(1); inicioMes.setHours(0, 0, 0, 0);
+      const receitaMes = (data || [])
+        .filter(p => new Date(p.created_at) >= inicioMes && p.status !== 'cancelado')
+        .reduce((s, p) => s + Number(p.total || 0), 0);
+      const receitaFmt = 'R$ ' + receitaMes.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      resumo.textContent = `${total} pedidos · ${receitaFmt} no mês`;
+
+      if (aguardando > 0) {
+        pill.textContent = `${aguardando} aguardando`;
+        pill.style.background = 'hsla(35, 90%, 50%, 0.18)';
+        pill.style.color = 'var(--status-warning)';
+      } else {
+        pill.textContent = 'Tudo em dia';
       }
     })();
   </script>

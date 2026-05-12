@@ -29,6 +29,72 @@
   <link rel="stylesheet" href="/styles/base.css" />
   <link rel="stylesheet" href="/styles/components.css" />
   <link rel="stylesheet" href="/styles/auth.css" />
+
+  <style>
+    .ped-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+    .ped-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-3);
+      padding: var(--space-4);
+      background: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      transition: border-color var(--duration-fast);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .ped-row:hover { border-color: var(--pink-500); }
+    .ped-row__num {
+      font-family: var(--font-mono, monospace);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+    .ped-row__date {
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      margin-top: 2px;
+    }
+    .ped-row__total {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: var(--font-bold);
+      color: var(--pink-500);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .ped-row__status {
+      display: inline-flex;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.625rem;
+      font-weight: var(--font-semibold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .ped-empty {
+      padding: var(--space-6);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      background: var(--surface-muted);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-3);
+    }
+    .ped-empty a { color: var(--pink-500); text-decoration: underline; }
+
+    .dash__card--full {
+      grid-column: 1 / -1;
+    }
+  </style>
 </head>
 <body>
   <!-- Loading inicial (esconde até auth resolver) -->
@@ -56,11 +122,12 @@
       </section>
 
       <section class="dash__cards">
-        <article class="dash__card">
+        <article class="dash__card dash__card--full">
           <span class="dash__card-eyebrow">Meus pedidos</span>
-          <h3 class="dash__card-title">Acompanhar compras</h3>
-          <p class="dash__card-text">Veja o status de cada pedido, código de rastreio e histórico completo.</p>
-          <span class="dash__card-soon">Em breve</span>
+          <h3 class="dash__card-title">Histórico de compras</h3>
+          <div id="pedidosContainer">
+            <p class="dash__card-text" id="pedidosLoading">Carregando seus pedidos…</p>
+          </div>
         </article>
 
         <article class="dash__card">
@@ -89,6 +156,7 @@
 
   <script type="module">
     import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+    import { STATUS_LABELS, STATUS_COLORS, fmtBRL, fmtData } from '/js/pedidos.js';
 
     const { session, profile } = await getSessionAndProfile();
 
@@ -98,10 +166,10 @@
       throw new Error('redirecting');
     }
 
-    // Se for admin tentando acessar conta cliente, redireciona pro admin (opcional)
-    // if (profile?.role === 'admin') {
-    //   window.location.href = '/admin/dashboard.html';
-    // }
+    function escapeHtml(s) {
+      if (s == null) return '';
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
 
     // Popula UI
     const primeiroNome = (profile?.nome || session.user.email || '').split(' ')[0];
@@ -109,6 +177,61 @@
     document.getElementById('profileText').textContent =
       `${profile?.nome || '—'} · ${session.user.email}` +
       (profile?.telefone ? ` · ${profile.telefone}` : '');
+
+    // ===== Carrega pedidos do cliente =====
+    (async () => {
+      const { data: pedidos, error } = await supabase
+        .from('pedidos')
+        .select(`
+          id, numero_pedido, total, status, created_at,
+          itens:itens_pedido(quantidade)
+        `)
+        .eq('cliente_id', session.user.id)
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      const container = document.getElementById('pedidosContainer');
+
+      if (error) {
+        console.error(error);
+        container.innerHTML = '<p class="dash__card-text" style="color: var(--status-error)">Não consegui carregar seus pedidos agora.</p>';
+        return;
+      }
+
+      if (!pedidos || pedidos.length === 0) {
+        container.innerHTML = `
+          <div class="ped-empty">
+            Você ainda não fez pedidos.<br>
+            <a href="/">Comece pela nossa coleção</a>.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="ped-list">
+          ${pedidos.map(p => {
+            const color = STATUS_COLORS[p.status] || { bg: 'transparent', fg: 'inherit' };
+            const totalItens = (p.itens || []).reduce((s, i) => s + (i.quantidade || 0), 0);
+            return `
+              <div class="ped-row" data-id="${p.id}">
+                <div>
+                  <div class="ped-row__num">${escapeHtml(p.numero_pedido)}</div>
+                  <div class="ped-row__date">${escapeHtml(fmtData(p.created_at))} · ${totalItens} ${totalItens === 1 ? 'item' : 'itens'}</div>
+                  <span class="ped-row__status" style="background: ${color.bg}; color: ${color.fg}">
+                    ${escapeHtml(STATUS_LABELS[p.status] || p.status)}
+                  </span>
+                </div>
+                <div class="ped-row__total">${fmtBRL(p.total)}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      // Note: cliente não tem página de detalhe própria ainda — só admin
+      // Por enquanto, click no row não faz nada (futuro: /cliente/pedido.html?id=X)
+    })();
 
     // Mostra UI, esconde loader
     document.getElementById('dash').style.display = '';
