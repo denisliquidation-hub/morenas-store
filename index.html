@@ -529,6 +529,82 @@
     .mp--6 { background: linear-gradient(135deg, hsl(335 60% 50%), hsl(335 80% 42%)); }
     .mp--7 { background: linear-gradient(135deg, hsl(0 0% 24%), hsl(0 0% 10%)); }
     .mp--8 { background: linear-gradient(135deg, hsl(220 15% 85%), hsl(220 20% 78%)); }
+
+    /* ============================================================
+       RESPONSIVO - mobile first overrides
+       ============================================================ */
+
+    /* Tablet & smaller (até 900px) */
+    @media (max-width: 900px) {
+      .hero { padding-block: var(--space-16) var(--space-20); }
+      .hero__grid { gap: var(--space-10); }
+      .hero__visual { aspect-ratio: 4/4; }
+      .hero__seal { width: 64px; height: 64px; bottom: var(--space-4); left: var(--space-4); }
+
+      .categories { padding-block: var(--space-16); }
+      .product-section { padding-block: var(--space-16); }
+      .editorial { padding-block: var(--space-20); }
+      .newsletter { padding-block: var(--space-20); }
+      .footer { padding-block: var(--space-12) var(--space-6); }
+
+      .section-head { margin-bottom: var(--space-8); }
+      .section-head__title { font-size: var(--text-3xl); }
+
+      .editorial__copy h2 { font-size: var(--text-4xl); }
+      .editorial__quote { font-size: var(--text-xl); padding-left: var(--space-4); }
+    }
+
+    /* Mobile (até 640px) */
+    @media (max-width: 640px) {
+      .hero { padding-block: var(--space-10) var(--space-12); }
+      .hero__title { font-size: clamp(var(--text-4xl), 11vw, var(--text-5xl)); line-height: 1; }
+      .hero__lead { font-size: var(--text-base); }
+      .hero__cta { gap: var(--space-2); }
+      .hero__cta .btn { flex: 1; padding: 14px 16px; font-size: var(--text-xs); }
+      .hero__meta { gap: var(--space-4); flex-wrap: wrap; }
+      .hero__meta-item .num { font-size: var(--text-xl); }
+      .hero__meta-item .label { font-size: 0.6875rem; }
+
+      .marquee__item { font-size: var(--text-base); }
+      .marquee__track { gap: var(--space-8); }
+
+      .section-head { flex-direction: column; align-items: flex-start; gap: var(--space-3); }
+      .section-head__title { font-size: var(--text-2xl); }
+
+      .cat-card { aspect-ratio: 4/5; padding: var(--space-4); }
+      .cat-card__label { font-size: var(--text-lg); }
+
+      .product-grid { gap: var(--space-5); grid-template-columns: repeat(2, 1fr); }
+      .product__name { font-size: var(--text-sm); line-height: 1.3; }
+      .product__category { font-size: 0.625rem; }
+      .product__price-now { font-size: var(--text-base); }
+      .product__price-was { font-size: var(--text-xs); }
+      .product__price { flex-wrap: wrap; gap: var(--space-1); }
+      .product__tag { font-size: 0.625rem; padding: 3px 8px; }
+      .product__fav { width: 32px; height: 32px; }
+
+      .editorial__copy h2 { font-size: var(--text-3xl); }
+      .editorial__copy p { font-size: var(--text-base); }
+      .editorial__quote { font-size: var(--text-base); padding-left: var(--space-3); }
+
+      .newsletter p { font-size: var(--text-base); margin-bottom: var(--space-8); }
+      .newsletter__form { flex-direction: column; gap: var(--space-3); }
+      .newsletter__form .btn { width: 100%; }
+      .newsletter__bg-seal { width: 360px; height: 360px; opacity: 0.03; }
+
+      .footer__grid { grid-template-columns: 1fr 1fr; gap: var(--space-8); margin-bottom: var(--space-10); }
+      .footer__brand { grid-column: 1 / -1; max-width: 100%; }
+      .footer__bottom { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+    }
+
+    /* Mobile pequeno (até 400px) */
+    @media (max-width: 400px) {
+      .hero__cta { flex-direction: column; }
+      .hero__cta .btn { width: 100%; }
+      .hero__meta-item .num { font-size: var(--text-lg); }
+      .product-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+      .product__image-wrap { aspect-ratio: 1/1; }
+    }
   </style>
 </head>
 <body>
@@ -547,6 +623,10 @@
   <!-- ============== NAV ============== -->
   <nav class="nav">
     <div class="nav__inner">
+      <button class="nav__toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navDrawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
       <a href="#" class="nav__logo" aria-label="Morenas Store">
         <img src="imagens/logo.png" alt="" />
         <span class="nav__logo-text">Morenas Store</span>
@@ -576,6 +656,37 @@
       </div>
     </div>
   </nav>
+
+  <!-- ============== MOBILE DRAWER ============== -->
+  <div class="drawer" id="navDrawer" aria-hidden="true">
+    <div class="drawer__backdrop" data-drawer-close></div>
+    <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu de navegação">
+      <header class="drawer__header">
+        <a href="#" class="nav__logo" aria-label="Morenas Store" data-drawer-close>
+          <img src="imagens/logo.png" alt="" />
+          <span class="nav__logo-text">Morenas Store</span>
+        </a>
+        <button class="drawer__close" aria-label="Fechar menu" data-drawer-close>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+
+      <nav class="drawer__nav" aria-label="Categorias">
+        <a class="drawer__link drawer__link--active" href="#" data-drawer-close>Novidades</a>
+        <a class="drawer__link" href="#" data-drawer-close>Sandálias</a>
+        <a class="drawer__link" href="#" data-drawer-close>Saltos</a>
+        <a class="drawer__link" href="#" data-drawer-close>Tênis</a>
+        <a class="drawer__link" href="#" data-drawer-close>Botas</a>
+        <a class="drawer__link drawer__link--pink" href="#" data-drawer-close>Promoção</a>
+      </nav>
+
+      <div class="drawer__footer">
+        <span class="eyebrow eyebrow--pink">Atacado · Varejo</span>
+        <p class="drawer__location">Direto do showroom em Imperatriz - MA</p>
+        <a class="btn btn--pink" href="#" data-drawer-close>Comprar no atacado</a>
+      </div>
+    </aside>
+  </div>
 
   <!-- ============== HERO ============== -->
   <header class="hero container">
@@ -936,6 +1047,34 @@
           root.classList.toggle('dark', e.matches);
           syncAria();
         }
+      });
+    })();
+
+    /* Mobile drawer */
+    (function () {
+      const toggle = document.getElementById('navToggle');
+      const drawer = document.getElementById('navDrawer');
+      if (!toggle || !drawer) return;
+
+      function open() {
+        drawer.classList.add('drawer--open');
+        drawer.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('no-scroll');
+      }
+      function close() {
+        drawer.classList.remove('drawer--open');
+        drawer.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('no-scroll');
+      }
+
+      toggle.addEventListener('click', open);
+      drawer.querySelectorAll('[data-drawer-close]').forEach(function (el) {
+        el.addEventListener('click', close);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && drawer.classList.contains('drawer--open')) close();
       });
     })();
   </script>
