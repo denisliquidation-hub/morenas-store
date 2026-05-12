@@ -1,0 +1,19 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+
+# Preservar imagens originais do WhatsApp localmente, mas não comitar
+imagens/Calcados/
+
+# Logo originais não-renomeados (manter localmente, não publicar)
+imagens/Untitled*.png

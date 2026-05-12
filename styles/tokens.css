@@ -1,0 +1,169 @@
+/* Morenas Store — Design Tokens
+ * Fashion editorial: preto + branco como base, pink como statement.
+ */
+
+:root {
+  /* ===== TEXT ===== */
+  --text-primary: hsl(0 0% 8%);
+  --text-secondary: hsl(0 0% 35%);
+  --text-muted: hsl(0 0% 55%);
+  --text-on-dark: hsl(0 0% 98%);
+  --text-on-accent: hsl(0 0% 100%);
+  --text-on-secondary: hsl(0 0% 98%);
+
+  /* ===== SURFACE ===== */
+  --surface-page: hsl(30 10% 98%);
+  --surface-card: hsl(0 0% 100%);
+  --surface-elevated: hsl(0 0% 100%);
+  --surface-inverse: hsl(0 0% 8%);
+  --surface-feature: hsl(0 0% 8%);
+  --surface-feature-text: hsl(0 0% 98%);
+  --surface-muted: hsl(30 8% 95%);
+
+  /* ===== ACTION ===== */
+  --action-primary: hsl(335 75% 48%);
+  --action-primary-hover: hsl(335 80% 42%);
+  --action-secondary: hsl(0 0% 8%);
+  --action-secondary-hover: hsl(0 0% 20%);
+  --action-ghost-hover: hsl(30 10% 94%);
+
+  /* ===== BORDER ===== */
+  --border-default: hsl(0 0% 88%);
+  --border-subtle: hsl(0 0% 93%);
+  --border-strong: hsl(0 0% 8%);
+  --border-focus: hsl(335 75% 48%);
+
+  /* ===== STATUS ===== */
+  --status-success: hsl(150 45% 38%);
+  --status-warning: hsl(35 90% 50%);
+  --status-error: hsl(0 72% 50%);
+  --status-info: hsl(210 70% 50%);
+
+  /* ===== PINK SCALE (editorial use) ===== */
+  --pink-50: hsl(335 80% 97%);
+  --pink-100: hsl(335 75% 92%);
+  --pink-300: hsl(335 75% 75%);
+  --pink-500: hsl(335 75% 48%);
+  --pink-700: hsl(335 80% 38%);
+  --pink-900: hsl(335 70% 22%);
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-display: 5rem;
+  --text-hero: 6.5rem;
+
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-black: 900;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
+
+  /* ===== SPACING (4px grid) ===== */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-40: 10rem;
+
+  /* ===== RADIUS ===== */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ===== SHADOW ===== */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
+  --shadow-product: 0 16px 40px rgba(0, 0, 0, 0.10);
+
+  /* ===== MOTION ===== */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --duration-editorial: 600ms;
+
+  --easing-base: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ===== LAYOUT ===== */
+  --container-max: 1280px;
+  --header-height: 72px;
+}
+
+.dark {
+  --text-primary: hsl(0 0% 96%);
+  --text-secondary: hsl(0 0% 72%);
+  --text-muted: hsl(0 0% 52%);
+  --text-on-dark: hsl(0 0% 96%);
+  --text-on-accent: hsl(0 0% 100%);
+  --text-on-secondary: hsl(0 0% 8%);
+
+  --surface-page: hsl(0 0% 6%);
+  --surface-card: hsl(0 0% 9%);
+  --surface-elevated: hsl(0 0% 12%);
+  --surface-inverse: hsl(0 0% 98%);
+  --surface-feature: hsl(0 0% 13%);
+  --surface-feature-text: hsl(0 0% 98%);
+  --surface-muted: hsl(0 0% 11%);
+
+  --action-primary: hsl(335 80% 58%);
+  --action-primary-hover: hsl(335 85% 64%);
+  --action-secondary: hsl(0 0% 96%);
+  --action-secondary-hover: hsl(0 0% 85%);
+  --action-ghost-hover: hsla(0 0% 100% / 0.06);
+
+  --border-default: hsla(0 0% 100% / 0.1);
+  --border-subtle: hsla(0 0% 100% / 0.06);
+  --border-strong: hsl(0 0% 96%);
+  --border-focus: hsl(335 80% 58%);
+
+  --pink-50: hsl(335 40% 16%);
+  --pink-100: hsl(335 50% 22%);
+  --pink-300: hsl(335 70% 45%);
+  --pink-500: hsl(335 80% 58%);
+  --pink-700: hsl(335 85% 70%);
+  --pink-900: hsl(335 80% 92%);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.8);
+  --shadow-product: 0 16px 40px rgba(0, 0, 0, 0.6);
+}

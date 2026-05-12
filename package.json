@@ -1,0 +1,16 @@
+{
+  "name": "morenas-store",
+  "version": "1.0.0",
+  "description": "Morenas Store — Moda Feminina · Atacado e Varejo · Imperatriz - MA",
+  "private": true,
+  "scripts": {
+    "start": "serve . --listen tcp://0.0.0.0:${PORT:-3000} --no-clipboard --single",
+    "dev": "serve . --listen 3000"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
