@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="/styles/base.css" />
   <link rel="stylesheet" href="/styles/components.css" />
   <link rel="stylesheet" href="/styles/auth.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
 </head>
 <body>
   <div class="auth-loading" id="loading">
@@ -47,12 +48,12 @@
       </section>
 
       <section class="dash__cards">
-        <article class="dash__card">
+        <a class="dash__card" href="/admin/produtos.html" style="text-decoration: none; cursor: pointer; transition: all var(--duration-base) var(--easing-base)" onmouseover="this.style.borderColor='var(--pink-500)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor=''; this.style.transform=''">
           <span class="dash__card-eyebrow">Catálogo</span>
-          <h3 class="dash__card-title">Produtos</h3>
+          <h3 class="dash__card-title">Produtos →</h3>
           <p class="dash__card-text">Cadastrar, editar e remover modelos. Preços, fotos, descrições, estoque.</p>
-          <span class="dash__card-soon">Em breve · CRUD</span>
-        </article>
+          <span class="adm-pill adm-pill--success" style="width: fit-content">Ativo</span>
+        </a>
 
         <article class="dash__card">
           <span class="dash__card-eyebrow">Vendas</span>

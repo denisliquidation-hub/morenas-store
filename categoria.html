@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Categoria · Morenas Store</title>
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
+
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('morenas-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (_) {}
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+
+  <style>
+    .cat-page {
+      padding-block: var(--space-12) var(--space-16);
+    }
+    .cat-hero {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+    .cat-hero__eyebrow {
+      margin-bottom: var(--space-3);
+    }
+    .cat-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(var(--text-4xl), 6vw, var(--text-6xl));
+      font-weight: var(--font-black);
+      letter-spacing: var(--tracking-tight);
+      line-height: 1.05;
+      margin-bottom: var(--space-3);
+    }
+    .cat-hero h1 em {
+      font-style: italic;
+      color: var(--pink-500);
+    }
+    .cat-hero p {
+      max-width: 520px;
+      margin: 0 auto;
+      color: var(--text-secondary);
+    }
+    .cat-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .cat-toolbar__count {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    .cat-toolbar__sort {
+      min-width: 180px;
+    }
+    .cat-empty {
+      text-align: center;
+      padding: var(--space-20) var(--space-6);
+      color: var(--text-muted);
+    }
+    .cat-empty p { margin-bottom: var(--space-6); }
+  </style>
+</head>
+<body>
+  <!-- TOP BAR + NAV idêntico à home -->
+  <div class="top-bar">
+    <div class="top-bar__inner">
+      <span class="top-bar__item">Moda Feminina</span>
+      <span class="top-bar__sep" aria-hidden="true">·</span>
+      <span class="top-bar__item">Atacado e Varejo</span>
+      <span class="top-bar__sep" aria-hidden="true">·</span>
+      <span class="top-bar__item top-bar__item--pink">Imperatriz - MA</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Morenas Store">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="nav__logo-text">Morenas Store</span>
+      </a>
+      <ul class="nav__links">
+        <li><a class="nav__link" href="/">Novidades</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=sandalias">Sandálias</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=saltos">Saltos</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=tenis">Tênis</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=botas">Botas</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=havaianas">Havaianas</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=promocao">Promoção</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a class="icon-btn" href="/cliente/login.html" aria-label="Minha conta" id="accountLink">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <a class="icon-btn" href="https://wa.me/5599982508435" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9s-.5-.2-.7.2c-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6 0-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5l-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.1.2 2.1 3.2 5.2 4.5 1.9.8 2.7.9 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="cat-page container">
+    <header class="cat-hero">
+      <div class="eyebrow eyebrow--pink cat-hero__eyebrow" id="catBreadcrumb">Categoria</div>
+      <h1 id="catTitle">Carregando…</h1>
+      <p id="catSubtitle"></p>
+    </header>
+
+    <div class="cat-toolbar">
+      <span class="cat-toolbar__count" id="countLabel"></span>
+      <select class="input cat-toolbar__sort" id="sortSelect">
+        <option value="recente">Mais recentes</option>
+        <option value="preco-asc">Menor preço</option>
+        <option value="preco-desc">Maior preço</option>
+        <option value="nome">Nome A-Z</option>
+      </select>
+    </div>
+
+    <div class="product-grid" id="produtosGrid"></div>
+
+    <div class="cat-empty" id="emptyState" style="display: none">
+      <p>Ainda não temos produtos nessa categoria.</p>
+      <a class="btn btn--pink btn--lg" href="/">Ver todos os produtos</a>
+    </div>
+  </main>
+
+  <script type="module">
+    import { supabase } from '/js/supabase-client.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+
+    if (!slug) {
+      window.location.href = '/';
+    }
+
+    const TAG_LABELS = {
+      'novo': { label: 'Novo', cls: 'tag--pink' },
+      'mais-vendido': { label: 'Mais vendido', cls: 'tag--black' },
+      'edicao-limitada': { label: 'Edição limitada', cls: 'tag--soft' },
+      'pre-venda': { label: 'Pré-venda', cls: 'tag--soft' },
+      'lancamento-02': { label: 'Lançamento 02', cls: 'tag--pink' },
+      'promocao': { label: 'Promoção', cls: 'tag--pink' },
+      'exclusivo': { label: 'Exclusivo', cls: 'tag--black' },
+    };
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str).replace(/[&<>"']/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[c]));
+    }
+    function fmtPreco(n) { return 'R$ ' + Number(n).toFixed(2).replace('.', ','); }
+
+    function renderCard(p, cat) {
+      const tag = p.tag && TAG_LABELS[p.tag];
+      const tagHtml = tag ? `<span class="tag ${tag.cls} product__tag">${escapeHtml(tag.label)}</span>` : '';
+      const precoAntigo = p.preco_antigo ? `<span class="product__price-was">${fmtPreco(p.preco_antigo)}</span>` : '';
+      const desejo = p.desejo ? `<p class="product__desire">${escapeHtml(p.desejo)}</p>` : '';
+      const categoria = cat?.nome || '';
+      return `
+        <article class="product">
+          <a href="/produto.html?slug=${encodeURIComponent(p.slug)}" style="text-decoration: none; color: inherit">
+            <div class="product__image-wrap">
+              ${tagHtml}
+              <img src="${escapeHtml(p.imagem_url || '/imagens/logo.png')}" alt="${escapeHtml(p.nome)}" class="product__image" loading="lazy" style="object-position: ${escapeHtml(p.imagem_position || 'center center')}" />
+            </div>
+            <span class="product__category">${escapeHtml(categoria)}</span>
+            <h3 class="product__name">${escapeHtml(p.nome)}</h3>
+            ${desejo}
+            <div class="product__price">
+              <span class="product__price-now">${fmtPreco(p.preco)}</span>
+              ${precoAntigo}
+            </div>
+            <span class="product__cta">Ver detalhes</span>
+          </a>
+        </article>
+      `;
+    }
+
+    // ===== Carrega categoria + filhos + produtos =====
+    const { data: cat } = await supabase
+      .from('categorias').select('id, nome, slug, parent_id').eq('slug', slug).single();
+
+    if (!cat) {
+      document.getElementById('catTitle').textContent = 'Categoria não encontrada';
+      document.title = 'Categoria não encontrada · Morenas Store';
+      document.getElementById('emptyState').style.display = '';
+      throw new Error('cat not found');
+    }
+
+    document.title = `${cat.nome} · Morenas Store`;
+    document.getElementById('catTitle').innerHTML = `${escapeHtml(cat.nome)}.`;
+
+    // Busca filhos (subcategorias) pra incluir produtos delas também
+    const { data: filhos } = await supabase
+      .from('categorias').select('id, nome').eq('parent_id', cat.id);
+
+    const catIds = [cat.id, ...(filhos || []).map(f => f.id)];
+
+    if (filhos?.length) {
+      document.getElementById('catSubtitle').textContent =
+        `Explore ${filhos.length} subcategoria${filhos.length > 1 ? 's' : ''}: ${filhos.map(f => f.nome).join(', ')}.`;
+    } else {
+      document.getElementById('catSubtitle').textContent = '';
+    }
+
+    // ===== Busca produtos =====
+    const { data: categoriasTodas } = await supabase
+      .from('categorias').select('id, nome');
+    const catMap = new Map((categoriasTodas || []).map(c => [c.id, c]));
+
+    const { data: produtos } = await supabase
+      .from('produtos').select('*')
+      .eq('ativo', true)
+      .in('categoria_id', catIds)
+      .order('created_at', { ascending: false });
+
+    let todosProdutos = produtos || [];
+
+    function renderProdutos() {
+      const sort = document.getElementById('sortSelect').value;
+      let arr = [...todosProdutos];
+      if (sort === 'preco-asc') arr.sort((a, b) => a.preco - b.preco);
+      if (sort === 'preco-desc') arr.sort((a, b) => b.preco - a.preco);
+      if (sort === 'nome') arr.sort((a, b) => a.nome.localeCompare(b.nome));
+
+      const grid = document.getElementById('produtosGrid');
+      const empty = document.getElementById('emptyState');
+
+      document.getElementById('countLabel').textContent =
+        `${arr.length} ${arr.length === 1 ? 'produto' : 'produtos'}`;
+
+      if (arr.length === 0) {
+        grid.style.display = 'none';
+        empty.style.display = '';
+      } else {
+        grid.style.display = '';
+        empty.style.display = 'none';
+        grid.innerHTML = arr.map(p => renderCard(p, catMap.get(p.categoria_id))).join('');
+      }
+    }
+
+    document.getElementById('sortSelect').addEventListener('change', renderProdutos);
+    renderProdutos();
+
+    // ===== Detecta sessão pro link account =====
+    (async () => {
+      try {
+        const { getSessionAndProfile } = await import('/js/supabase-client.js');
+        const { session, profile } = await getSessionAndProfile();
+        if (session) {
+          const link = document.getElementById('accountLink');
+          if (link) link.href = profile?.role === 'admin' ? '/admin/dashboard.html' : '/cliente/conta.html';
+        }
+      } catch (_) {}
+    })();
+  </script>
+</body>
+</html>

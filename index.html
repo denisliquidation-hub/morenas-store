@@ -957,13 +957,13 @@
         <span class="nav__logo-text">Morenas Store</span>
       </a>
       <ul class="nav__links">
-        <li><a class="nav__link nav__link--active" href="#">Novidades</a></li>
-        <li><a class="nav__link" href="#">Sandálias</a></li>
-        <li><a class="nav__link" href="#">Saltos</a></li>
-        <li><a class="nav__link" href="#">Tênis</a></li>
-        <li><a class="nav__link" href="#">Botas</a></li>
-        <li><a class="nav__link" href="#">Havaianas</a></li>
-        <li><a class="nav__link" href="#">Promoção</a></li>
+        <li><a class="nav__link nav__link--active" href="/">Novidades</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=sandalias">Sandálias</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=saltos">Saltos</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=tenis">Tênis</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=botas">Botas</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=havaianas">Havaianas</a></li>
+        <li><a class="nav__link" href="/categoria.html?slug=promocao">Promoção</a></li>
       </ul>
       <div class="nav__actions">
         <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro" aria-pressed="false">
@@ -1217,7 +1217,7 @@
     </div>
 
     <div class="cat-grid">
-      <article class="cat-card cat-card--1">
+      <a class="cat-card cat-card--1" href="/categoria.html?slug=sandalias">
         <div class="cat-card__bg">
           <svg viewBox="0 0 200 200" fill="none">
             <path d="M30 140 Q50 100 110 110 L160 120 Q175 125 170 140 L165 155 Q160 160 145 158 L40 155 Q28 153 30 140Z" fill="hsl(335 70% 45%)"/>
@@ -1228,9 +1228,9 @@
           <h3 class="cat-card__label">Sandálias</h3>
           <span class="cat-card__cta">Ver modelos</span>
         </div>
-      </article>
+      </a>
 
-      <article class="cat-card cat-card--2">
+      <a class="cat-card cat-card--2" href="/categoria.html?slug=saltos">
         <div class="cat-card__bg">
           <svg viewBox="0 0 200 200" fill="none">
             <path d="M40 150 Q60 90 130 100 L165 115 Q175 125 168 140 L160 155 Q155 158 145 158 L50 162 Q38 160 40 150Z" fill="hsl(0 0% 95%)"/>
@@ -1242,9 +1242,9 @@
           <h3 class="cat-card__label">Saltos</h3>
           <span class="cat-card__cta">Ver modelos</span>
         </div>
-      </article>
+      </a>
 
-      <article class="cat-card cat-card--3">
+      <a class="cat-card cat-card--3" href="/categoria.html?slug=tenis">
         <div class="cat-card__bg">
           <svg viewBox="0 0 200 200" fill="none">
             <path d="M35 140 Q50 105 100 105 L155 115 Q172 120 172 138 L168 155 Q160 162 148 160 L40 162 Q30 160 35 140Z" fill="hsl(0 0% 18%)"/>
@@ -1257,9 +1257,9 @@
           <h3 class="cat-card__label">Tênis</h3>
           <span class="cat-card__cta">Ver modelos</span>
         </div>
-      </article>
+      </a>
 
-      <article class="cat-card cat-card--4">
+      <a class="cat-card cat-card--4" href="/categoria.html?slug=botas">
         <div class="cat-card__bg">
           <svg viewBox="0 0 200 200" fill="none">
             <path d="M50 50 L155 55 L162 145 Q165 160 150 162 L60 162 Q45 160 48 145 Z" fill="hsl(0 0% 12%)"/>
@@ -1271,7 +1271,7 @@
           <h3 class="cat-card__label">Botas</h3>
           <span class="cat-card__cta">Ver modelos</span>
         </div>
-      </article>
+      </a>
     </div>
   </section>
 
@@ -1286,79 +1286,8 @@
         <a href="#" class="section-head__link">Ver todos →</a>
       </div>
 
-      <div class="product-grid">
-        <!-- 1. Bota cano alto preta -->
-        <article class="product">
-          <div class="product__image-wrap">
-            <span class="tag tag--black product__tag">Mais vendido</span>
-            <button class="product__fav" aria-label="Favoritar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-            </button>
-            <img src="imagens/boot-knee-black.jpeg" alt="Bota Cano Alto preta" class="product__image" loading="lazy" style="object-position: center 75%" />
-          </div>
-          <span class="product__category">Bota cano alto · Salto bloco</span>
-          <h3 class="product__name">Bota Cano Alto preta em couro</h3>
-          <p class="product__desire">Elegante, poderosa e perfeita para looks marcantes.</p>
-          <div class="product__price">
-            <span class="product__price-now">R$ 599,00</span>
-            <span class="product__price-was">R$ 749,00</span>
-          </div>
-          <a href="#" class="product__cta">Ver detalhes</a>
-        </article>
-
-        <!-- 2. Mule plataforma preta com laço -->
-        <article class="product">
-          <div class="product__image-wrap">
-            <button class="product__fav product__fav--active" aria-label="Favoritar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-            </button>
-            <img src="imagens/mule-bow-black.jpeg" alt="Mule plataforma com laço" class="product__image" loading="lazy" style="object-position: center center" />
-          </div>
-          <span class="product__category">Mule plataforma · Laço</span>
-          <h3 class="product__name">Mule Lia preta com laço</h3>
-          <p class="product__desire">Delicada, moderna e fácil de combinar.</p>
-          <div class="product__price">
-            <span class="product__price-now">R$ 449,00</span>
-          </div>
-          <a href="#" class="product__cta">Ver detalhes</a>
-        </article>
-
-        <!-- 3. Havaianas com cristais -->
-        <article class="product">
-          <div class="product__image-wrap">
-            <span class="tag tag--pink product__tag">Novo</span>
-            <button class="product__fav" aria-label="Favoritar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-            </button>
-            <img src="imagens/flip-havaianas-crystal.jpeg" alt="Chinelo com cristais dourados" class="product__image" loading="lazy" style="object-position: 30% center" />
-          </div>
-          <span class="product__category">Chinelo · Cristais</span>
-          <h3 class="product__name">Chinelo Cristal Dourado</h3>
-          <p class="product__desire">Brilho discreto para deixar o básico mais sofisticado.</p>
-          <div class="product__price">
-            <span class="product__price-now">R$ 189,00</span>
-          </div>
-          <a href="#" class="product__cta">Ver detalhes</a>
-        </article>
-
-        <!-- 4. Flip Santa Lolla branco -->
-        <article class="product">
-          <div class="product__image-wrap">
-            <span class="tag tag--soft product__tag">Edição limitada</span>
-            <button class="product__fav" aria-label="Favoritar">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-            </button>
-            <img src="imagens/flip-santa-lolla.jpeg" alt="Chinelo pérola com corrente" class="product__image" loading="lazy" style="object-position: 0% 75%" />
-          </div>
-          <span class="product__category">Chinelo · Matelassê</span>
-          <h3 class="product__name">Chinelo Pérola com corrente</h3>
-          <p class="product__desire">Feminino, confortável e com toque premium.</p>
-          <div class="product__price">
-            <span class="product__price-now">R$ 169,00</span>
-            <span class="product__price-was">R$ 219,00</span>
-          </div>
-          <a href="#" class="product__cta">Ver detalhes</a>
-        </article>
+      <div class="product-grid" data-produtos="destaques">
+        <!-- Produtos carregados dinamicamente do banco -->
       </div>
     </div>
   </section>
@@ -1439,48 +1368,8 @@
         <a href="#" class="section-head__link">Ver coleção →</a>
       </div>
 
-      <div class="product-grid">
-        <!-- 1. Sienna Boot Caramelo (peça hero da coleção) -->
-        <article class="product">
-          <div class="product__image-wrap">
-            <span class="tag tag--pink product__tag">Lançamento 02</span>
-            <button class="product__fav" aria-label="Favoritar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
-            <img src="imagens/boot-knee-caramel.jpeg" alt="Bota Sienna caramelo" class="product__image" loading="lazy" style="object-position: center 70%" />
-          </div>
-          <span class="product__category">Bota · Salto fino</span>
-          <h3 class="product__name">Bota Sienna Caramelo</h3>
-          <p class="product__desire">Sofisticação atemporal com toque urbano.</p>
-          <div class="product__price"><span class="product__price-now">R$ 789,00</span></div>
-          <a href="#" class="product__cta">Ver detalhes</a>
-        </article>
-
-        <!-- 2. Western Duo -->
-        <article class="product">
-          <div class="product__image-wrap">
-            <span class="tag tag--pink product__tag">Lançamento 02</span>
-            <button class="product__fav" aria-label="Favoritar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
-            <img src="imagens/western-boots-duo.jpeg" alt="Bota texana bordada" class="product__image" loading="lazy" style="object-position: center 80%" />
-          </div>
-          <span class="product__category">Bota texana · 2 cores</span>
-          <h3 class="product__name">Bota Texana bordada</h3>
-          <p class="product__desire">Atitude country com presença marcante.</p>
-          <div class="product__price"><span class="product__price-now">R$ 559,00</span></div>
-          <a href="#" class="product__cta">Ver detalhes</a>
-        </article>
-
-        <!-- 3. Chinelo Plataforma Linho -->
-        <article class="product">
-          <div class="product__image-wrap">
-            <span class="tag tag--soft product__tag">Pré-venda</span>
-            <button class="product__fav" aria-label="Favoritar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
-            <img src="imagens/slipper-linen-nude.jpeg" alt="Chinelo plataforma de linho cru" class="product__image" loading="lazy" style="object-position: 40% 45%" />
-          </div>
-          <span class="product__category">Chinelo · Plataforma</span>
-          <h3 class="product__name">Chinelo Plataforma Linho Cru</h3>
-          <p class="product__desire">Conforto leve com elegância natural.</p>
-          <div class="product__price"><span class="product__price-now">R$ 229,00</span></div>
-          <a href="#" class="product__cta">Ver detalhes</a>
-        </article>
+      <div class="product-grid" data-produtos="lancamento">
+        <!-- Produtos carregados dinamicamente do banco -->
       </div>
     </div>
   </section>
@@ -1613,6 +1502,7 @@
     <span class="wa-float__tooltip">Falar no WhatsApp</span>
   </a>
 
+  <script type="module" src="/js/home-produtos.js"></script>
   <script>
     (function () {
       const root = document.documentElement;

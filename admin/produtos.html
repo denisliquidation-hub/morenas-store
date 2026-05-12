@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Produtos · Admin Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <script>document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
+</head>
+<body>
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <!-- Topbar -->
+    <header class="dash__topbar">
+      <a href="/admin/dashboard.html" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge auth-badge--admin">Admin</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/admin/dashboard.html" class="dash__signout">Dashboard</a>
+        <a href="/" class="dash__signout">Ver loja</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <div class="adm-pagehead">
+        <div>
+          <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-2)">Catálogo</div>
+          <h1 class="adm-pagehead__title">Produtos</h1>
+          <p class="adm-pagehead__sub" id="countLabel">Carregando…</p>
+        </div>
+        <a class="btn btn--pink btn--lg" href="/admin/produto-edit.html">+ Novo produto</a>
+      </div>
+
+      <!-- Filtros -->
+      <div class="adm-toolbar">
+        <input type="search" class="input adm-toolbar__search" id="searchInput" placeholder="Buscar por nome ou slug…" />
+        <select class="input adm-toolbar__select" id="filterCategoria">
+          <option value="">Todas categorias</option>
+        </select>
+        <select class="input adm-toolbar__select" id="filterStatus">
+          <option value="">Todos status</option>
+          <option value="ativo">Ativos</option>
+          <option value="inativo">Inativos</option>
+        </select>
+      </div>
+
+      <!-- Tabela -->
+      <div class="adm-table-wrap">
+        <table class="adm-table" id="produtosTable">
+          <thead>
+            <tr>
+              <th class="adm-table__th--img">Foto</th>
+              <th>Produto</th>
+              <th>Categoria</th>
+              <th>Preço</th>
+              <th>Estoque</th>
+              <th>Status</th>
+              <th class="adm-table__th--actions">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="produtosBody"></tbody>
+        </table>
+        <div class="adm-empty" id="emptyState" style="display: none">
+          <p>Nenhum produto encontrado.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+
+    const { session, profile } = await getSessionAndProfile();
+    if (!session) {
+      window.location.href = '/admin/login.html';
+      throw new Error('redirecting');
+    }
+    if (profile?.role !== 'admin') {
+      window.location.href = '/cliente/conta.html';
+      throw new Error('not admin');
+    }
+
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+
+    // ===== Carregar categorias pro filtro =====
+    const { data: categorias } = await supabase
+      .from('categorias')
+      .select('id, nome, parent_id, slug')
+      .order('ordem');
+
+    const filterCat = document.getElementById('filterCategoria');
+    const catsByParent = new Map();
+    categorias?.forEach(c => {
+      const key = c.parent_id ?? 'root';
+      if (!catsByParent.has(key)) catsByParent.set(key, []);
+      catsByParent.get(key).push(c);
+    });
+    function appendCats(parentKey, prefix = '') {
+      const list = catsByParent.get(parentKey) || [];
+      list.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = prefix + c.nome;
+        filterCat.appendChild(opt);
+        appendCats(c.id, prefix + '— ');
+      });
+    }
+    appendCats('root');
+
+    const catMap = new Map(categorias?.map(c => [c.id, c]) ?? []);
+
+    // ===== Render produtos =====
+    let allProdutos = [];
+
+    async function carregarProdutos() {
+      const { data, error } = await supabase
+        .from('produtos')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+      allProdutos = data || [];
+      renderProdutos();
+    }
+
+    function renderProdutos() {
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const catId = document.getElementById('filterCategoria').value;
+      const status = document.getElementById('filterStatus').value;
+
+      let filtered = allProdutos;
+      if (search) filtered = filtered.filter(p =>
+        p.nome.toLowerCase().includes(search) || p.slug.toLowerCase().includes(search)
+      );
+      if (catId) filtered = filtered.filter(p => p.categoria_id === catId);
+      if (status === 'ativo') filtered = filtered.filter(p => p.ativo);
+      if (status === 'inativo') filtered = filtered.filter(p => !p.ativo);
+
+      document.getElementById('countLabel').textContent =
+        `${filtered.length} de ${allProdutos.length} produtos`;
+
+      const body = document.getElementById('produtosBody');
+      const empty = document.getElementById('emptyState');
+      body.innerHTML = '';
+
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      filtered.forEach(p => {
+        const cat = catMap.get(p.categoria_id);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div class="adm-thumb">
+              ${p.imagem_url
+                ? `<img src="${p.imagem_url}" alt="" loading="lazy" style="object-position: ${p.imagem_position || 'center'}" />`
+                : '<span class="adm-thumb__empty">—</span>'}
+            </div>
+          </td>
+          <td>
+            <div class="adm-cell-main">${escapeHtml(p.nome)}</div>
+            <div class="adm-cell-sub">${escapeHtml(p.slug)}</div>
+          </td>
+          <td>${cat ? escapeHtml(cat.nome) : '<span style="color: var(--text-muted)">sem categoria</span>'}</td>
+          <td>
+            <div class="adm-cell-main">R$ ${Number(p.preco).toFixed(2).replace('.', ',')}</div>
+            ${p.preco_antigo
+              ? `<div class="adm-cell-sub" style="text-decoration: line-through">R$ ${Number(p.preco_antigo).toFixed(2).replace('.', ',')}</div>`
+              : ''}
+          </td>
+          <td>${p.estoque}</td>
+          <td>
+            ${p.ativo
+              ? '<span class="adm-pill adm-pill--success">Ativo</span>'
+              : '<span class="adm-pill adm-pill--muted">Inativo</span>'}
+          </td>
+          <td>
+            <div class="adm-actions">
+              <a class="adm-action" href="/admin/produto-edit.html?id=${p.id}" title="Editar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+              </a>
+              <button class="adm-action adm-action--danger" data-delete="${p.id}" data-nome="${escapeHtml(p.nome)}" title="Deletar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+              </button>
+            </div>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+
+      // Deletar
+      body.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.delete;
+          const nome = btn.dataset.nome;
+          if (!confirm(`Deletar "${nome}"? Esta ação não pode ser desfeita.`)) return;
+          const { error } = await supabase.from('produtos').delete().eq('id', id);
+          if (error) {
+            alert('Erro ao deletar: ' + error.message);
+            return;
+          }
+          allProdutos = allProdutos.filter(p => p.id !== id);
+          renderProdutos();
+        });
+      });
+    }
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    // Filtros reativos
+    document.getElementById('searchInput').addEventListener('input', renderProdutos);
+    document.getElementById('filterCategoria').addEventListener('change', renderProdutos);
+    document.getElementById('filterStatus').addEventListener('change', renderProdutos);
+
+    await carregarProdutos();
+
+    document.getElementById('dash').style.display = '';
+    const loader = document.getElementById('loading');
+    loader.classList.add('auth-loading--hide');
+    setTimeout(() => loader.remove(), 300);
+  </script>
+</body>
+</html>

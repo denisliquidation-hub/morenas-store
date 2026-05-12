@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editar produto · Admin Morenas Store</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="/imagens/logo.png" />
+  <meta name="theme-color" content="#0f0f0f" />
+
+  <script>document.documentElement.classList.add('dark');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" />
+
+  <link rel="stylesheet" href="/styles/tokens.css" />
+  <link rel="stylesheet" href="/styles/base.css" />
+  <link rel="stylesheet" href="/styles/components.css" />
+  <link rel="stylesheet" href="/styles/auth.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
+</head>
+<body>
+  <div class="auth-loading" id="loading">
+    <div class="auth-loading__spinner" aria-label="Carregando"></div>
+  </div>
+
+  <div class="dash" style="display: none" id="dash">
+    <header class="dash__topbar">
+      <a href="/admin/dashboard.html" class="dash__topbar-left" style="color: inherit">
+        <img src="/imagens/logo.png" alt="" />
+        <span class="dash__topbar-title">Morenas Store</span>
+        <span class="auth-badge auth-badge--admin">Admin</span>
+      </a>
+      <div class="dash__topbar-actions">
+        <a href="/admin/produtos.html" class="dash__signout">← Voltar</a>
+        <button class="dash__signout" id="signoutBtn">Sair</button>
+      </div>
+    </header>
+
+    <main class="dash__main">
+      <div class="adm-pagehead">
+        <div>
+          <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-2)" id="modeLabel">Novo produto</div>
+          <h1 class="adm-pagehead__title" id="pageTitle">Cadastrar produto</h1>
+        </div>
+      </div>
+
+      <div class="auth-alert auth-alert--error" id="error" role="alert" style="margin-bottom: var(--space-5)"></div>
+      <div class="auth-alert auth-alert--success" id="success" role="status" style="margin-bottom: var(--space-5)"></div>
+
+      <form id="produtoForm" novalidate>
+        <div class="adm-form-grid">
+          <!-- COLUNA PRINCIPAL -->
+          <div>
+            <section class="adm-card">
+              <h2 class="adm-card__title">Identificação</h2>
+
+              <div class="adm-field">
+                <label class="input-label" for="nome">Nome do produto *</label>
+                <input type="text" id="nome" class="input" required placeholder="Bota Cano Alto preta em couro" />
+              </div>
+
+              <div class="adm-field">
+                <label class="input-label" for="slug">Slug (URL)</label>
+                <input type="text" id="slug" class="input" placeholder="bota-cano-alto-preta" />
+                <span class="adm-field__hint">Identificador na URL. Deixe vazio pra gerar automaticamente do nome.</span>
+              </div>
+
+              <div class="adm-field">
+                <label class="input-label" for="desejo">Frase de desejo</label>
+                <input type="text" id="desejo" class="input" placeholder="Elegante, poderosa e perfeita para looks marcantes." maxlength="120" />
+                <span class="adm-field__hint">Aparece em itálico (Playfair) abaixo do nome no card. Máx 120 caracteres.</span>
+              </div>
+
+              <div class="adm-field">
+                <label class="input-label" for="descricao">Descrição completa</label>
+                <textarea id="descricao" class="input" rows="5" placeholder="Detalhes do produto: material, salto, palmilha, ocasiões de uso…" style="resize: vertical; min-height: 120px; font-family: var(--font-body); padding: 12px 16px;"></textarea>
+                <span class="adm-field__hint">Aparece na página de detalhe do produto (PDP).</span>
+              </div>
+            </section>
+
+            <section class="adm-card">
+              <h2 class="adm-card__title">Preço e estoque</h2>
+
+              <div class="adm-row">
+                <div class="adm-field">
+                  <label class="input-label" for="preco">Preço (R$) *</label>
+                  <input type="number" id="preco" class="input" required min="0" step="0.01" placeholder="599,00" />
+                </div>
+                <div class="adm-field">
+                  <label class="input-label" for="preco_antigo">Preço antigo (R$)</label>
+                  <input type="number" id="preco_antigo" class="input" min="0" step="0.01" placeholder="749,00" />
+                  <span class="adm-field__hint">Mostra riscado ao lado. Deixe vazio se não tem promoção.</span>
+                </div>
+              </div>
+
+              <div class="adm-field">
+                <label class="input-label" for="estoque">Estoque</label>
+                <input type="number" id="estoque" class="input" min="0" step="1" placeholder="10" value="0" />
+              </div>
+            </section>
+          </div>
+
+          <!-- COLUNA LATERAL -->
+          <div>
+            <section class="adm-card">
+              <h2 class="adm-card__title">Foto do produto</h2>
+
+              <label class="adm-upload" id="uploadLabel">
+                <input type="file" id="imagemFile" accept="image/jpeg,image/png,image/webp,image/avif" />
+                <img class="adm-upload__preview" id="imagemPreview" alt="" style="display: none" />
+                <div class="adm-upload__placeholder" id="uploadPlaceholder">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="m21 15-3.4-3.4a2 2 0 0 0-2.8 0L6 21"/></svg>
+                  <div class="adm-upload__placeholder-title">Clique pra escolher uma foto</div>
+                  <div class="adm-upload__placeholder-hint">JPG, PNG, WebP até 10MB · Vertical 4:5 recomendado</div>
+                </div>
+              </label>
+
+              <div class="adm-field" style="margin-top: var(--space-4)">
+                <label class="input-label" for="imagem_position">Posicionamento</label>
+                <select id="imagem_position" class="input">
+                  <option value="center center">Centro</option>
+                  <option value="center 30%">Centro alto</option>
+                  <option value="center 70%">Centro baixo</option>
+                  <option value="center 80%">Centro inferior</option>
+                  <option value="0% center">Esquerda</option>
+                  <option value="30% center">Esquerda-centro</option>
+                  <option value="70% center">Direita-centro</option>
+                  <option value="100% center">Direita</option>
+                  <option value="0% 75%">Esquerda inferior</option>
+                  <option value="40% 45%">Levemente esquerda</option>
+                </select>
+                <span class="adm-field__hint">Ajusta o foco da foto quando aparece nos cards (4:5).</span>
+              </div>
+            </section>
+
+            <section class="adm-card">
+              <h2 class="adm-card__title">Categoria e marketing</h2>
+
+              <div class="adm-field">
+                <label class="input-label" for="categoria_id">Categoria</label>
+                <select id="categoria_id" class="input">
+                  <option value="">Sem categoria</option>
+                </select>
+              </div>
+
+              <div class="adm-field">
+                <label class="input-label" for="tag">Tag de destaque</label>
+                <select id="tag" class="input">
+                  <option value="">Nenhuma</option>
+                  <option value="novo">Novo</option>
+                  <option value="mais-vendido">Mais vendido</option>
+                  <option value="edicao-limitada">Edição limitada</option>
+                  <option value="pre-venda">Pré-venda</option>
+                  <option value="lancamento-02">Lançamento 02</option>
+                  <option value="promocao">Promoção</option>
+                  <option value="exclusivo">Exclusivo</option>
+                </select>
+                <span class="adm-field__hint">Aparece em cima da foto do produto.</span>
+              </div>
+
+              <div class="adm-toggle">
+                <div class="adm-toggle__label">
+                  <span class="adm-toggle__title">Destaque na home</span>
+                  <span class="adm-toggle__hint">Aparece em "Confira e escolha o seu modelo"</span>
+                </div>
+                <label class="adm-switch">
+                  <input type="checkbox" id="destaque_home" />
+                  <span class="adm-switch__slider"></span>
+                </label>
+              </div>
+
+              <div class="adm-toggle">
+                <div class="adm-toggle__label">
+                  <span class="adm-toggle__title">Lançamento</span>
+                  <span class="adm-toggle__hint">Aparece em "Lançamento 02 acabou de chegar"</span>
+                </div>
+                <label class="adm-switch">
+                  <input type="checkbox" id="lancamento" />
+                  <span class="adm-switch__slider"></span>
+                </label>
+              </div>
+
+              <div class="adm-toggle">
+                <div class="adm-toggle__label">
+                  <span class="adm-toggle__title">Ativo</span>
+                  <span class="adm-toggle__hint">Se desativado, não aparece pra clientes</span>
+                </div>
+                <label class="adm-switch">
+                  <input type="checkbox" id="ativo" checked />
+                  <span class="adm-switch__slider"></span>
+                </label>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="adm-form-footer">
+          <button type="button" class="btn btn--ghost" id="deleteBtn" style="display: none; color: var(--status-error)">Deletar produto</button>
+          <div class="adm-form-footer__primary">
+            <a class="btn btn--secondary" href="/admin/produtos.html">Cancelar</a>
+            <button type="submit" class="btn btn--pink btn--lg" id="submitBtn">Salvar produto</button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script type="module">
+    import { supabase, getSessionAndProfile, signOut } from '/js/supabase-client.js';
+
+    const { session, profile } = await getSessionAndProfile();
+    if (!session) { window.location.href = '/admin/login.html'; throw new Error('redirecting'); }
+    if (profile?.role !== 'admin') { window.location.href = '/cliente/conta.html'; throw new Error('not admin'); }
+
+    document.getElementById('signoutBtn').addEventListener('click', signOut);
+
+    // ===== Modo: criar vs editar =====
+    const params = new URLSearchParams(window.location.search);
+    const editingId = params.get('id');
+    const isEditing = !!editingId;
+
+    if (isEditing) {
+      document.getElementById('modeLabel').textContent = 'Editar produto';
+      document.getElementById('pageTitle').textContent = 'Editar produto';
+      document.getElementById('deleteBtn').style.display = '';
+    }
+
+    // ===== Helpers =====
+    const errorBox = document.getElementById('error');
+    const successBox = document.getElementById('success');
+
+    function showError(msg) {
+      successBox.classList.remove('auth-alert--show');
+      errorBox.textContent = msg;
+      errorBox.classList.add('auth-alert--show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function showSuccess(msg) {
+      errorBox.classList.remove('auth-alert--show');
+      successBox.textContent = msg;
+      successBox.classList.add('auth-alert--show');
+    }
+    function clearAlerts() {
+      errorBox.classList.remove('auth-alert--show');
+      successBox.classList.remove('auth-alert--show');
+    }
+
+    function slugify(str) {
+      return str.toString().toLowerCase().trim()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    // ===== Carregar categorias =====
+    const { data: categorias } = await supabase
+      .from('categorias').select('id, nome, parent_id').order('ordem');
+
+    const selCat = document.getElementById('categoria_id');
+    const catsByParent = new Map();
+    categorias?.forEach(c => {
+      const k = c.parent_id ?? 'root';
+      if (!catsByParent.has(k)) catsByParent.set(k, []);
+      catsByParent.get(k).push(c);
+    });
+    function appendCats(parentKey, prefix = '') {
+      (catsByParent.get(parentKey) || []).forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = prefix + c.nome;
+        selCat.appendChild(opt);
+        appendCats(c.id, prefix + '— ');
+      });
+    }
+    appendCats('root');
+
+    // ===== Carregar produto se editando =====
+    let produtoAtual = null;
+    if (isEditing) {
+      const { data, error } = await supabase
+        .from('produtos').select('*').eq('id', editingId).single();
+      if (error || !data) {
+        showError('Produto não encontrado.');
+      } else {
+        produtoAtual = data;
+        document.getElementById('nome').value = data.nome || '';
+        document.getElementById('slug').value = data.slug || '';
+        document.getElementById('desejo').value = data.desejo || '';
+        document.getElementById('descricao').value = data.descricao || '';
+        document.getElementById('preco').value = data.preco ?? '';
+        document.getElementById('preco_antigo').value = data.preco_antigo ?? '';
+        document.getElementById('estoque').value = data.estoque ?? 0;
+        document.getElementById('categoria_id').value = data.categoria_id || '';
+        document.getElementById('tag').value = data.tag || '';
+        document.getElementById('imagem_position').value = data.imagem_position || 'center center';
+        document.getElementById('destaque_home').checked = !!data.destaque_home;
+        document.getElementById('lancamento').checked = !!data.lancamento;
+        document.getElementById('ativo').checked = !!data.ativo;
+
+        if (data.imagem_url) {
+          const preview = document.getElementById('imagemPreview');
+          preview.src = data.imagem_url;
+          preview.style.display = '';
+          document.getElementById('uploadPlaceholder').style.display = 'none';
+        }
+      }
+    }
+
+    // ===== Upload de imagem (preview local + upload no submit) =====
+    const fileInput = document.getElementById('imagemFile');
+    const preview = document.getElementById('imagemPreview');
+    const placeholder = document.getElementById('uploadPlaceholder');
+    let arquivoPendente = null;
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (file.size > 10 * 1024 * 1024) {
+        showError('Imagem muito grande (máx 10MB).');
+        fileInput.value = '';
+        return;
+      }
+      arquivoPendente = file;
+      const url = URL.createObjectURL(file);
+      preview.src = url;
+      preview.style.display = '';
+      placeholder.style.display = 'none';
+    });
+
+    async function uploadImagem(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      const slug = document.getElementById('slug').value.trim() ||
+                   slugify(document.getElementById('nome').value);
+      const filename = `${slug || 'produto'}-${Date.now()}.${ext}`;
+      const { data, error } = await supabase.storage
+        .from('produtos').upload(filename, file, { cacheControl: '3600', upsert: false });
+      if (error) throw error;
+      const { data: pub } = supabase.storage.from('produtos').getPublicUrl(data.path);
+      return pub.publicUrl;
+    }
+
+    // ===== Auto-gerar slug do nome =====
+    const nomeInput = document.getElementById('nome');
+    const slugInput = document.getElementById('slug');
+    let slugTocado = isEditing;
+    slugInput.addEventListener('input', () => { slugTocado = true; });
+    nomeInput.addEventListener('input', () => {
+      if (!slugTocado) slugInput.value = slugify(nomeInput.value);
+    });
+
+    // ===== Salvar =====
+    const submitBtn = document.getElementById('submitBtn');
+    document.getElementById('produtoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlerts();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Salvando…';
+
+      try {
+        const nome = document.getElementById('nome').value.trim();
+        const slug = document.getElementById('slug').value.trim() || slugify(nome);
+        const preco = parseFloat(document.getElementById('preco').value);
+        const preco_antigo = document.getElementById('preco_antigo').value
+          ? parseFloat(document.getElementById('preco_antigo').value) : null;
+
+        if (!nome) throw new Error('Nome é obrigatório.');
+        if (isNaN(preco) || preco < 0) throw new Error('Preço inválido.');
+        if (preco_antigo !== null && preco_antigo <= preco)
+          throw new Error('Preço antigo deve ser maior que o preço atual.');
+
+        let imagem_url = produtoAtual?.imagem_url || null;
+        if (arquivoPendente) {
+          imagem_url = await uploadImagem(arquivoPendente);
+        }
+
+        const payload = {
+          slug,
+          nome,
+          desejo: document.getElementById('desejo').value.trim() || null,
+          descricao: document.getElementById('descricao').value.trim() || null,
+          preco,
+          preco_antigo,
+          estoque: parseInt(document.getElementById('estoque').value || 0, 10),
+          categoria_id: document.getElementById('categoria_id').value || null,
+          tag: document.getElementById('tag').value || null,
+          imagem_url,
+          imagem_position: document.getElementById('imagem_position').value || 'center center',
+          destaque_home: document.getElementById('destaque_home').checked,
+          lancamento: document.getElementById('lancamento').checked,
+          ativo: document.getElementById('ativo').checked,
+        };
+
+        let result;
+        if (isEditing) {
+          result = await supabase.from('produtos').update(payload).eq('id', editingId).select().single();
+        } else {
+          result = await supabase.from('produtos').insert(payload).select().single();
+        }
+        if (result.error) throw result.error;
+
+        showSuccess(isEditing ? 'Produto atualizado!' : 'Produto criado!');
+        setTimeout(() => { window.location.href = '/admin/produtos.html'; }, 800);
+      } catch (err) {
+        showError(err.message || 'Erro ao salvar');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Salvar produto';
+      }
+    });
+
+    // ===== Deletar =====
+    document.getElementById('deleteBtn').addEventListener('click', async () => {
+      if (!confirm(`Deletar "${produtoAtual?.nome}" permanentemente?`)) return;
+      const { error } = await supabase.from('produtos').delete().eq('id', editingId);
+      if (error) { showError(error.message); return; }
+      window.location.href = '/admin/produtos.html';
+    });
+
+    document.getElementById('dash').style.display = '';
+    const loader = document.getElementById('loading');
+    loader.classList.add('auth-loading--hide');
+    setTimeout(() => loader.remove(), 300);
+  </script>
+</body>
+</html>
