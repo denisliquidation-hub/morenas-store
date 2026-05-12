@@ -424,13 +424,13 @@
 .drawer__panel {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   bottom: 0;
   width: min(85vw, 360px);
   background-color: var(--surface-page);
   display: flex;
   flex-direction: column;
-  transform: translateX(-100%);
+  transform: translateX(100%);
   transition: transform var(--duration-slow) var(--easing-editorial);
   overflow-y: auto;
 }
