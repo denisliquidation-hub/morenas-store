@@ -678,12 +678,15 @@
     }
     .footer__grid {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
-      gap: var(--space-12);
+      grid-template-columns: 1.4fr 1fr 1.2fr 1fr 1fr;
+      gap: var(--space-10);
       margin-bottom: var(--space-16);
     }
+    @media (max-width: 1024px) {
+      .footer__grid { grid-template-columns: 1fr 1fr 1fr; gap: var(--space-8); }
+    }
     @media (max-width: 768px) {
-      .footer__grid { grid-template-columns: 1fr 1fr; gap: var(--space-10); }
+      .footer__grid { grid-template-columns: 1fr 1fr; gap: var(--space-8); }
     }
     .footer__brand {
       display: flex;
@@ -959,6 +962,7 @@
         <li><a class="nav__link" href="#">Saltos</a></li>
         <li><a class="nav__link" href="#">Tênis</a></li>
         <li><a class="nav__link" href="#">Botas</a></li>
+        <li><a class="nav__link" href="#">Havaianas</a></li>
         <li><a class="nav__link" href="#">Promoção</a></li>
       </ul>
       <div class="nav__actions">
@@ -1045,16 +1049,6 @@
 
         <a class="drawer__cat" href="#" data-drawer-close style="--i:3">
           <span class="drawer__cat-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16c1-3 3-4 5-4l3-2c2-1 3-3 5-3v6l4 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z M10 12l2 2"/></svg>
-          </span>
-          <span class="drawer__cat-label">Tênis</span>
-          <span class="drawer__cat-arrow" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
-          </span>
-        </a>
-
-        <a class="drawer__cat" href="#" data-drawer-close style="--i:4">
-          <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h7v12h5v3H4v-3h4V3z M8 8h7M8 12h7"/></svg>
           </span>
           <span class="drawer__cat-label">Botas</span>
@@ -1063,7 +1057,68 @@
           </span>
         </a>
 
-        <a class="drawer__cat" href="/cliente/login.html" data-drawer-close style="--i:5" id="drawerAccountLink">
+        <!-- ===== SUB-GRUPO: TÊNIS ===== -->
+        <div class="drawer__subhead" style="--i:4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16c1-3 3-4 5-4l3-2c2-1 3-3 5-3v6l4 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
+          <span>Tênis</span>
+        </div>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:5">
+          <span class="drawer__cat-label">Tênis Feminino</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:6">
+          <span class="drawer__cat-label">Tênis Masculino</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:7">
+          <span class="drawer__cat-label">Tênis Infantil Feminino</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:8">
+          <span class="drawer__cat-label">Tênis Infantil Masculino</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <!-- ===== SUB-GRUPO: HAVAIANAS ===== -->
+        <div class="drawer__subhead" style="--i:9">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h18M5 14l2-6h10l2 6"/></svg>
+          <span>Havaianas</span>
+        </div>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:10">
+          <span class="drawer__cat-label">Havaiana Feminina</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:11">
+          <span class="drawer__cat-label">Havaiana Masculina</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:12">
+          <span class="drawer__cat-label">Havaiana Infantil Feminino</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:13">
+          <span class="drawer__cat-label">Havaiana Infantil Masculino</span>
+          <span class="drawer__cat-arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <!-- ===== CONTA ===== -->
+        <a class="drawer__cat" href="/cliente/login.html" data-drawer-close style="--i:14" id="drawerAccountLink">
           <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </span>
@@ -1073,7 +1128,7 @@
           </span>
         </a>
 
-        <a class="drawer__cat drawer__cat--promo" href="#" data-drawer-close style="--i:6">
+        <a class="drawer__cat drawer__cat--promo" href="#" data-drawer-close style="--i:15">
           <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6c-.8.8-2 .8-2.8 0L2 12V2h10l8.6 8.6c.8.8.8 2 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
           </span>
@@ -1493,14 +1548,25 @@
         </div>
 
         <div class="footer__col">
-          <h4>Loja</h4>
+          <h4>Feminino</h4>
           <ul>
-            <li><a href="#">Novidades</a></li>
             <li><a href="#">Sandálias</a></li>
             <li><a href="#">Saltos</a></li>
             <li><a href="#">Botas</a></li>
-            <li><a href="#">Tênis</a></li>
-            <li><a href="#">Promoção</a></li>
+            <li><a href="#">Tênis Feminino</a></li>
+            <li><a href="#">Havaiana Feminina</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4>Masculino & Infantil</h4>
+          <ul>
+            <li><a href="#">Tênis Masculino</a></li>
+            <li><a href="#">Tênis Infantil Feminino</a></li>
+            <li><a href="#">Tênis Infantil Masculino</a></li>
+            <li><a href="#">Havaiana Masculina</a></li>
+            <li><a href="#">Havaiana Infantil Feminino</a></li>
+            <li><a href="#">Havaiana Infantil Masculino</a></li>
           </ul>
         </div>
 

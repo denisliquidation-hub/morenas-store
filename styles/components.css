@@ -685,6 +685,70 @@
   color: var(--pink-500);
 }
 
+/* Header de subgrupo (TÊNIS, HAVAIANAS) */
+.drawer__subhead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 18px var(--space-3) 8px;
+  margin-top: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--pink-500);
+  border-bottom: 1px solid hsla(335, 75%, 48%, 0.18);
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.drawer--open .drawer__subhead {
+  animation: drawerItemIn 500ms var(--easing-editorial) forwards;
+  animation-delay: calc(var(--i, 0) * 55ms + 200ms);
+}
+
+.drawer__subhead svg {
+  color: var(--pink-500);
+  opacity: 0.85;
+}
+
+/* Item de subgrupo (Tênis Masculino, Havaiana Feminina, etc) */
+.drawer__cat--sub {
+  grid-template-columns: 1fr auto;
+  padding: 11px var(--space-3) 11px calc(var(--space-3) + 22px);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  letter-spacing: 0;
+  color: hsla(0, 0%, 100%, 0.88);
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.04);
+  border-radius: 0;
+}
+
+.drawer__cat--sub::before {
+  content: "—";
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: hsla(0, 0%, 100%, 0.2);
+  font-weight: var(--font-regular);
+  font-size: var(--text-sm);
+}
+
+.drawer__cat--sub:hover,
+.drawer__cat--sub:focus-visible {
+  padding-left: calc(var(--space-3) + 28px);
+}
+
+.drawer__cat--sub:hover::before {
+  color: var(--pink-500);
+}
+
+.drawer__cat--sub .drawer__cat-arrow {
+  opacity: 0.6;
+}
+
 /* Promoção destacada */
 .drawer__cat--promo {
   margin-top: var(--space-3);
