@@ -1193,6 +1193,214 @@
       body { padding-bottom: 0; } /* botão é fixed, não desloca conteúdo */
       .footer { padding-bottom: 88px; } /* extra space pra não cobrir bottom info */
     }
+
+    /* ===================================================== */
+    /* ============ MICRO-INTERAÇÕES PREMIUM =============== */
+    /* ===================================================== */
+
+    /* --- Scroll reveal universal --- */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.9s cubic-bezier(0.23, 0.86, 0.39, 0.96),
+                  transform 0.9s cubic-bezier(0.23, 0.86, 0.39, 0.96);
+      will-change: opacity, transform;
+    }
+    .reveal-on-scroll.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Shine sweep nos botões primários (pink + secondary do hero/CTAs) --- */
+    .btn--pink,
+    .btn--secondary {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .btn--pink::after,
+    .btn--secondary::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        100deg,
+        transparent 0%,
+        hsla(0, 0%, 100%, 0.35) 50%,
+        transparent 100%
+      );
+      transform: skewX(-20deg);
+      transition: left 0.7s cubic-bezier(0.23, 0.86, 0.39, 0.96);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .btn--pink:hover::after,
+    .btn--secondary:hover::after,
+    .btn--pink:focus-visible::after,
+    .btn--secondary:focus-visible::after {
+      left: 130%;
+    }
+    .btn--secondary::after {
+      background: linear-gradient(
+        100deg,
+        transparent 0%,
+        hsla(335, 90%, 75%, 0.30) 50%,
+        transparent 100%
+      );
+    }
+    .btn--pink:active,
+    .btn--secondary:active {
+      transform: translateY(0) scale(0.98);
+      transition: transform 0.12s ease-out;
+    }
+    /* Mantém o conteúdo do botão acima do shine */
+    .btn > * { position: relative; z-index: 2; }
+
+    /* --- Cat-card refinement (glow rosa interno + seta com slide maior) --- */
+    .cat-card {
+      transition: transform 0.5s cubic-bezier(0.23, 0.86, 0.39, 0.96),
+                  border-color 0.4s ease,
+                  box-shadow 0.5s ease;
+    }
+    .cat-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at 50% 110%,
+        hsla(335, 80%, 55%, 0.35) 0%,
+        transparent 55%
+      );
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .cat-card:hover::after { opacity: 1; }
+    .cat-card__cta {
+      transition: color 0.3s ease, opacity 0.3s ease, letter-spacing 0.4s ease;
+    }
+    .cat-card:hover .cat-card__cta {
+      letter-spacing: 0.18em;
+    }
+    .cat-card__cta::after {
+      transition: transform 0.5s cubic-bezier(0.23, 0.86, 0.39, 0.96);
+      display: inline-block;
+    }
+    .cat-card:hover .cat-card__cta::after {
+      transform: translateX(8px);
+    }
+
+    /* --- Product card: badge pulse + price highlight no hover --- */
+    .product__tag {
+      transform-origin: left center;
+      animation: productBadgePulse 3.6s ease-in-out infinite;
+    }
+    .product__tag.tag--pink {
+      box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.45);
+      animation: productBadgePulse 3.6s ease-in-out infinite,
+                 productBadgeGlow 3.6s ease-in-out infinite;
+    }
+    @keyframes productBadgePulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.04); }
+    }
+    @keyframes productBadgeGlow {
+      0%, 100% { box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.45); }
+      50%      { box-shadow: 0 0 0 6px hsla(335, 80%, 55%, 0); }
+    }
+    .product__price-now {
+      transition: color 0.3s ease, transform 0.3s cubic-bezier(0.23, 0.86, 0.39, 0.96);
+      display: inline-block;
+    }
+    .product:hover .product__price-now {
+      color: var(--pink-500);
+      transform: scale(1.04);
+    }
+
+    /* --- WhatsApp float: entrada com delay + texto novo no tooltip --- */
+    .wa-float {
+      opacity: 0;
+      transform: translateY(20px) scale(0.85);
+      animation: waEnter 0.7s cubic-bezier(0.23, 0.86, 0.39, 0.96) 1.5s forwards,
+                 waFloat 3s ease-in-out 2.5s infinite;
+    }
+    @keyframes waEnter {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* --- Promoção no nav: glow rosa + pulse discreto --- */
+    .nav__link[href*="promocao"] {
+      position: relative;
+      color: var(--pink-500);
+      font-weight: var(--font-semibold);
+    }
+    .nav__link[href*="promocao"]::before {
+      content: "";
+      position: absolute;
+      inset: -4px -10px;
+      background: radial-gradient(
+        ellipse at center,
+        hsla(335, 80%, 55%, 0.18) 0%,
+        transparent 70%
+      );
+      border-radius: var(--radius-full);
+      opacity: 0;
+      animation: promoGlowPulse 3.2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+    @keyframes promoGlowPulse {
+      0%, 100% { opacity: 0.35; transform: scale(0.95); }
+      50%      { opacity: 0.8;  transform: scale(1.05); }
+    }
+    .drawer__cat--promo {
+      animation: promoBorderPulse 3.2s ease-in-out infinite;
+    }
+    @keyframes promoBorderPulse {
+      0%, 100% { box-shadow: 0 0 24px hsla(335, 75%, 48%, 0.08), 0 0 0 0 hsla(335, 75%, 48%, 0); }
+      50%      { box-shadow: 0 0 32px hsla(335, 75%, 48%, 0.18), 0 0 0 1px hsla(335, 75%, 48%, 0.35); }
+    }
+
+    /* --- prefers-reduced-motion: zera todas as novas animações --- */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .btn--pink::after,
+      .btn--secondary::after {
+        display: none;
+      }
+      .btn--pink:active,
+      .btn--secondary:active { transform: none; }
+      .cat-card,
+      .cat-card::after,
+      .cat-card__cta,
+      .cat-card__cta::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .product__tag,
+      .product__price-now {
+        animation: none !important;
+        transition: none !important;
+      }
+      .wa-float {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .nav__link[href*="promocao"]::before,
+      .drawer__cat--promo {
+        animation: none !important;
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1466,7 +1674,7 @@
   </div>
 
   <!-- ============== CATEGORIAS ============== -->
-  <section class="categories container">
+  <section class="categories container reveal-on-scroll">
     <div class="section-head">
       <div>
         <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-3)">Categorias</div>
@@ -1520,7 +1728,7 @@
   </section>
 
   <!-- ============== COLLECTION DUO (Havaianas + Conforto) ============== -->
-  <section class="collection-duo container">
+  <section class="collection-duo container reveal-on-scroll">
     <div class="collection-duo__grid">
       <a class="collection-card" href="/categoria.html?slug=havaianas">
         <img class="collection-card__photo" src="imagens/havaiana-sl-branca.jpeg" alt="Havaiana branca acolchoada com correntinha dourada" loading="lazy" />
@@ -1545,7 +1753,7 @@
   </section>
 
   <!-- ============== MAIS VENDIDOS ============== -->
-  <section class="product-section" id="destaques">
+  <section class="product-section reveal-on-scroll" id="destaques">
     <div class="container">
       <div class="section-head">
         <div>
@@ -1562,7 +1770,7 @@
   </section>
 
   <!-- ============== ATACADO B2B ============== -->
-  <section class="wholesale" id="atacado">
+  <section class="wholesale reveal-on-scroll" id="atacado">
     <div class="container wholesale__inner">
       <div class="wholesale__copy">
         <div class="eyebrow eyebrow--pink wholesale__eyebrow">Para revendedoras</div>
@@ -1603,7 +1811,7 @@
   </section>
 
   <!-- ============== EDITORIAL ============== -->
-  <section class="editorial container">
+  <section class="editorial container reveal-on-scroll">
     <div class="editorial__grid">
       <div class="editorial__visual">
         <img src="imagens/western-boots-duo.jpeg" alt="Bota texana em couro · Coleção OI26" class="editorial__photo" />
@@ -1627,7 +1835,7 @@
   </section>
 
   <!-- ============== NOVIDADES ============== -->
-  <section class="product-section">
+  <section class="product-section reveal-on-scroll">
     <div class="container">
       <div class="section-head">
         <div>
@@ -1644,7 +1852,7 @@
   </section>
 
   <!-- ============== NEWSLETTER ============== -->
-  <section class="newsletter">
+  <section class="newsletter reveal-on-scroll">
     <img src="imagens/logo.png" alt="" class="newsletter__bg-seal" aria-hidden="true" />
     <div class="container newsletter__inner">
       <div class="eyebrow newsletter__eyebrow">Lista Exclusiva · 10% OFF</div>
@@ -1658,7 +1866,7 @@
   </section>
 
   <!-- ============== TRUST BADGES ============== -->
-  <section class="trust">
+  <section class="trust reveal-on-scroll">
     <div class="container">
       <ul class="trust__grid">
         <li class="trust__item">
@@ -1768,7 +1976,7 @@
     <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9s-.5-.2-.7.2c-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6 0-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5l-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.1.2 2.1 3.2 5.2 4.5 1.9.8 2.7.9 3.6.8.6-.1 1.7-.7 2-1.4.2-.7.2-1.3.2-1.4s-.3-.2-.6-.4z M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/>
     </svg>
-    <span class="wa-float__tooltip">Falar no WhatsApp</span>
+    <span class="wa-float__tooltip">Fale com a Morena's</span>
   </a>
 
   <script type="module" src="/js/cart.js"></script>
@@ -1856,6 +2064,29 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && drawer.classList.contains('drawer--open')) close();
       });
+    })();
+
+    /* ===== Scroll reveal (IntersectionObserver, one-shot) ===== */
+    (function () {
+      var targets = document.querySelectorAll('.reveal-on-scroll');
+      if (!targets.length) return;
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        targets.forEach(function (el) { el.classList.add('is-revealed'); });
+        return;
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+      targets.forEach(function (el) { io.observe(el); });
     })();
   </script>
 </body>
