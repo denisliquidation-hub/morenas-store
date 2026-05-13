@@ -264,7 +264,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.7) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 40%, rgba(0,0,0,0.85) 100%);
       z-index: 1;
       transition: opacity var(--duration-base) var(--easing-base);
     }
@@ -280,6 +280,15 @@
       transform: scale(1.05);
     }
     .cat-card__bg svg { width: 60%; height: auto; }
+    .cat-card__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
     .cat-card__content {
       position: relative;
       z-index: 2;
@@ -323,6 +332,112 @@
     .cat-card--2 { background: linear-gradient(135deg, hsl(0 0% 22%), hsl(0 0% 12%)); }
     .cat-card--3 { background: linear-gradient(135deg, hsl(30 25% 88%), hsl(30 20% 80%)); }
     .cat-card--4 { background: linear-gradient(135deg, hsl(335 65% 55%), hsl(335 75% 42%)); }
+
+    /* ========== COLLECTION DUO (banner 2 colunas) ========== */
+    .collection-duo {
+      padding-block: var(--space-16) var(--space-8);
+    }
+    .collection-duo__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+    }
+    @media (max-width: 768px) {
+      .collection-duo__grid { grid-template-columns: 1fr; }
+    }
+    .collection-card {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background-color: var(--surface-muted);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-7);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all var(--duration-slow) var(--easing-editorial);
+      text-decoration: none;
+    }
+    .collection-card:hover {
+      transform: translateY(-4px);
+      border-color: hsla(335, 75%, 48%, 0.4);
+      box-shadow: 0 16px 40px hsla(335, 75%, 48%, 0.16);
+    }
+    .collection-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 35%, rgba(0,0,0,0.85) 100%);
+      z-index: 1;
+    }
+    .collection-card__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform var(--duration-slow) var(--easing-editorial);
+    }
+    .collection-card:hover .collection-card__photo {
+      transform: scale(1.05);
+    }
+    .collection-card__content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      max-width: 75%;
+    }
+    .collection-card__eyebrow {
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--pink-300);
+    }
+    .collection-card__title {
+      color: white;
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-bold);
+      letter-spacing: var(--tracking-tight);
+      line-height: 1.1;
+    }
+    .collection-card__sub {
+      color: hsla(0, 0%, 100%, 0.85);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+    }
+    .collection-card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-2);
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: white;
+      opacity: 0.9;
+      transition: all var(--duration-base) var(--easing-base);
+    }
+    .collection-card__cta::after {
+      content: "→";
+      transition: transform var(--duration-base) var(--easing-base);
+    }
+    .collection-card:hover .collection-card__cta {
+      color: var(--pink-300);
+      opacity: 1;
+    }
+    .collection-card:hover .collection-card__cta::after {
+      transform: translateX(4px);
+    }
 
     /* ========== GRID DE PRODUTOS ========== */
     .product-section {
@@ -1219,10 +1334,7 @@
     <div class="cat-grid">
       <a class="cat-card cat-card--1" href="/categoria.html?slug=sandalias">
         <div class="cat-card__bg">
-          <svg viewBox="0 0 200 200" fill="none">
-            <path d="M30 140 Q50 100 110 110 L160 120 Q175 125 170 140 L165 155 Q160 160 145 158 L40 155 Q28 153 30 140Z" fill="hsl(335 70% 45%)"/>
-            <path d="M60 130 L80 110 M90 130 L110 110" stroke="hsl(335 60% 35%)" stroke-width="1.5"/>
-          </svg>
+          <img class="cat-card__photo" src="imagens/sandalia-marrom-plataforma.jpeg" alt="Sandália plataforma marrom" loading="lazy" />
         </div>
         <div class="cat-card__content">
           <h3 class="cat-card__label">Sandálias</h3>
@@ -1232,11 +1344,7 @@
 
       <a class="cat-card cat-card--2" href="/categoria.html?slug=saltos">
         <div class="cat-card__bg">
-          <svg viewBox="0 0 200 200" fill="none">
-            <path d="M40 150 Q60 90 130 100 L165 115 Q175 125 168 140 L160 155 Q155 158 145 158 L50 162 Q38 160 40 150Z" fill="hsl(0 0% 95%)"/>
-            <rect x="125" y="100" width="8" height="58" fill="hsl(0 0% 95%)"/>
-            <circle cx="80" cy="135" r="3" fill="hsl(335 75% 55%)"/>
-          </svg>
+          <img class="cat-card__photo" src="imagens/mule-bow-black.jpeg" alt="Mule preto com laço" loading="lazy" />
         </div>
         <div class="cat-card__content">
           <h3 class="cat-card__label">Saltos</h3>
@@ -1246,12 +1354,7 @@
 
       <a class="cat-card cat-card--3" href="/categoria.html?slug=tenis">
         <div class="cat-card__bg">
-          <svg viewBox="0 0 200 200" fill="none">
-            <path d="M35 140 Q50 105 100 105 L155 115 Q172 120 172 138 L168 155 Q160 162 148 160 L40 162 Q30 160 35 140Z" fill="hsl(0 0% 18%)"/>
-            <path d="M70 130 L100 130 M110 130 L140 130" stroke="hsl(335 75% 55%)" stroke-width="2"/>
-            <circle cx="55" cy="145" r="4" fill="hsl(0 0% 95%)"/>
-            <circle cx="155" cy="145" r="4" fill="hsl(0 0% 95%)"/>
-          </svg>
+          <img class="cat-card__photo" src="imagens/tenis-olympikus-cinza.jpeg" alt="Tênis Olympikus cinza com detalhe pink" loading="lazy" />
         </div>
         <div class="cat-card__content">
           <h3 class="cat-card__label">Tênis</h3>
@@ -1261,15 +1364,36 @@
 
       <a class="cat-card cat-card--4" href="/categoria.html?slug=botas">
         <div class="cat-card__bg">
-          <svg viewBox="0 0 200 200" fill="none">
-            <path d="M50 50 L155 55 L162 145 Q165 160 150 162 L60 162 Q45 160 48 145 Z" fill="hsl(0 0% 12%)"/>
-            <path d="M55 75 L155 75" stroke="hsl(335 80% 60%)" stroke-width="1.5"/>
-            <path d="M55 105 L155 105" stroke="hsl(335 80% 60%)" stroke-width="1.5"/>
-          </svg>
+          <img class="cat-card__photo" src="imagens/boot-knee-black.jpeg" alt="Bota cano alto preta" loading="lazy" />
         </div>
         <div class="cat-card__content">
           <h3 class="cat-card__label">Botas</h3>
           <span class="cat-card__cta">Ver modelos</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============== COLLECTION DUO (Havaianas + Conforto) ============== -->
+  <section class="collection-duo container">
+    <div class="collection-duo__grid">
+      <a class="collection-card" href="/categoria.html?slug=havaianas">
+        <img class="collection-card__photo" src="imagens/havaiana-sl-branca.jpeg" alt="Havaiana branca acolchoada com correntinha dourada" loading="lazy" />
+        <div class="collection-card__content">
+          <span class="collection-card__eyebrow">Coleção</span>
+          <h3 class="collection-card__title">Havaianas <em>com brilho</em>.</h3>
+          <p class="collection-card__sub">Modelos premium com correntinha, pedraria e acabamento acolchoado.</p>
+          <span class="collection-card__cta">Ver havaianas</span>
+        </div>
+      </a>
+
+      <a class="collection-card" href="/categoria.html?slug=sandalias">
+        <img class="collection-card__photo" src="imagens/crocs-branco-charms.jpeg" alt="Crocs branco com laço de pérolas e charms decorativos" loading="lazy" />
+        <div class="collection-card__content">
+          <span class="collection-card__eyebrow">Conforto</span>
+          <h3 class="collection-card__title">Casual com <em>personalidade</em>.</h3>
+          <p class="collection-card__sub">Modelos confortáveis personalizados com charms, pérolas e pedrarias.</p>
+          <span class="collection-card__cta">Ver modelos</span>
         </div>
       </a>
     </div>
