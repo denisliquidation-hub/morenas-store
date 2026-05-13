@@ -40,20 +40,79 @@
 
   <style>
     /* ========== HERO EDITORIAL ========== */
+    /* ===== HERO ANIMATIONS ===== */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes heroScaleIn {
+      from { opacity: 0; transform: scale(0.94); filter: blur(10px); }
+      to   { opacity: 1; transform: scale(1); filter: blur(0); }
+    }
+    @keyframes heroDropDown {
+      from { opacity: 0; transform: translateY(-22px) scale(0.9); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes heroRiseUp {
+      from { opacity: 0; transform: translateY(24px) scale(0.85); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+    @keyframes heroBreathe {
+      0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.55; }
+      50%      { transform: translateY(-50%) scale(1.18); opacity: 0.8; }
+    }
+    @keyframes heroShimmer {
+      0%   { background-position: 200% 50%; }
+      100% { background-position: -100% 50%; }
+    }
+
     .hero {
       position: relative;
       padding-block: var(--space-24) var(--space-32);
       overflow: hidden;
+      isolation: isolate;
+    }
+    .hero__glow {
+      position: absolute;
+      top: 50%;
+      right: -8%;
+      width: 620px;
+      height: 620px;
+      border-radius: 50%;
+      background: radial-gradient(circle, hsla(335, 85%, 55%, 0.38) 0%, hsla(335, 80%, 55%, 0.12) 38%, transparent 70%);
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: -1;
+      transform: translateY(-50%);
+      animation: heroBreathe 9s ease-in-out infinite;
     }
     .hero__grid {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
       gap: var(--space-16);
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
     .hero__copy {
       max-width: 580px;
     }
+
+    /* Entrance cascade — cada elemento entra com delay incremental */
+    .hero__reveal {
+      opacity: 0;
+      animation: heroFadeUp 0.9s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards;
+    }
+    .hero__reveal--1 { animation-delay: 0.05s; }
+    .hero__reveal--2 { animation-delay: 0.20s; }
+    .hero__reveal--3 { animation-delay: 0.40s; }
+    .hero__reveal--4 { animation-delay: 0.60s; }
+    .hero__reveal--5 { animation-delay: 0.80s; }
+
     .hero__eyebrow {
       display: inline-flex;
       align-items: center;
@@ -76,8 +135,22 @@
     }
     .hero__title em {
       font-style: italic;
-      color: var(--pink-500);
       font-weight: var(--font-black);
+      background: linear-gradient(
+        100deg,
+        hsl(335, 75%, 55%) 0%,
+        hsl(335, 90%, 78%) 30%,
+        hsl(0, 0%, 100%) 50%,
+        hsl(335, 90%, 78%) 70%,
+        hsl(335, 75%, 55%) 100%
+      );
+      background-size: 220% 100%;
+      background-position: 200% 50%;
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+              color: transparent;
+      animation: heroShimmer 6s ease-in-out 1.4s infinite;
     }
     .hero__lead {
       font-size: var(--text-lg);
@@ -90,6 +163,29 @@
       gap: var(--space-3);
       flex-wrap: wrap;
       margin-bottom: var(--space-6);
+    }
+    .hero__cta .btn {
+      transition: transform 0.35s cubic-bezier(0.23, 0.86, 0.39, 0.96),
+                  box-shadow 0.35s ease,
+                  background-color 0.25s ease,
+                  border-color 0.25s ease,
+                  color 0.25s ease;
+    }
+    .hero__cta .btn--pink {
+      box-shadow: 0 12px 36px -10px hsla(335, 80%, 55%, 0.50);
+    }
+    .hero__cta .btn--pink:hover {
+      box-shadow: 0 18px 48px -8px hsla(335, 85%, 55%, 0.70);
+    }
+    .hero__cta .btn--secondary {
+      border-color: hsla(335, 75%, 55%, 0.55);
+      color: var(--text-primary);
+    }
+    .hero__cta .btn--secondary:hover {
+      border-color: var(--pink-500);
+      background-color: hsla(335, 75%, 55%, 0.08);
+      color: var(--pink-500);
+      transform: translateY(-2px);
     }
     .hero__trust {
       display: flex;
@@ -118,6 +214,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transform: scale(0.94);
+      animation: heroScaleIn 1.2s cubic-bezier(0.23, 0.86, 0.39, 0.96) 0.25s forwards;
+      transition: transform 0.6s cubic-bezier(0.23, 0.86, 0.39, 0.96),
+                  box-shadow 0.6s ease;
+      will-change: transform, opacity, filter;
+    }
+    .hero__visual:hover {
+      transform: scale(1.015);
+      box-shadow: 0 30px 80px -20px hsla(335, 75%, 48%, 0.35);
     }
     .hero__shoe {
       position: absolute;
@@ -126,6 +232,11 @@
       height: 100%;
       object-fit: cover;
       object-position: center 65%;
+      transition: transform 0.7s cubic-bezier(0.23, 0.86, 0.39, 0.96);
+      will-change: transform;
+    }
+    .hero__visual:hover .hero__shoe {
+      transform: scale(1.06);
     }
     .hero__badge {
       position: absolute;
@@ -139,6 +250,11 @@
       letter-spacing: var(--tracking-widest);
       text-transform: uppercase;
       font-weight: var(--font-medium);
+      box-shadow: 0 10px 28px hsla(0, 0%, 0%, 0.22);
+      opacity: 0;
+      animation:
+        heroDropDown 0.8s cubic-bezier(0.23, 0.86, 0.39, 0.96) 0.95s forwards,
+        heroFloat 4.5s ease-in-out 2s infinite;
     }
     .hero__seal {
       position: absolute;
@@ -148,11 +264,39 @@
       height: 88px;
       border-radius: var(--radius-full);
       box-shadow: var(--shadow-lg);
+      opacity: 0;
+      animation: heroRiseUp 0.9s cubic-bezier(0.23, 0.86, 0.39, 0.96) 1.15s forwards;
     }
 
     @media (max-width: 960px) {
       .hero__grid { grid-template-columns: 1fr; gap: var(--space-12); }
       .hero { padding-block: var(--space-12) var(--space-20); }
+      .hero__glow { right: 50%; transform: translate(50%, -50%); width: 420px; height: 420px; }
+      @keyframes heroBreathe {
+        0%, 100% { transform: translate(50%, -50%) scale(1); opacity: 0.45; }
+        50%      { transform: translate(50%, -50%) scale(1.18); opacity: 0.7; }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero__reveal,
+      .hero__visual,
+      .hero__badge,
+      .hero__seal,
+      .hero__glow,
+      .hero__title em {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
+      .hero__title em {
+        -webkit-text-fill-color: var(--pink-500);
+        color: var(--pink-500);
+        background: none;
+      }
+      .hero__shoe,
+      .hero__cta .btn { transition: none !important; }
     }
 
     /* ========== MARQUEE TAG BAR ========== */
@@ -1280,16 +1424,17 @@
 
   <!-- ============== HERO ============== -->
   <header class="hero container">
+    <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__grid">
       <div class="hero__copy">
-        <div class="hero__eyebrow eyebrow eyebrow--pink">Outono · Inverno 2026</div>
-        <h1 class="hero__title">Calçados femininos que <em>elevam</em> seu estilo em qualquer ocasião.</h1>
-        <p class="hero__lead">Do showroom em Imperatriz - MA para mulheres que querem beleza, conforto e presença — no atacado e no varejo.</p>
-        <div class="hero__cta">
+        <div class="hero__eyebrow eyebrow eyebrow--pink hero__reveal hero__reveal--1">Outono · Inverno 2026</div>
+        <h1 class="hero__title hero__reveal hero__reveal--2">Calçados femininos para quem quer <em>presença</em>, conforto e estilo.</h1>
+        <p class="hero__lead hero__reveal hero__reveal--3">Novidades selecionadas direto do showroom em Imperatriz - MA, com opções para varejo e atacado.</p>
+        <div class="hero__cta hero__reveal hero__reveal--4">
           <a class="btn btn--pink btn--lg" href="#destaques">Ver Novidades</a>
           <a class="btn btn--secondary btn--lg" href="#atacado">Comprar no Atacado</a>
         </div>
-        <p class="hero__trust">
+        <p class="hero__trust hero__reveal hero__reveal--5">
           <span>Entrega rápida</span>
           <span class="hero__trust-dot" aria-hidden="true">•</span>
           <span>Troca em até 30 dias</span>
@@ -1299,7 +1444,7 @@
       </div>
 
       <div class="hero__visual">
-        <span class="hero__badge">Lançamento 02 · OI26</span>
+        <span class="hero__badge">Lançamento disponível agora</span>
         <img src="imagens/boot-knee-caramel.jpeg" alt="Bota Sienna Caramelo" class="hero__shoe" />
         <img src="imagens/logo.png" alt="" class="hero__seal" />
       </div>
@@ -1607,7 +1752,7 @@
       </div>
 
       <div class="footer__bottom">
-        <span>© 2026 Morenas Store · CNPJ 00.000.000/0001-00 · Imperatriz - MA</span>
+        <span>© 2026 Morenas Store · CNPJ 58.921.096/0001-00 · Imperatriz - MA</span>
         <span>Pagamento seguro · SSL</span>
       </div>
     </div>
