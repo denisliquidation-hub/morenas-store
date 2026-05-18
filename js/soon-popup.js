@@ -176,18 +176,24 @@
     .soon-pop__form {
       display: flex; gap: 10px;
       flex-wrap: wrap;
+      align-items: center;
       margin-bottom: 16px;
     }
     .soon-pop__input {
       flex: 1 1 220px;
       min-width: 0;
-      padding: 14px 18px;
+      height: 48px;
+      padding: 0 18px;
       border-radius: 999px;
       border: 1px solid hsla(20, 18%, 12%, 0.18);
       background: hsla(0, 0%, 100%, 0.7);
       color: hsl(20, 18%, 12%);
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 14px;
+      line-height: 1;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
       transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease;
     }
     .soon-pop__input::placeholder {
@@ -200,7 +206,8 @@
       box-shadow: 0 0 0 4px hsla(335, 80%, 55%, 0.15);
     }
     .soon-pop__submit {
-      padding: 14px 24px;
+      height: 48px;
+      padding: 0 24px;
       border-radius: 999px;
       border: none;
       background: hsl(20, 18%, 12%);
@@ -209,7 +216,11 @@
       font-weight: 600;
       font-size: 14px;
       letter-spacing: 0.3px;
+      line-height: 1;
       cursor: pointer;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
       transition: transform 200ms ease, background 200ms ease, box-shadow 200ms ease;
       white-space: nowrap;
     }
@@ -313,8 +324,9 @@
 
     @media (max-width: 480px) {
       .soon-pop__title { font-size: 30px; letter-spacing: -1px; }
-      .soon-pop__form { flex-direction: column; gap: 8px; }
-      .soon-pop__submit { width: 100%; }
+      .soon-pop__form { flex-direction: column; gap: 10px; align-items: stretch; }
+      .soon-pop__input { flex: 0 0 auto; width: 100%; height: 50px; padding: 0 18px; }
+      .soon-pop__submit { width: 100%; flex: 0 0 auto; height: 50px; padding: 0 24px; }
       .soon-pop__hint { flex-direction: column; align-items: flex-start; gap: 4px; }
     }
     @media (prefers-reduced-motion: reduce) {
