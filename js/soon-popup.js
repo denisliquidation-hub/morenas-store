@@ -403,12 +403,15 @@
     const form = document.getElementById('soonPopForm');
     const emailInput = document.getElementById('soonPopEmail');
 
-    function open() {
+    function open({ prefillEmail } = {}) {
       pop.style.pointerEvents = 'auto';
       backdrop.classList.add('is-open');
       pop.classList.add('is-open');
+      pop.classList.remove('is-success');
       pop.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      if (prefillEmail && !emailInput.value) emailInput.value = prefillEmail;
+      emailInput.style.borderColor = '';
       setTimeout(() => emailInput.focus(), 320);
     }
     function close() {
@@ -445,7 +448,29 @@
       setTimeout(close, 2400);
     });
 
-    window.addEventListener('morenas:open-soon-popup', open);
+    // Evento custom — sempre abre, ignora dismiss (clique deliberado do usuário)
+    window.addEventListener('morenas:open-soon-popup', (e) => {
+      open({ prefillEmail: e?.detail?.email });
+    });
+
+    // Listener global: qualquer [data-soon] (link, botão ou form) abre o popup.
+    // Não usa stopPropagation pra deixar outros handlers (drawer close, etc) rodarem.
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-soon]');
+      if (!target) return;
+      e.preventDefault();
+      const form = target.tagName === 'FORM' ? target : target.closest('form[data-soon]');
+      const emailField = form?.querySelector('input[type="email"]');
+      open({ prefillEmail: emailField?.value?.trim() });
+    });
+
+    document.addEventListener('submit', (e) => {
+      const form = e.target.closest('form[data-soon]');
+      if (!form) return;
+      e.preventDefault();
+      const emailField = form.querySelector('input[type="email"]');
+      open({ prefillEmail: emailField?.value?.trim() });
+    });
 
     // Auto-show
     if (!getDismissed()) {

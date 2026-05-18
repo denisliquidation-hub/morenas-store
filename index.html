@@ -1438,7 +1438,7 @@
   <!-- ============== NAV ============== -->
   <nav class="nav">
     <div class="nav__inner">
-      <a href="#" class="nav__logo" aria-label="Morenas Store">
+      <a href="/" class="nav__logo" aria-label="Morenas Store">
         <img src="imagens/logo.png" alt="" />
         <span class="nav__logo-text">Morenas Store</span>
       </a>
@@ -1456,10 +1456,10 @@
           <svg class="theme-icon theme-icon--sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           <svg class="theme-icon theme-icon--moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <button class="icon-btn" aria-label="Buscar">
+        <button class="icon-btn" aria-label="Buscar" data-soon>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         </button>
-        <button class="icon-btn" aria-label="Favoritos">
+        <button class="icon-btn" aria-label="Favoritos" data-soon>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
         </button>
         <a class="icon-btn" href="/cliente/login.html" aria-label="Minha conta" id="accountLink">
@@ -1483,7 +1483,7 @@
 
       <!-- HEADER -->
       <header class="drawer__header">
-        <a href="#" class="drawer__brand" aria-label="Morenas Store" data-drawer-close>
+        <a href="/" class="drawer__brand" aria-label="Morenas Store" data-drawer-close>
           <img src="imagens/logo.png" alt="" class="drawer__logo" />
           <div class="drawer__brand-text">
             <span class="drawer__brand-name">Morenas Store</span>
@@ -1496,14 +1496,14 @@
       </header>
 
       <!-- SEARCH -->
-      <form class="drawer__search" role="search" onsubmit="event.preventDefault()">
+      <form class="drawer__search" role="search" data-soon>
         <svg class="drawer__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input type="search" class="drawer__search-input" placeholder="Buscar sandálias, saltos, tênis…" aria-label="Buscar produtos" />
+        <input type="search" class="drawer__search-input" placeholder="Buscar sandálias, saltos, tênis…" aria-label="Buscar produtos" data-soon />
       </form>
 
       <!-- CATEGORIAS -->
       <nav class="drawer__nav" aria-label="Categorias">
-        <a class="drawer__cat" href="#" data-drawer-close style="--i:0">
+        <a class="drawer__cat" href="/" data-drawer-close style="--i:0">
           <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 13.5 9 19.5 10.5 14.5 14.5 16 21 12 17.5 8 21 9.5 14.5 4.5 10.5 10.5 9z"/></svg>
           </span>
@@ -1513,7 +1513,7 @@
           </span>
         </a>
 
-        <a class="drawer__cat" href="#" data-drawer-close style="--i:1">
+        <a class="drawer__cat" href="/categoria.html?slug=sandalias" data-drawer-close style="--i:1">
           <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h18M5 14l2-6h10l2 6M8 14v3M12 14v3M16 14v3"/></svg>
           </span>
@@ -1523,7 +1523,7 @@
           </span>
         </a>
 
-        <a class="drawer__cat" href="#" data-drawer-close style="--i:2">
+        <a class="drawer__cat" href="/categoria.html?slug=saltos" data-drawer-close style="--i:2">
           <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18h12l3-3-5-2-7-7v12z M16 18l2 3"/></svg>
           </span>
@@ -1533,7 +1533,7 @@
           </span>
         </a>
 
-        <a class="drawer__cat" href="#" data-drawer-close style="--i:3">
+        <a class="drawer__cat" href="/categoria.html?slug=botas" data-drawer-close style="--i:3">
           <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h7v12h5v3H4v-3h4V3z M8 8h7M8 12h7"/></svg>
           </span>
@@ -1548,25 +1548,25 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16c1-3 3-4 5-4l3-2c2-1 3-3 5-3v6l4 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
           <span>Tênis</span>
         </div>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:5">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:5">
           <span class="drawer__cat-label">Tênis Feminino</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
           </span>
         </a>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:6">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:6">
           <span class="drawer__cat-label">Tênis Masculino</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
           </span>
         </a>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:7">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:7">
           <span class="drawer__cat-label">Tênis Infantil Feminino</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
           </span>
         </a>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:8">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:8">
           <span class="drawer__cat-label">Tênis Infantil Masculino</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
@@ -1578,25 +1578,25 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h18M5 14l2-6h10l2 6"/></svg>
           <span>Havaianas</span>
         </div>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:10">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:10">
           <span class="drawer__cat-label">Havaiana Feminina</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
           </span>
         </a>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:11">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:11">
           <span class="drawer__cat-label">Havaiana Masculina</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
           </span>
         </a>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:12">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:12">
           <span class="drawer__cat-label">Havaiana Infantil Feminino</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
           </span>
         </a>
-        <a class="drawer__cat drawer__cat--sub" href="#" data-drawer-close style="--i:13">
+        <a class="drawer__cat drawer__cat--sub" href="#" data-soon data-drawer-close style="--i:13">
           <span class="drawer__cat-label">Havaiana Infantil Masculino</span>
           <span class="drawer__cat-arrow" aria-hidden="true">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
@@ -1614,7 +1614,7 @@
           </span>
         </a>
 
-        <a class="drawer__cat drawer__cat--promo" href="#" data-drawer-close style="--i:15">
+        <a class="drawer__cat drawer__cat--promo" href="/categoria.html?slug=promocao" data-drawer-close style="--i:15">
           <span class="drawer__cat-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6c-.8.8-2 .8-2.8 0L2 12V2h10l8.6 8.6c.8.8.8 2 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
           </span>
@@ -1631,7 +1631,7 @@
         <div class="drawer__card-eyebrow">Lojista</div>
         <h3 class="drawer__card-title">Compre no Atacado</h3>
         <p class="drawer__card-text">Direto do showroom em Imperatriz - MA</p>
-        <a class="btn btn--pink drawer__card-cta" href="#" data-drawer-close>Comprar no Atacado</a>
+        <a class="btn btn--pink drawer__card-cta" href="https://wa.me/5599982508435?text=Ol%C3%A1!%20Quero%20comprar%20no%20atacado%20da%20Morenas%20Store" target="_blank" rel="noopener" data-drawer-close>Comprar no Atacado</a>
       </div>
 
       <!-- WHATSAPP -->
@@ -1700,7 +1700,7 @@
         <h2 class="section-head__title">Escolha seu estilo <em>favorito</em>.</h2>
         <p class="section-head__sub">Sandálias, saltos, tênis e botas selecionados para combinar com seu momento.</p>
       </div>
-      <a href="#" class="section-head__link">Ver tudo →</a>
+      <a href="#" class="section-head__link" data-soon>Ver tudo →</a>
     </div>
 
     <div class="cat-grid">
@@ -1779,7 +1779,7 @@
           <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-3)">Destaques</div>
           <h2 class="section-head__title">Confira e <em>escolha</em> o seu modelo.</h2>
         </div>
-        <a href="#" class="section-head__link">Ver todos →</a>
+        <a href="#" class="section-head__link" data-soon>Ver todos →</a>
       </div>
 
       <div class="product-grid" data-produtos="destaques">
@@ -1861,7 +1861,7 @@
           <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-3)">Novidades</div>
           <h2 class="section-head__title">Lançamento 02 acabou de <em>chegar</em>.</h2>
         </div>
-        <a href="#" class="section-head__link">Ver coleção →</a>
+        <a href="#" class="section-head__link" data-soon>Ver coleção →</a>
       </div>
 
       <div class="product-grid" data-produtos="lancamento">
@@ -1877,8 +1877,8 @@
       <div class="eyebrow newsletter__eyebrow">Lista Exclusiva · Acesso antecipado</div>
       <h2>Entre para a<br>Lista <em>Morenas</em>.</h2>
       <p>Receba os lançamentos antes de todo mundo e <strong>seja a primeira a saber</strong> quando a nova coleção entrar no ar.</p>
-      <form class="newsletter__form" onsubmit="event.preventDefault()">
-        <input type="email" class="newsletter__input" placeholder="seu@email.com" required />
+      <form class="newsletter__form" data-soon>
+        <input type="email" class="newsletter__input" placeholder="seu@email.com" />
         <button class="btn btn--pink btn--lg" type="submit">Quero ser avisada</button>
       </form>
     </div>
@@ -1920,10 +1920,10 @@
           <img src="imagens/logo.png" alt="Morenas Store" />
           <p>Sempre com o melhor da moda aos seus pés. Atacado e varejo em Imperatriz - MA.</p>
           <div class="footer__social">
-            <a class="icon-btn" href="#" aria-label="Instagram">
+            <a class="icon-btn" href="https://www.instagram.com/morenasstore" target="_blank" rel="noopener" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             </a>
-            <a class="icon-btn" href="#" aria-label="TikTok">
+            <a class="icon-btn" href="#" aria-label="TikTok" data-soon>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
             </a>
             <a class="icon-btn" href="https://wa.me/5599982508435" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -1935,23 +1935,23 @@
         <div class="footer__col">
           <h4>Feminino</h4>
           <ul>
-            <li><a href="#">Sandálias</a></li>
-            <li><a href="#">Saltos</a></li>
-            <li><a href="#">Botas</a></li>
-            <li><a href="#">Tênis Feminino</a></li>
-            <li><a href="#">Havaiana Feminina</a></li>
+            <li><a href="/categoria.html?slug=sandalias">Sandálias</a></li>
+            <li><a href="/categoria.html?slug=saltos">Saltos</a></li>
+            <li><a href="/categoria.html?slug=botas">Botas</a></li>
+            <li><a href="#" data-soon>Tênis Feminino</a></li>
+            <li><a href="#" data-soon>Havaiana Feminina</a></li>
           </ul>
         </div>
 
         <div class="footer__col">
           <h4>Masculino & Infantil</h4>
           <ul>
-            <li><a href="#">Tênis Masculino</a></li>
-            <li><a href="#">Tênis Infantil Feminino</a></li>
-            <li><a href="#">Tênis Infantil Masculino</a></li>
-            <li><a href="#">Havaiana Masculina</a></li>
-            <li><a href="#">Havaiana Infantil Feminino</a></li>
-            <li><a href="#">Havaiana Infantil Masculino</a></li>
+            <li><a href="#" data-soon>Tênis Masculino</a></li>
+            <li><a href="#" data-soon>Tênis Infantil Feminino</a></li>
+            <li><a href="#" data-soon>Tênis Infantil Masculino</a></li>
+            <li><a href="#" data-soon>Havaiana Masculina</a></li>
+            <li><a href="#" data-soon>Havaiana Infantil Feminino</a></li>
+            <li><a href="#" data-soon>Havaiana Infantil Masculino</a></li>
           </ul>
         </div>
 
@@ -1959,21 +1959,20 @@
           <h4>Ajuda</h4>
           <ul>
             <li><a href="https://wa.me/5599982508435" target="_blank" rel="noopener">WhatsApp (99) 98250-8435</a></li>
-            <li><a href="#">Frete e entrega</a></li>
-            <li><a href="#">Trocas e devoluções</a></li>
-            <li><a href="#">Guia de medidas</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li><a href="#" data-soon>Frete e entrega</a></li>
+            <li><a href="#" data-soon>Trocas e devoluções</a></li>
+            <li><a href="#" data-soon>Guia de medidas</a></li>
+            <li><a href="#" data-soon>FAQ</a></li>
           </ul>
         </div>
 
         <div class="footer__col">
           <h4>Sobre</h4>
           <ul>
-            <li><a href="#">A marca</a></li>
-            <li><a href="#">O ateliê</a></li>
-            <li><a href="#">Sustentabilidade</a></li>
-            <li><a href="#">Imprensa</a></li>
-            <li><a href="design-system.html">Design System</a></li>
+            <li><a href="#" data-soon>A marca</a></li>
+            <li><a href="#" data-soon>O ateliê</a></li>
+            <li><a href="#" data-soon>Sustentabilidade</a></li>
+            <li><a href="#" data-soon>Imprensa</a></li>
           </ul>
         </div>
       </div>
