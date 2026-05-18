@@ -5,10 +5,14 @@
   "private": true,
   "scripts": {
     "start": "serve . --listen tcp://0.0.0.0:${PORT:-3000} --no-clipboard",
-    "dev": "serve . --listen 3000"
+    "dev": "serve . --listen 3000",
+    "build:og": "node scripts/build-og.js"
   },
   "dependencies": {
     "serve": "^14.2.4"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
   },
   "engines": {
     "node": ">=20"
