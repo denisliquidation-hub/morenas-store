@@ -21,18 +21,10 @@ function escapeHtml(str) {
   }[c]));
 }
 
-function fmtPreco(n) {
-  return 'R$ ' + Number(n).toFixed(2).replace('.', ',');
-}
-
 function renderCard(p, cat) {
   const tag = p.tag && TAG_LABELS[p.tag];
   const tagHtml = tag
     ? `<span class="tag ${tag.cls} product__tag">${escapeHtml(tag.label)}</span>`
-    : '';
-
-  const precoAntigo = p.preco_antigo
-    ? `<span class="product__price-was">${fmtPreco(p.preco_antigo)}</span>`
     : '';
 
   const desejo = p.desejo
@@ -56,9 +48,11 @@ function renderCard(p, cat) {
         <span class="product__category">${escapeHtml(categoria)}</span>
         <h3 class="product__name">${escapeHtml(p.nome)}</h3>
         ${desejo}
-        <div class="product__price">
-          <span class="product__price-now">${fmtPreco(p.preco)}</span>
-          ${precoAntigo}
+        <div class="product__price product__price--soon">
+          <span class="product__soon">
+            <span class="product__soon-dot"></span>
+            Em breve
+          </span>
         </div>
         <span class="product__cta">Ver detalhes</span>
       </a>

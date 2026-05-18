@@ -206,6 +206,37 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Estado "Em breve" — substitui preço enquanto produtos ainda não foram precificados */
+.product__price--soon {
+  align-items: center;
+}
+.product__soon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  letter-spacing: -0.005em;
+}
+.product__soon-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pink-500);
+  box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55);
+  animation: productSoonPulse 1.8s ease-in-out infinite;
+}
+@keyframes productSoonPulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55); }
+  50%      { box-shadow: 0 0 0 7px hsla(335, 80%, 55%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product__soon-dot { animation: none; }
+}
+
 .product__desire {
   font-family: var(--font-display);
   font-size: var(--text-sm);

@@ -9,10 +9,21 @@
   <link rel="icon" type="image/png" href="imagens/logo.png" />
   <link rel="apple-touch-icon" href="imagens/logo.png" />
 
-  <meta property="og:title" content="Morenas Store — Sempre com o melhor da moda aos seus pés" />
-  <meta property="og:description" content="Moda feminina · Atacado e varejo · Imperatriz - MA. Confira os destaques e escolha o seu modelo." />
-  <meta property="og:image" content="imagens/logo.png" />
+  <meta property="og:site_name" content="Morenas Store" />
+  <meta property="og:title" content="Morenas Store — Coleção 02 · Novidades em breve" />
+  <meta property="og:description" content="Moda feminina · Atacado e varejo · Imperatriz - MA. Sempre com o melhor da moda aos seus pés." />
+  <meta property="og:image" content="https://morenasstore.com/imagens/og-image.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Morenas Store — Coleção 02, novidades em breve" />
+  <meta property="og:url" content="https://morenasstore.com/" />
+  <meta property="og:locale" content="pt_BR" />
   <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Morenas Store — Coleção 02 · Novidades em breve" />
+  <meta name="twitter:description" content="Moda feminina · Atacado e varejo · Imperatriz - MA." />
+  <meta name="twitter:image" content="https://morenasstore.com/imagens/og-image.svg" />
   <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
 
@@ -1662,14 +1673,14 @@
   <!-- ============== MARQUEE ============== -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
-      <span class="marquee__item">Frete grátis acima de R$ 399</span>
-      <span class="marquee__item">Lançamento 02 disponível agora</span>
-      <span class="marquee__item">10% de desconto na primeira compra · MORENAS10</span>
-      <span class="marquee__item">Parcele em 6× sem juros</span>
-      <span class="marquee__item">Frete grátis acima de R$ 399</span>
-      <span class="marquee__item">Lançamento 02 disponível agora</span>
-      <span class="marquee__item">10% de desconto na primeira compra · MORENAS10</span>
-      <span class="marquee__item">Parcele em 6× sem juros</span>
+      <span class="marquee__item">Novidades em breve</span>
+      <span class="marquee__item">Coleção 02 chegando</span>
+      <span class="marquee__item">Garanta o seu antes do lançamento</span>
+      <span class="marquee__item">Cadastre-se e seja a primeira a saber</span>
+      <span class="marquee__item">Novidades em breve</span>
+      <span class="marquee__item">Coleção 02 chegando</span>
+      <span class="marquee__item">Garanta o seu antes do lançamento</span>
+      <span class="marquee__item">Cadastre-se e seja a primeira a saber</span>
     </div>
   </div>
 
@@ -1775,11 +1786,11 @@
       <div class="wholesale__copy">
         <div class="eyebrow eyebrow--pink wholesale__eyebrow">Para revendedoras</div>
         <h2 class="wholesale__title">Compra no atacado<br>para <em>revendedoras</em>.</h2>
-        <p class="wholesale__lead">Tenha acesso a modelos selecionados, preços especiais e novidades direto do showroom da Morenas Store em Imperatriz - MA.</p>
+        <p class="wholesale__lead">Tenha acesso a modelos selecionados, condições especiais e novidades direto do showroom da Morenas Store em Imperatriz - MA.</p>
         <p class="wholesale__sub">Ideal para lojistas, sacoleiras e revendedoras que querem produtos bonitos, atuais e com boa margem de venda.</p>
 
         <ul class="wholesale__bullets">
-          <li><span class="wholesale__check" aria-hidden="true">✓</span> Tabela de preços exclusiva</li>
+          <li><span class="wholesale__check" aria-hidden="true">✓</span> Condições exclusivas para revenda</li>
           <li><span class="wholesale__check" aria-hidden="true">✓</span> Acesso antecipado a lançamentos</li>
           <li><span class="wholesale__check" aria-hidden="true">✓</span> Atendimento personalizado por WhatsApp</li>
           <li><span class="wholesale__check" aria-hidden="true">✓</span> Envio para todo o Brasil</li>
@@ -1855,12 +1866,12 @@
   <section class="newsletter reveal-on-scroll">
     <img src="imagens/logo.png" alt="" class="newsletter__bg-seal" aria-hidden="true" />
     <div class="container newsletter__inner">
-      <div class="eyebrow newsletter__eyebrow">Lista Exclusiva · 10% OFF</div>
+      <div class="eyebrow newsletter__eyebrow">Lista Exclusiva · Acesso antecipado</div>
       <h2>Entre para a<br>Lista <em>Morenas</em>.</h2>
-      <p>Receba lançamentos antes de todo mundo, ofertas especiais e <strong>10% OFF na sua primeira compra</strong>.</p>
+      <p>Receba os lançamentos antes de todo mundo e <strong>seja a primeira a saber</strong> quando a nova coleção entrar no ar.</p>
       <form class="newsletter__form" onsubmit="event.preventDefault()">
         <input type="email" class="newsletter__input" placeholder="seu@email.com" required />
-        <button class="btn btn--pink btn--lg" type="submit">Quero meu desconto</button>
+        <button class="btn btn--pink btn--lg" type="submit">Quero ser avisada</button>
       </form>
     </div>
   </section>
@@ -1981,6 +1992,7 @@
 
   <script type="module" src="/js/cart.js"></script>
   <script type="module" src="/js/home-produtos.js"></script>
+  <script src="/js/soon-popup.js" defer></script>
   <script>
     (function () {
       const root = document.documentElement;

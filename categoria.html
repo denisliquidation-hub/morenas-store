@@ -9,6 +9,18 @@
   <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
 
+  <meta property="og:site_name" content="Morenas Store" />
+  <meta property="og:title" content="Morenas Store — Coleção 02 · Novidades em breve" />
+  <meta property="og:description" content="Moda feminina · Atacado e varejo · Imperatriz - MA. Sempre com o melhor da moda aos seus pés." />
+  <meta property="og:image" content="https://morenasstore.com/imagens/og-image.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://morenasstore.com/imagens/og-image.svg" />
+
   <script>
     (function () {
       try {
@@ -131,8 +143,6 @@
       <span class="cat-toolbar__count" id="countLabel"></span>
       <select class="input cat-toolbar__sort" id="sortSelect">
         <option value="recente">Mais recentes</option>
-        <option value="preco-asc">Menor preço</option>
-        <option value="preco-desc">Maior preço</option>
         <option value="nome">Nome A-Z</option>
       </select>
     </div>
@@ -146,6 +156,7 @@
   </main>
 
   <script type="module" src="/js/cart.js"></script>
+  <script src="/js/soon-popup.js" defer></script>
   <script type="module">
     import { supabase } from '/js/supabase-client.js';
 
@@ -172,12 +183,9 @@
         '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
       }[c]));
     }
-    function fmtPreco(n) { return 'R$ ' + Number(n).toFixed(2).replace('.', ','); }
-
     function renderCard(p, cat) {
       const tag = p.tag && TAG_LABELS[p.tag];
       const tagHtml = tag ? `<span class="tag ${tag.cls} product__tag">${escapeHtml(tag.label)}</span>` : '';
-      const precoAntigo = p.preco_antigo ? `<span class="product__price-was">${fmtPreco(p.preco_antigo)}</span>` : '';
       const desejo = p.desejo ? `<p class="product__desire">${escapeHtml(p.desejo)}</p>` : '';
       const categoria = cat?.nome || '';
       return `
@@ -190,9 +198,11 @@
             <span class="product__category">${escapeHtml(categoria)}</span>
             <h3 class="product__name">${escapeHtml(p.nome)}</h3>
             ${desejo}
-            <div class="product__price">
-              <span class="product__price-now">${fmtPreco(p.preco)}</span>
-              ${precoAntigo}
+            <div class="product__price product__price--soon">
+              <span class="product__soon">
+                <span class="product__soon-dot"></span>
+                Em breve
+              </span>
             </div>
             <span class="product__cta">Ver detalhes</span>
           </a>
@@ -243,8 +253,6 @@
     function renderProdutos() {
       const sort = document.getElementById('sortSelect').value;
       let arr = [...todosProdutos];
-      if (sort === 'preco-asc') arr.sort((a, b) => a.preco - b.preco);
-      if (sort === 'preco-desc') arr.sort((a, b) => b.preco - a.preco);
       if (sort === 'nome') arr.sort((a, b) => a.nome.localeCompare(b.nome));
 
       const grid = document.getElementById('produtosGrid');

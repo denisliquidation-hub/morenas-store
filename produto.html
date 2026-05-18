@@ -9,6 +9,18 @@
   <meta name="theme-color" content="#faf8f5" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />
 
+  <meta property="og:site_name" content="Morenas Store" />
+  <meta property="og:title" content="Morenas Store — Coleção 02 · Novidades em breve" />
+  <meta property="og:description" content="Moda feminina · Atacado e varejo · Imperatriz - MA. Sempre com o melhor da moda aos seus pés." />
+  <meta property="og:image" content="https://morenasstore.com/imagens/og-image.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://morenasstore.com/imagens/og-image.svg" />
+
   <script>
     (function () {
       try {
@@ -103,32 +115,43 @@
     }
     .pdp__price {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: var(--space-3);
       padding: var(--space-5) 0;
       border-block: 1px solid var(--border-subtle);
     }
-    .pdp__price-now {
+    .pdp__soon {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
       font-family: var(--font-display);
-      font-size: var(--text-4xl);
-      font-weight: var(--font-black);
-      color: var(--text-primary);
-      font-variant-numeric: tabular-nums;
-    }
-    .pdp__price-was {
-      font-size: var(--text-lg);
-      text-decoration: line-through;
-      color: var(--text-muted);
-      font-variant-numeric: tabular-nums;
-    }
-    .pdp__discount {
-      background: var(--pink-500);
-      color: white;
-      font-size: var(--text-xs);
+      font-style: italic;
+      font-size: var(--text-3xl);
       font-weight: var(--font-semibold);
-      letter-spacing: var(--tracking-wide);
-      padding: 3px 10px;
-      border-radius: var(--radius-full);
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    .pdp__soon-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--pink-500);
+      box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55);
+      animation: soonDotPulse 1.8s ease-in-out infinite;
+    }
+    .pdp__soon-hint {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      letter-spacing: var(--tracking-widest);
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-left: var(--space-3);
+    }
+    @keyframes soonDotPulse {
+      0%, 100% { box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55); }
+      50%      { box-shadow: 0 0 0 10px hsla(335, 80%, 55%, 0); }
     }
     .pdp__stock {
       font-size: var(--text-sm);
@@ -310,34 +333,21 @@
         <p class="pdp__desire" id="productDesire" style="display: none"></p>
 
         <div class="pdp__price">
-          <span class="pdp__price-now" id="productPrice"></span>
-          <span class="pdp__price-was" id="productPriceOld" style="display: none"></span>
-          <span class="pdp__discount" id="productDiscount" style="display: none"></span>
+          <span class="pdp__soon">
+            <span class="pdp__soon-dot"></span>
+            Em breve
+          </span>
+          <span class="pdp__soon-hint">Garanta o seu antes do lançamento</span>
         </div>
-
-        <p class="pdp__stock" id="productStock"></p>
 
         <div class="pdp__desc" id="productDesc" style="display: none"></div>
 
-        <div class="pdp__qty-row" id="qtyRow">
-          <span class="input-label" style="margin: 0">Quantidade</span>
-          <div class="qty-stepper">
-            <button class="qty-stepper__btn" type="button" id="qtyMinus" aria-label="Diminuir">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg>
-            </button>
-            <input class="qty-stepper__input" type="number" id="qtyInput" min="1" value="1" />
-            <button class="qty-stepper__btn" type="button" id="qtyPlus" aria-label="Aumentar">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-            </button>
-          </div>
-        </div>
-
         <div class="pdp__cta">
-          <button class="btn btn--pink btn--lg" id="addCart" type="button">
-            Adicionar ao carrinho
+          <button class="btn btn--pink btn--lg" id="notifyBtn" type="button">
+            Quero ser avisado do lançamento
           </button>
           <a class="btn btn--secondary btn--lg" id="waCta" href="#" target="_blank" rel="noopener">
-            Comprar agora pelo WhatsApp
+            Tirar dúvida no WhatsApp
           </a>
         </div>
 
@@ -359,17 +369,10 @@
     </div>
   </main>
 
-  <div class="pdp-toast" id="toast" role="status" aria-live="polite">
-    <span class="pdp-toast__icon">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </span>
-    <span>Adicionado ao carrinho. <a href="/carrinho.html">Ver carrinho →</a></span>
-  </div>
-
   <script type="module" src="/js/cart.js"></script>
+  <script src="/js/soon-popup.js" defer></script>
   <script type="module">
     import { supabase } from '/js/supabase-client.js';
-    import * as Cart from '/js/cart.js';
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
@@ -381,7 +384,6 @@
         '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
       }[c]));
     }
-    function fmtPreco(n) { return 'R$ ' + Number(n).toFixed(2).replace('.', ','); }
 
     const TAG_LABELS = {
       'novo': { label: 'Novo', cls: 'tag--pink' },
@@ -461,96 +463,22 @@
       d.style.display = '';
     }
 
-    document.getElementById('productPrice').textContent = fmtPreco(produto.preco);
-    if (produto.preco_antigo) {
-      document.getElementById('productPriceOld').textContent = fmtPreco(produto.preco_antigo);
-      document.getElementById('productPriceOld').style.display = '';
-      const pct = Math.round((1 - produto.preco / produto.preco_antigo) * 100);
-      const d = document.getElementById('productDiscount');
-      d.textContent = `-${pct}%`;
-      d.style.display = '';
-    }
-
-    const stock = document.getElementById('productStock');
-    if (produto.estoque === 0) {
-      stock.textContent = 'Esgotado — entre na lista de espera no WhatsApp';
-      stock.className = 'pdp__stock pdp__stock--out';
-    } else if (produto.estoque <= 3) {
-      stock.textContent = `Últimas ${produto.estoque} unidades em estoque`;
-      stock.className = 'pdp__stock pdp__stock--low';
-    } else {
-      stock.textContent = `${produto.estoque} unidades disponíveis`;
-    }
-
     if (produto.descricao) {
       const desc = document.getElementById('productDesc');
       desc.textContent = produto.descricao;
       desc.style.display = '';
     }
 
-    // ===== Stepper de quantidade =====
-    const qtyInput = document.getElementById('qtyInput');
-    const qtyMinus = document.getElementById('qtyMinus');
-    const qtyPlus = document.getElementById('qtyPlus');
-    const qtyRow = document.getElementById('qtyRow');
-    const addBtn = document.getElementById('addCart');
+    // ===== CTA "Quero ser avisado" abre o popup de novidades =====
+    document.getElementById('notifyBtn').addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('morenas:open-soon-popup', {
+        detail: { source: 'pdp', produto: produto.nome }
+      }));
+    });
 
-    const maxQty = Math.max(produto.estoque || 0, 0);
-    qtyInput.max = maxQty || 1;
-
-    function clampQty() {
-      let v = parseInt(qtyInput.value, 10);
-      if (isNaN(v) || v < 1) v = 1;
-      if (maxQty > 0 && v > maxQty) v = maxQty;
-      qtyInput.value = v;
-      qtyMinus.disabled = v <= 1;
-      qtyPlus.disabled = maxQty > 0 && v >= maxQty;
-    }
-    qtyMinus.addEventListener('click', () => { qtyInput.value = parseInt(qtyInput.value, 10) - 1; clampQty(); });
-    qtyPlus.addEventListener('click', () => { qtyInput.value = parseInt(qtyInput.value, 10) + 1; clampQty(); });
-    qtyInput.addEventListener('input', clampQty);
-    qtyInput.addEventListener('blur', clampQty);
-    clampQty();
-
-    // Se esgotado: esconde stepper, desabilita botão
-    if (maxQty === 0) {
-      qtyRow.style.display = 'none';
-      addBtn.disabled = true;
-      addBtn.textContent = 'Esgotado — avisar quando voltar';
-      addBtn.style.opacity = '0.6';
-      addBtn.style.cursor = 'not-allowed';
-    }
-
-    // ===== Adicionar ao carrinho =====
-    const toast = document.getElementById('toast');
-    let toastTimer = null;
-    function showToast() {
-      toast.classList.add('pdp-toast--show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('pdp-toast--show'), 3200);
-    }
-
-    if (maxQty > 0) {
-      addBtn.addEventListener('click', () => {
-        const qty = parseInt(qtyInput.value, 10) || 1;
-        Cart.add({
-          id: produto.id,
-          slug: produto.slug,
-          nome: produto.nome,
-          preco: produto.preco,
-          preco_antigo: produto.preco_antigo,
-          imagem_url: produto.imagem_url,
-          imagem_position: produto.imagem_position,
-          categoria_nome: categoria?.nome || null,
-          max_estoque: maxQty,
-        }, qty);
-        showToast();
-      });
-    }
-
-    // ===== CTA WhatsApp direto (compra imediata desse produto) =====
+    // ===== CTA WhatsApp (interesse, sem preço) =====
     const waMsg = encodeURIComponent(
-      `Olá! Quero comprar o ${produto.nome} — ${fmtPreco(produto.preco)}.\n\n${window.location.href}`
+      `Olá! Tenho interesse no ${produto.nome}. Quando estará disponível?\n\n${window.location.href}`
     );
     document.getElementById('waCta').href = `https://wa.me/5599982508435?text=${waMsg}`;
 
