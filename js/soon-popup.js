@@ -457,22 +457,51 @@
       open({ prefillEmail: e?.detail?.email });
     });
 
-    // Listener global: qualquer [data-soon] (link, botão ou form) abre o popup.
-    // Não usa stopPropagation pra deixar outros handlers (drawer close, etc) rodarem.
-    document.addEventListener('click', (e) => {
-      const target = e.target.closest('[data-soon]');
-      if (!target) return;
-      e.preventDefault();
-      const form = target.tagName === 'FORM' ? target : target.closest('form[data-soon]');
+    // ===== Listener global =====
+    // Modo "pré-lançamento": QUALQUER clique abre o popup, exceto whitelist
+    // (controles essenciais de navegação e canais reais de contato).
+    const IGNORE_SELECTORS = [
+      '.soon-pop',                    // qualquer coisa dentro do popup
+      '.soon-pop__backdrop',          // backdrop fecha o popup
+      'a[href*="wa.me"]',             // WhatsApp (canal real)
+      'a[href^="tel:"]',              // ligação direta
+      'a[href^="mailto:"]',           // email direto
+      '.nav__logo',                   // logo do header → home
+      '.drawer__brand',               // logo do drawer → home
+      '.theme-toggle',                // alternar tema
+      '#themeToggle',
+      '.nav__toggle',                 // abrir hamburger drawer
+      '#navToggle',
+      '.drawer__close',               // fechar drawer (X)
+      '[data-drawer-close]',          // qualquer elemento que fecha drawer
+      '.wa-float',                    // botão flutuante de WhatsApp
+      '[data-no-soon]',               // opt-out explícito
+    ].join(', ');
+
+    function shouldIgnoreClick(target) {
+      if (!target || target.nodeType !== 1) return true;
+      return !!target.closest(IGNORE_SELECTORS);
+    }
+
+    function getPrefillEmail(target) {
+      const form = target.closest('form');
       const emailField = form?.querySelector('input[type="email"]');
-      open({ prefillEmail: emailField?.value?.trim() });
+      return emailField?.value?.trim();
+    }
+
+    document.addEventListener('click', (e) => {
+      // Não disparar se o popup já estiver aberto
+      if (pop.classList.contains('is-open')) return;
+      if (shouldIgnoreClick(e.target)) return;
+      e.preventDefault();
+      open({ prefillEmail: getPrefillEmail(e.target) });
     });
 
     document.addEventListener('submit', (e) => {
-      const form = e.target.closest('form[data-soon]');
-      if (!form) return;
+      if (pop.classList.contains('is-open')) return;
+      if (shouldIgnoreClick(e.target)) return;
       e.preventDefault();
-      const emailField = form.querySelector('input[type="email"]');
+      const emailField = e.target.querySelector?.('input[type="email"]');
       open({ prefillEmail: emailField?.value?.trim() });
     });
 
