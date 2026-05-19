@@ -40,9 +40,13 @@
       -webkit-backdrop-filter: blur(8px);
       z-index: 9998;
       opacity: 0;
+      pointer-events: none;
       transition: opacity 380ms cubic-bezier(0.23, 0.86, 0.39, 0.96);
     }
-    .soon-pop__backdrop.is-open { opacity: 1; }
+    .soon-pop__backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     .soon-pop {
       position: fixed; inset: 0;
