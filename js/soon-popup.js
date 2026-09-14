@@ -80,7 +80,7 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Glow rosa atrás */
+    /* Glow verde atrás */
     .soon-pop__card::before {
       content: "";
       position: absolute;

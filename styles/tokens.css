@@ -1,5 +1,5 @@
 /* Morenas Store — Design Tokens
- * Fashion editorial: preto + branco como base, pink como statement.
+ * Fashion editorial: preto + branco como base, verde esmeralda como statement.
  */
 
 :root {
@@ -39,7 +39,7 @@
   --status-error: hsl(0 72% 50%);
   --status-info: hsl(210 70% 50%);
 
-  /* ===== PINK SCALE (editorial use) ===== */
+  /* ===== BRAND SCALE — verde esmeralda (editorial use) ===== */
   --brand-50: hsl(152 80% 92.6%);
   --brand-100: hsl(152 75% 80.7%);
   --brand-300: hsl(152 75% 44.2%);

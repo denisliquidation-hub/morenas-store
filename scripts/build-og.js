@@ -54,7 +54,7 @@ const SVG = `<?xml version="1.0" encoding="UTF-8"?>
   <g transform="translate(80, 290)">
     <text x="0" y="0" font-family="Georgia, 'Times New Roman', serif" font-size="118" font-weight="900" fill="#181210" letter-spacing="-3">Novidades</text>
   </g>
-  <!-- Title gigante (linha 2 — italic rosa) -->
+  <!-- Title gigante (linha 2 — italic verde) -->
   <g transform="translate(80, 412)">
     <text x="0" y="0" font-family="Georgia, 'Times New Roman', serif" font-size="118" font-weight="900" font-style="italic" fill="#187e4f" letter-spacing="-3">em breve.</text>
   </g>
