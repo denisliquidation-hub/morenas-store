@@ -148,9 +148,9 @@
   color: var(--text-muted);
 }
 
-.adm-pill--pink {
-  background-color: hsla(335, 75%, 48%, 0.15);
-  color: var(--pink-500);
+.adm-pill--brand {
+  background-color: hsla(152, 75%, 28.9%, 0.15);
+  color: var(--brand-500);
 }
 
 /* ===== AÇÕES ===== */
@@ -312,7 +312,7 @@
 }
 
 .adm-switch input:checked + .adm-switch__slider {
-  background-color: var(--pink-500);
+  background-color: var(--brand-500);
 }
 
 .adm-switch input:checked + .adm-switch__slider::before {
@@ -336,7 +336,7 @@
 }
 
 .adm-upload:hover {
-  border-color: var(--pink-500);
+  border-color: var(--brand-500);
   background-color: var(--surface-card);
 }
 

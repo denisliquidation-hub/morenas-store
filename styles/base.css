@@ -129,7 +129,7 @@ p {
 
 /* Selection */
 ::selection {
-  background-color: var(--pink-500);
+  background-color: var(--brand-500);
   color: var(--text-on-accent);
 }
 
@@ -156,19 +156,19 @@ p {
   color: var(--text-secondary);
 }
 
-.eyebrow--pink {
-  color: var(--pink-500);
+.eyebrow--brand {
+  color: var(--brand-500);
 }
 
 /* Editorial link */
 .link-editorial {
   text-decoration: underline;
-  text-decoration-color: var(--pink-500);
+  text-decoration-color: var(--brand-500);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
   transition: color var(--duration-fast) var(--easing-base);
 }
 
 .link-editorial:hover {
-  color: var(--pink-500);
+  color: var(--brand-500);
 }

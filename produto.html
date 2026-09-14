@@ -64,8 +64,8 @@
       color: var(--text-secondary);
       transition: color var(--duration-fast) var(--easing-base);
     }
-    .pdp-breadcrumb a:hover { color: var(--pink-500); }
-    .pdp-breadcrumb__sep { color: var(--pink-500); margin: 0 6px; }
+    .pdp-breadcrumb a:hover { color: var(--brand-500); }
+    .pdp-breadcrumb__sep { color: var(--brand-500); margin: 0 6px; }
 
     .pdp__grid {
       display: grid;
@@ -105,7 +105,7 @@
       font-size: var(--text-xs);
       letter-spacing: var(--tracking-widest);
       text-transform: uppercase;
-      color: var(--pink-500);
+      color: var(--brand-500);
       font-weight: var(--font-semibold);
     }
     .pdp__name {
@@ -144,8 +144,8 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--pink-500);
-      box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55);
+      background: var(--brand-500);
+      box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.55);
       animation: soonDotPulse 1.8s ease-in-out infinite;
     }
     .pdp__soon-hint {
@@ -159,8 +159,8 @@
       margin-left: var(--space-3);
     }
     @keyframes soonDotPulse {
-      0%, 100% { box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55); }
-      50%      { box-shadow: 0 0 0 10px hsla(335, 80%, 55%, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.55); }
+      50%      { box-shadow: 0 0 0 10px hsla(152, 80%, 31.4%, 0); }
     }
     .pdp__stock {
       font-size: var(--text-sm);
@@ -227,7 +227,7 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: var(--pink-500);
+      background: var(--brand-500);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -235,7 +235,7 @@
       flex-shrink: 0;
     }
     .pdp-toast a {
-      color: var(--pink-300);
+      color: var(--brand-300);
       text-decoration: underline;
       text-underline-offset: 3px;
     }
@@ -261,7 +261,7 @@
       gap: var(--space-2);
       text-align: center;
     }
-    .pdp__trust-item svg { color: var(--pink-500); }
+    .pdp__trust-item svg { color: var(--brand-500); }
     .pdp__trust-label {
       font-size: 0.6875rem;
       letter-spacing: var(--tracking-wide);
@@ -281,7 +281,7 @@
       height: 32px;
       border-radius: 50%;
       border: 3px solid var(--border-default);
-      border-top-color: var(--pink-500);
+      border-top-color: var(--brand-500);
       animation: spin 700ms linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -294,7 +294,7 @@
       <span class="top-bar__sep" aria-hidden="true">·</span>
       <span class="top-bar__item">Atacado e Varejo</span>
       <span class="top-bar__sep" aria-hidden="true">·</span>
-      <span class="top-bar__item top-bar__item--pink">Imperatriz - MA</span>
+      <span class="top-bar__item top-bar__item--brand">Imperatriz - MA</span>
     </div>
   </div>
 
@@ -332,7 +332,7 @@
 
     <div class="pdp__grid">
       <div class="pdp__media" id="media">
-        <span class="tag tag--pink pdp__tag" id="productTag" style="display: none"></span>
+        <span class="tag tag--brand pdp__tag" id="productTag" style="display: none"></span>
         <img id="productImage" src="" alt="" />
       </div>
 
@@ -352,7 +352,7 @@
         <div class="pdp__desc" id="productDesc" style="display: none"></div>
 
         <div class="pdp__cta">
-          <button class="btn btn--pink btn--lg" id="notifyBtn" type="button">
+          <button class="btn btn--brand btn--lg" id="notifyBtn" type="button">
             Quero ser avisado do lançamento
           </button>
           <a class="btn btn--secondary btn--lg" id="waCta" href="#" target="_blank" rel="noopener">
@@ -395,12 +395,12 @@
     }
 
     const TAG_LABELS = {
-      'novo': { label: 'Novo', cls: 'tag--pink' },
+      'novo': { label: 'Novo', cls: 'tag--brand' },
       'mais-vendido': { label: 'Mais vendido', cls: 'tag--black' },
       'edicao-limitada': { label: 'Edição limitada', cls: 'tag--soft' },
       'pre-venda': { label: 'Pré-venda', cls: 'tag--soft' },
-      'lancamento-02': { label: 'Lançamento 02', cls: 'tag--pink' },
-      'promocao': { label: 'Promoção', cls: 'tag--pink' },
+      'lancamento-02': { label: 'Lançamento 02', cls: 'tag--brand' },
+      'promocao': { label: 'Promoção', cls: 'tag--brand' },
       'exclusivo': { label: 'Exclusivo', cls: 'tag--black' },
     };
 
@@ -410,7 +410,7 @@
 
     if (error || !produto) {
       document.getElementById('loading').innerHTML =
-        '<div style="text-align: center"><p style="color: var(--text-muted); margin-bottom: var(--space-4)">Produto não encontrado.</p><a class="btn btn--pink" href="/">Voltar à loja</a></div>';
+        '<div style="text-align: center"><p style="color: var(--text-muted); margin-bottom: var(--space-4)">Produto não encontrado.</p><a class="btn btn--brand" href="/">Voltar à loja</a></div>';
       throw new Error('not found');
     }
 

@@ -5,12 +5,12 @@
 import { supabase } from '/js/supabase-client.js';
 
 const TAG_LABELS = {
-  'novo': { label: 'Novo', cls: 'tag--pink' },
+  'novo': { label: 'Novo', cls: 'tag--brand' },
   'mais-vendido': { label: 'Mais vendido', cls: 'tag--black' },
   'edicao-limitada': { label: 'Edição limitada', cls: 'tag--soft' },
   'pre-venda': { label: 'Pré-venda', cls: 'tag--soft' },
-  'lancamento-02': { label: 'Lançamento 02', cls: 'tag--pink' },
-  'promocao': { label: 'Promoção', cls: 'tag--pink' },
+  'lancamento-02': { label: 'Lançamento 02', cls: 'tag--brand' },
+  'promocao': { label: 'Promoção', cls: 'tag--brand' },
   'exclusivo': { label: 'Exclusivo', cls: 'tag--black' },
 };
 

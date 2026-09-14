@@ -102,7 +102,7 @@
       width: 620px;
       height: 620px;
       border-radius: 50%;
-      background: radial-gradient(circle, hsla(335, 85%, 55%, 0.38) 0%, hsla(335, 80%, 55%, 0.12) 38%, transparent 70%);
+      background: radial-gradient(circle, hsla(152, 85%, 31%, 0.38) 0%, hsla(152, 80%, 31.4%, 0.12) 38%, transparent 70%);
       filter: blur(70px);
       pointer-events: none;
       z-index: -1;
@@ -142,7 +142,7 @@
       content: "";
       width: 32px;
       height: 1px;
-      background-color: var(--pink-500);
+      background-color: var(--brand-500);
     }
     .hero__title {
       font-family: var(--font-display);
@@ -157,11 +157,11 @@
       font-weight: var(--font-black);
       background: linear-gradient(
         100deg,
-        hsl(335, 75%, 55%) 0%,
-        hsl(335, 90%, 78%) 30%,
+        hsl(152, 75%, 32%) 0%,
+        hsl(152, 90%, 42.4%) 30%,
         hsl(0, 0%, 100%) 50%,
-        hsl(335, 90%, 78%) 70%,
-        hsl(335, 75%, 55%) 100%
+        hsl(152, 90%, 42.4%) 70%,
+        hsl(152, 75%, 32%) 100%
       );
       background-size: 220% 100%;
       background-position: 200% 50%;
@@ -190,20 +190,20 @@
                   border-color 0.25s ease,
                   color 0.25s ease;
     }
-    .hero__cta .btn--pink {
-      box-shadow: 0 12px 36px -10px hsla(335, 80%, 55%, 0.50);
+    .hero__cta .btn--brand {
+      box-shadow: 0 12px 36px -10px hsla(152, 80%, 31.4%, 0.50);
     }
-    .hero__cta .btn--pink:hover {
-      box-shadow: 0 18px 48px -8px hsla(335, 85%, 55%, 0.70);
+    .hero__cta .btn--brand:hover {
+      box-shadow: 0 18px 48px -8px hsla(152, 85%, 31%, 0.70);
     }
     .hero__cta .btn--secondary {
-      border-color: hsla(335, 75%, 55%, 0.55);
+      border-color: hsla(152, 75%, 32%, 0.55);
       color: var(--text-primary);
     }
     .hero__cta .btn--secondary:hover {
-      border-color: var(--pink-500);
-      background-color: hsla(335, 75%, 55%, 0.08);
-      color: var(--pink-500);
+      border-color: var(--brand-500);
+      background-color: hsla(152, 75%, 32%, 0.08);
+      color: var(--brand-500);
       transform: translateY(-2px);
     }
     .hero__trust {
@@ -220,14 +220,14 @@
       letter-spacing: 0.02em;
     }
     .hero__trust-dot {
-      color: var(--pink-500);
+      color: var(--brand-500);
       font-weight: var(--font-bold);
     }
 
     .hero__visual {
       position: relative;
       aspect-ratio: 4 / 5;
-      background: linear-gradient(135deg, hsl(335 30% 92%) 0%, hsl(335 50% 80%) 100%);
+      background: linear-gradient(135deg, hsl(152 30% 89.1%) 0%, hsl(152 50% 64.7%) 100%);
       border-radius: var(--radius-2xl);
       overflow: hidden;
       display: flex;
@@ -242,7 +242,7 @@
     }
     .hero__visual:hover {
       transform: scale(1.015);
-      box-shadow: 0 30px 80px -20px hsla(335, 75%, 48%, 0.35);
+      box-shadow: 0 30px 80px -20px hsla(152, 75%, 28.9%, 0.35);
     }
     .hero__shoe {
       position: absolute;
@@ -310,8 +310,8 @@
         filter: none !important;
       }
       .hero__title em {
-        -webkit-text-fill-color: var(--pink-500);
-        color: var(--pink-500);
+        -webkit-text-fill-color: var(--brand-500);
+        color: var(--brand-500);
         background: none;
       }
       .hero__shoe,
@@ -344,7 +344,7 @@
     }
     .marquee__item::after {
       content: "✦";
-      color: var(--pink-500);
+      color: var(--brand-500);
       font-size: var(--text-base);
       font-style: normal;
     }
@@ -374,7 +374,7 @@
     }
     .section-head__title em {
       font-style: italic;
-      color: var(--pink-500);
+      color: var(--brand-500);
     }
     .section-head__sub {
       margin-top: var(--space-3);
@@ -392,9 +392,9 @@
       align-items: center;
       gap: var(--space-2);
       padding-bottom: var(--space-1);
-      border-bottom: 2px solid var(--pink-500);
+      border-bottom: 2px solid var(--brand-500);
     }
-    .section-head__link:hover { color: var(--pink-500); }
+    .section-head__link:hover { color: var(--brand-500); }
 
     .cat-grid {
       display: grid;
@@ -420,8 +420,8 @@
     }
     .cat-card:hover {
       transform: translateY(-4px);
-      border-color: hsla(335, 75%, 48%, 0.4);
-      box-shadow: 0 12px 32px hsla(335, 75%, 48%, 0.12);
+      border-color: hsla(152, 75%, 28.9%, 0.4);
+      box-shadow: 0 12px 32px hsla(152, 75%, 28.9%, 0.12);
     }
     .cat-card::before {
       content: "";
@@ -475,7 +475,7 @@
       font-weight: var(--font-medium);
       letter-spacing: var(--tracking-widest);
       text-transform: uppercase;
-      color: var(--pink-300);
+      color: var(--brand-300);
       opacity: 0.85;
       transition: all var(--duration-base) var(--easing-base);
     }
@@ -484,17 +484,17 @@
       transition: transform var(--duration-base) var(--easing-base);
     }
     .cat-card:hover .cat-card__cta {
-      color: var(--pink-500);
+      color: var(--brand-500);
       opacity: 1;
     }
     .cat-card:hover .cat-card__cta::after {
       transform: translateX(4px);
     }
 
-    .cat-card--1 { background: linear-gradient(135deg, hsl(335 30% 88%), hsl(335 40% 78%)); }
+    .cat-card--1 { background: linear-gradient(135deg, hsl(152 30% 83.6%), hsl(152 40% 65.9%)); }
     .cat-card--2 { background: linear-gradient(135deg, hsl(0 0% 22%), hsl(0 0% 12%)); }
     .cat-card--3 { background: linear-gradient(135deg, hsl(30 25% 88%), hsl(30 20% 80%)); }
-    .cat-card--4 { background: linear-gradient(135deg, hsl(335 65% 55%), hsl(335 75% 42%)); }
+    .cat-card--4 { background: linear-gradient(135deg, hsl(152 65% 33.3%), hsl(152 75% 25.2%)); }
 
     /* ========== COLLECTION DUO (banner 2 colunas) ========== */
     .collection-duo {
@@ -524,8 +524,8 @@
     }
     .collection-card:hover {
       transform: translateY(-4px);
-      border-color: hsla(335, 75%, 48%, 0.4);
-      box-shadow: 0 16px 40px hsla(335, 75%, 48%, 0.16);
+      border-color: hsla(152, 75%, 28.9%, 0.4);
+      box-shadow: 0 16px 40px hsla(152, 75%, 28.9%, 0.16);
     }
     .collection-card::before {
       content: "";
@@ -560,7 +560,7 @@
       font-weight: var(--font-medium);
       letter-spacing: var(--tracking-widest);
       text-transform: uppercase;
-      color: var(--pink-300);
+      color: var(--brand-300);
     }
     .collection-card__title {
       color: white;
@@ -595,7 +595,7 @@
       transition: transform var(--duration-base) var(--easing-base);
     }
     .collection-card:hover .collection-card__cta {
-      color: var(--pink-300);
+      color: var(--brand-300);
       opacity: 1;
     }
     .collection-card:hover .collection-card__cta::after {
@@ -618,11 +618,11 @@
     .wholesale {
       padding-block: var(--space-24);
       background:
-        radial-gradient(ellipse at top left, hsla(335, 75%, 48%, 0.08), transparent 50%),
+        radial-gradient(ellipse at top left, hsla(152, 75%, 28.9%, 0.08), transparent 50%),
         var(--surface-feature);
       color: var(--surface-feature-text);
-      border-top: 1px solid hsla(335, 75%, 48%, 0.15);
-      border-bottom: 1px solid hsla(335, 75%, 48%, 0.15);
+      border-top: 1px solid hsla(152, 75%, 28.9%, 0.15);
+      border-bottom: 1px solid hsla(152, 75%, 28.9%, 0.15);
     }
     .wholesale__inner {
       display: grid;
@@ -644,7 +644,7 @@
     }
     .wholesale__title em {
       font-style: italic;
-      color: var(--pink-500);
+      color: var(--brand-500);
     }
     .wholesale__lead {
       font-size: var(--text-lg);
@@ -677,7 +677,7 @@
       width: 24px;
       height: 24px;
       border-radius: var(--radius-full);
-      background: var(--pink-500);
+      background: var(--brand-500);
       color: white;
       display: inline-flex;
       align-items: center;
@@ -704,16 +704,16 @@
       position: relative;
       padding: var(--space-10) var(--space-8);
       background:
-        linear-gradient(135deg, hsla(335, 75%, 48%, 0.15), hsla(335, 75%, 30%, 0.05) 60%),
+        linear-gradient(135deg, hsla(152, 75%, 28.9%, 0.15), hsla(152, 75%, 17.8%, 0.05) 60%),
         hsl(0 0% 10%);
-      border: 1px solid hsla(335, 75%, 48%, 0.25);
+      border: 1px solid hsla(152, 75%, 28.9%, 0.25);
       border-radius: var(--radius-2xl);
       display: flex;
       flex-direction: column;
       gap: var(--space-6);
       align-items: center;
       overflow: hidden;
-      box-shadow: 0 16px 48px hsla(335, 75%, 48%, 0.12);
+      box-shadow: 0 16px 48px hsla(152, 75%, 28.9%, 0.12);
     }
     .wholesale__card-glow {
       position: absolute;
@@ -721,7 +721,7 @@
       left: -20%;
       width: 80%;
       height: 80%;
-      background: radial-gradient(circle, hsla(335, 75%, 48%, 0.18), transparent 60%);
+      background: radial-gradient(circle, hsla(152, 75%, 28.9%, 0.18), transparent 60%);
       pointer-events: none;
     }
     .wholesale__seal {
@@ -730,7 +730,7 @@
       border-radius: var(--radius-full);
       position: relative;
       z-index: 1;
-      box-shadow: 0 0 32px hsla(335, 75%, 48%, 0.25),
+      box-shadow: 0 0 32px hsla(152, 75%, 28.9%, 0.25),
                   0 0 0 1px hsla(0, 0%, 100%, 0.1);
     }
     .wholesale__stat {
@@ -745,7 +745,7 @@
       font-family: var(--font-display);
       font-size: var(--text-3xl);
       font-weight: var(--font-black);
-      color: var(--pink-500);
+      color: var(--brand-500);
       letter-spacing: var(--tracking-tight);
       line-height: 1;
     }
@@ -794,7 +794,7 @@
       font-family: var(--font-mono);
       font-size: var(--text-xs);
       letter-spacing: var(--tracking-widest);
-      color: var(--pink-500);
+      color: var(--brand-500);
     }
     .editorial__copy h2 {
       font-family: var(--font-display);
@@ -806,7 +806,7 @@
     }
     .editorial__copy h2 em {
       font-style: italic;
-      color: var(--pink-500);
+      color: var(--brand-500);
     }
     .editorial__copy p {
       font-size: var(--text-lg);
@@ -818,7 +818,7 @@
       font-size: var(--text-2xl);
       line-height: 1.4;
       padding-left: var(--space-6);
-      border-left: 3px solid var(--pink-500);
+      border-left: 3px solid var(--brand-500);
       margin-bottom: var(--space-8);
       color: var(--text-primary);
     }
@@ -851,7 +851,7 @@
       z-index: 2;
     }
     .newsletter__eyebrow {
-      color: var(--pink-300);
+      color: var(--brand-300);
       margin-bottom: var(--space-4);
     }
     .newsletter h2 {
@@ -865,7 +865,7 @@
     }
     .newsletter h2 em {
       font-style: italic;
-      color: var(--pink-500);
+      color: var(--brand-500);
     }
     .newsletter p {
       color: hsla(0, 0%, 100%, 0.7);
@@ -891,8 +891,8 @@
     .newsletter__input::placeholder { color: hsla(0, 0%, 100%, 0.4); }
     .newsletter__input:focus {
       outline: none;
-      border-color: var(--pink-500);
-      box-shadow: 0 0 0 3px hsla(335, 75%, 48%, 0.25);
+      border-color: var(--brand-500);
+      box-shadow: 0 0 0 3px hsla(152, 75%, 28.9%, 0.25);
     }
     .newsletter__bg-seal {
       position: absolute;
@@ -928,7 +928,7 @@
       padding: var(--space-4);
     }
     .trust__icon {
-      color: var(--pink-500);
+      color: var(--brand-500);
     }
     .trust__label {
       font-family: var(--font-body);
@@ -1005,7 +1005,7 @@
       color: var(--text-secondary);
       transition: color var(--duration-fast) var(--easing-base);
     }
-    .footer__col a:hover { color: var(--pink-500); }
+    .footer__col a:hover { color: var(--brand-500); }
     .footer__bottom {
       display: flex;
       justify-content: space-between;
@@ -1124,11 +1124,11 @@
     .mp { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
     .mp svg { width: 70%; }
     .mp--1 { background: linear-gradient(135deg, hsl(30 15% 92%), hsl(30 10% 86%)); }
-    .mp--2 { background: linear-gradient(135deg, hsl(335 30% 90%), hsl(335 40% 82%)); }
+    .mp--2 { background: linear-gradient(135deg, hsl(152 30% 86.3%), hsl(152 40% 72.3%)); }
     .mp--3 { background: linear-gradient(135deg, hsl(0 0% 14%), hsl(0 0% 22%)); }
     .mp--4 { background: linear-gradient(135deg, hsl(0 0% 96%), hsl(0 0% 90%)); }
     .mp--5 { background: linear-gradient(135deg, hsl(40 25% 88%), hsl(40 30% 80%)); }
-    .mp--6 { background: linear-gradient(135deg, hsl(335 60% 50%), hsl(335 80% 42%)); }
+    .mp--6 { background: linear-gradient(135deg, hsl(152 60% 31.4%), hsl(152 80% 25%)); }
     .mp--7 { background: linear-gradient(135deg, hsl(0 0% 24%), hsl(0 0% 10%)); }
     .mp--8 { background: linear-gradient(135deg, hsl(220 15% 85%), hsl(220 20% 78%)); }
 
@@ -1231,13 +1231,13 @@
     }
 
     /* --- Shine sweep nos botões primários (pink + secondary do hero/CTAs) --- */
-    .btn--pink,
+    .btn--brand,
     .btn--secondary {
       position: relative;
       overflow: hidden;
       isolation: isolate;
     }
-    .btn--pink::after,
+    .btn--brand::after,
     .btn--secondary::after {
       content: "";
       position: absolute;
@@ -1256,9 +1256,9 @@
       pointer-events: none;
       z-index: 1;
     }
-    .btn--pink:hover::after,
+    .btn--brand:hover::after,
     .btn--secondary:hover::after,
-    .btn--pink:focus-visible::after,
+    .btn--brand:focus-visible::after,
     .btn--secondary:focus-visible::after {
       left: 130%;
     }
@@ -1266,11 +1266,11 @@
       background: linear-gradient(
         100deg,
         transparent 0%,
-        hsla(335, 90%, 75%, 0.30) 50%,
+        hsla(152, 90%, 40.4%, 0.30) 50%,
         transparent 100%
       );
     }
-    .btn--pink:active,
+    .btn--brand:active,
     .btn--secondary:active {
       transform: translateY(0) scale(0.98);
       transition: transform 0.12s ease-out;
@@ -1290,7 +1290,7 @@
       inset: 0;
       background: radial-gradient(
         circle at 50% 110%,
-        hsla(335, 80%, 55%, 0.35) 0%,
+        hsla(152, 80%, 31.4%, 0.35) 0%,
         transparent 55%
       );
       opacity: 0;
@@ -1318,8 +1318,8 @@
       transform-origin: left center;
       animation: productBadgePulse 3.6s ease-in-out infinite;
     }
-    .product__tag.tag--pink {
-      box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.45);
+    .product__tag.tag--brand {
+      box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.45);
       animation: productBadgePulse 3.6s ease-in-out infinite,
                  productBadgeGlow 3.6s ease-in-out infinite;
     }
@@ -1328,15 +1328,15 @@
       50%      { transform: scale(1.04); }
     }
     @keyframes productBadgeGlow {
-      0%, 100% { box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.45); }
-      50%      { box-shadow: 0 0 0 6px hsla(335, 80%, 55%, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.45); }
+      50%      { box-shadow: 0 0 0 6px hsla(152, 80%, 31.4%, 0); }
     }
     .product__price-now {
       transition: color 0.3s ease, transform 0.3s cubic-bezier(0.23, 0.86, 0.39, 0.96);
       display: inline-block;
     }
     .product:hover .product__price-now {
-      color: var(--pink-500);
+      color: var(--brand-500);
       transform: scale(1.04);
     }
 
@@ -1354,7 +1354,7 @@
     /* --- Promoção no nav: glow rosa + pulse discreto --- */
     .nav__link[href*="promocao"] {
       position: relative;
-      color: var(--pink-500);
+      color: var(--brand-500);
       font-weight: var(--font-semibold);
     }
     .nav__link[href*="promocao"]::before {
@@ -1363,7 +1363,7 @@
       inset: -4px -10px;
       background: radial-gradient(
         ellipse at center,
-        hsla(335, 80%, 55%, 0.18) 0%,
+        hsla(152, 80%, 31.4%, 0.18) 0%,
         transparent 70%
       );
       border-radius: var(--radius-full);
@@ -1380,8 +1380,8 @@
       animation: promoBorderPulse 3.2s ease-in-out infinite;
     }
     @keyframes promoBorderPulse {
-      0%, 100% { box-shadow: 0 0 24px hsla(335, 75%, 48%, 0.08), 0 0 0 0 hsla(335, 75%, 48%, 0); }
-      50%      { box-shadow: 0 0 32px hsla(335, 75%, 48%, 0.18), 0 0 0 1px hsla(335, 75%, 48%, 0.35); }
+      0%, 100% { box-shadow: 0 0 24px hsla(152, 75%, 28.9%, 0.08), 0 0 0 0 hsla(152, 75%, 28.9%, 0); }
+      50%      { box-shadow: 0 0 32px hsla(152, 75%, 28.9%, 0.18), 0 0 0 1px hsla(152, 75%, 28.9%, 0.35); }
     }
 
     /* --- prefers-reduced-motion: zera todas as novas animações --- */
@@ -1391,11 +1391,11 @@
         transform: none !important;
         transition: none !important;
       }
-      .btn--pink::after,
+      .btn--brand::after,
       .btn--secondary::after {
         display: none;
       }
-      .btn--pink:active,
+      .btn--brand:active,
       .btn--secondary:active { transform: none; }
       .cat-card,
       .cat-card::after,
@@ -1431,7 +1431,7 @@
       <span class="top-bar__sep" aria-hidden="true">·</span>
       <span class="top-bar__item">Atacado e Varejo</span>
       <span class="top-bar__sep" aria-hidden="true">·</span>
-      <span class="top-bar__item top-bar__item--pink">Imperatriz - MA</span>
+      <span class="top-bar__item top-bar__item--brand">Imperatriz - MA</span>
     </div>
   </div>
 
@@ -1631,7 +1631,7 @@
         <div class="drawer__card-eyebrow">Lojista</div>
         <h3 class="drawer__card-title">Compre no Atacado</h3>
         <p class="drawer__card-text">Direto do showroom em Imperatriz - MA</p>
-        <a class="btn btn--pink drawer__card-cta" href="https://wa.me/5599982508435?text=Ol%C3%A1!%20Quero%20comprar%20no%20atacado%20da%20Morenas%20Store" target="_blank" rel="noopener" data-drawer-close>Comprar no Atacado</a>
+        <a class="btn btn--brand drawer__card-cta" href="https://wa.me/5599982508435?text=Ol%C3%A1!%20Quero%20comprar%20no%20atacado%20da%20Morenas%20Store" target="_blank" rel="noopener" data-drawer-close>Comprar no Atacado</a>
       </div>
 
       <!-- WHATSAPP -->
@@ -1654,11 +1654,11 @@
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__grid">
       <div class="hero__copy">
-        <div class="hero__eyebrow eyebrow eyebrow--pink hero__reveal hero__reveal--1">Outono · Inverno 2026</div>
+        <div class="hero__eyebrow eyebrow eyebrow--brand hero__reveal hero__reveal--1">Outono · Inverno 2026</div>
         <h1 class="hero__title hero__reveal hero__reveal--2">Calçados femininos para quem quer <em>presença</em>, conforto e estilo.</h1>
         <p class="hero__lead hero__reveal hero__reveal--3">Novidades selecionadas direto do showroom em Imperatriz - MA, com opções para varejo e atacado.</p>
         <div class="hero__cta hero__reveal hero__reveal--4">
-          <a class="btn btn--pink btn--lg" href="#destaques">Ver Novidades</a>
+          <a class="btn btn--brand btn--lg" href="#destaques">Ver Novidades</a>
           <a class="btn btn--secondary btn--lg" href="#atacado">Comprar no Atacado</a>
         </div>
         <p class="hero__trust hero__reveal hero__reveal--5">
@@ -1696,7 +1696,7 @@
   <section class="categories container reveal-on-scroll">
     <div class="section-head">
       <div>
-        <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-3)">Categorias</div>
+        <div class="eyebrow eyebrow--brand" style="margin-bottom: var(--space-3)">Categorias</div>
         <h2 class="section-head__title">Escolha seu estilo <em>favorito</em>.</h2>
         <p class="section-head__sub">Sandálias, saltos, tênis e botas selecionados para combinar com seu momento.</p>
       </div>
@@ -1776,7 +1776,7 @@
     <div class="container">
       <div class="section-head">
         <div>
-          <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-3)">Destaques</div>
+          <div class="eyebrow eyebrow--brand" style="margin-bottom: var(--space-3)">Destaques</div>
           <h2 class="section-head__title">Confira e <em>escolha</em> o seu modelo.</h2>
         </div>
         <a href="#" class="section-head__link" data-soon>Ver todos →</a>
@@ -1792,7 +1792,7 @@
   <section class="wholesale reveal-on-scroll" id="atacado">
     <div class="container wholesale__inner">
       <div class="wholesale__copy">
-        <div class="eyebrow eyebrow--pink wholesale__eyebrow">Para revendedoras</div>
+        <div class="eyebrow eyebrow--brand wholesale__eyebrow">Para revendedoras</div>
         <h2 class="wholesale__title">Compra no atacado<br>para <em>revendedoras</em>.</h2>
         <p class="wholesale__lead">Tenha acesso a modelos selecionados, condições especiais e novidades direto do showroom da Morenas Store em Imperatriz - MA.</p>
         <p class="wholesale__sub">Ideal para lojistas, sacoleiras e revendedoras que querem produtos bonitos, atuais e com boa margem de venda.</p>
@@ -1805,7 +1805,7 @@
         </ul>
 
         <div class="wholesale__cta">
-          <a class="btn btn--pink btn--lg" href="https://wa.me/5599982508435?text=Ol%C3%A1!%20Quero%20comprar%20no%20atacado%20da%20Morenas%20Store" target="_blank" rel="noopener">Quero comprar no atacado</a>
+          <a class="btn btn--brand btn--lg" href="https://wa.me/5599982508435?text=Ol%C3%A1!%20Quero%20comprar%20no%20atacado%20da%20Morenas%20Store" target="_blank" rel="noopener">Quero comprar no atacado</a>
           <a class="btn btn--secondary btn--lg" href="https://wa.me/5599982508435" target="_blank" rel="noopener">Falar com atendimento</a>
         </div>
       </div>
@@ -1837,7 +1837,7 @@
       </div>
 
       <div class="editorial__copy">
-        <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-4)">A loja</div>
+        <div class="eyebrow eyebrow--brand" style="margin-bottom: var(--space-4)">A loja</div>
         <h2>Beleza, conforto<br>e <em>confiança</em>.</h2>
         <p>Na Morenas Store, cada modelo é escolhido com atenção ao conforto, acabamento e estilo. Nossa missão é oferecer calçados femininos que acompanham a rotina real da mulher brasileira: trabalho, eventos, encontros, viagens e momentos especiais.</p>
 
@@ -1848,7 +1848,7 @@
           <span class="editorial__author">Cliente Morenas · Imperatriz - MA</span>
         </blockquote>
 
-        <a href="#destaques" class="btn btn--pink btn--lg">Ver coleção</a>
+        <a href="#destaques" class="btn btn--brand btn--lg">Ver coleção</a>
       </div>
     </div>
   </section>
@@ -1858,7 +1858,7 @@
     <div class="container">
       <div class="section-head">
         <div>
-          <div class="eyebrow eyebrow--pink" style="margin-bottom: var(--space-3)">Novidades</div>
+          <div class="eyebrow eyebrow--brand" style="margin-bottom: var(--space-3)">Novidades</div>
           <h2 class="section-head__title">Lançamento 02 acabou de <em>chegar</em>.</h2>
         </div>
         <a href="#" class="section-head__link" data-soon>Ver coleção →</a>
@@ -1879,7 +1879,7 @@
       <p>Receba os lançamentos antes de todo mundo e <strong>seja a primeira a saber</strong> quando a nova coleção entrar no ar.</p>
       <form class="newsletter__form" data-soon>
         <input type="email" class="newsletter__input" placeholder="seu@email.com" />
-        <button class="btn btn--pink btn--lg" type="submit">Quero ser avisada</button>
+        <button class="btn btn--brand btn--lg" type="submit">Quero ser avisada</button>
       </form>
     </div>
   </section>

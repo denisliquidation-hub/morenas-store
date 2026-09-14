@@ -77,7 +77,7 @@
       letter-spacing: var(--tracking-tight);
       line-height: 1.05;
     }
-    .det-title em { font-style: italic; color: var(--pink-500); }
+    .det-title em { font-style: italic; color: var(--brand-500); }
     .det-meta {
       font-size: var(--text-sm);
       color: var(--text-muted);
@@ -108,7 +108,7 @@
       color: var(--text-primary);
     }
     .det-item__name a { color: inherit; transition: color var(--duration-fast); }
-    .det-item__name a:hover { color: var(--pink-500); }
+    .det-item__name a:hover { color: var(--brand-500); }
     .det-item__sub {
       font-size: var(--text-xs);
       color: var(--text-muted);
@@ -162,7 +162,7 @@
       font-family: var(--font-display);
       font-size: var(--text-3xl);
       font-weight: var(--font-black);
-      color: var(--pink-500);
+      color: var(--brand-500);
       font-variant-numeric: tabular-nums;
     }
 
@@ -207,7 +207,7 @@
       font-weight: var(--font-medium);
       margin-top: var(--space-3);
     }
-    .det-select-status:focus { outline: none; border-color: var(--pink-500); }
+    .det-select-status:focus { outline: none; border-color: var(--brand-500); }
 
     .det-textarea {
       width: 100%;
@@ -221,7 +221,7 @@
       resize: vertical;
       min-height: 80px;
     }
-    .det-textarea:focus { outline: none; border-color: var(--pink-500); }
+    .det-textarea:focus { outline: none; border-color: var(--brand-500); }
 
     .det-input {
       width: 100%;
@@ -233,7 +233,7 @@
       font-size: var(--text-sm);
       color: var(--text-primary);
     }
-    .det-input:focus { outline: none; border-color: var(--pink-500); }
+    .det-input:focus { outline: none; border-color: var(--brand-500); }
 
     .det-save-msg {
       font-size: var(--text-xs);
@@ -270,11 +270,11 @@
       font-size: var(--text-sm);
       font-weight: var(--font-medium);
       letter-spacing: var(--tracking-wide);
-      border-bottom: 2px solid var(--pink-500);
+      border-bottom: 2px solid var(--brand-500);
       padding-bottom: 2px;
       transition: color var(--duration-fast);
     }
-    .det-back:hover { color: var(--pink-500); }
+    .det-back:hover { color: var(--brand-500); }
 
     .det-loading-msg, .det-error-msg {
       text-align: center;
@@ -493,7 +493,7 @@
             <div class="det-card">
               <div class="det-card__title">Observações internas</div>
               <textarea class="det-textarea" id="obsAdmin" placeholder="Notas internas pro time: cliente preferiu PIX, mandar carta personalizada, etc.">${escapeHtml(pedido.observacoes_admin || '')}</textarea>
-              <button class="btn btn--pink" type="button" id="saveObsBtn" style="margin-top: var(--space-3)">Salvar observação</button>
+              <button class="btn btn--brand" type="button" id="saveObsBtn" style="margin-top: var(--space-3)">Salvar observação</button>
               <p class="det-save-msg" id="obsSaveMsg">Observação salva.</p>
             </div>
           </div>
@@ -533,7 +533,7 @@
                 <input type="text" class="det-input" id="codigoRastreio" placeholder="Ex: BR123456789BR" value="${escapeHtml(pedido.codigo_rastreio || '')}" />
               </div>
 
-              <button class="btn btn--pink" type="button" id="savePagamentoBtn" style="margin-top: var(--space-4); width: 100%">Salvar</button>
+              <button class="btn btn--brand" type="button" id="savePagamentoBtn" style="margin-top: var(--space-4); width: 100%">Salvar</button>
               <p class="det-save-msg" id="pagamentoSaveMsg">Atualizado.</p>
             </div>
 

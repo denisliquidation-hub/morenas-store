@@ -22,13 +22,13 @@ const C = {
   ink: '#181210',
   inkSoft: '#46352e',
   inkMuted: '#7a665b',
-  pink: '#cf2867',
-  pinkDeep: '#b51d57',
-  pinkLight: '#ff7da4',
+  pink: '#187e4f',
+  pinkDeep: '#116d42',
+  pinkLight: '#00c066',
   cream: '#ece1d2',
   dark: '#181210',
-  glowPink: '#d92f6e',
-  glowPurple: '#a64dbf',
+  glowPink: '#198653',
+  glowPurple: '#2f9e8f',
 };
 
 const FONT_SERIF = "Georgia, 'Times New Roman', serif";

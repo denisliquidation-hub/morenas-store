@@ -1,6 +1,6 @@
 # Morenas Store — Design System
 
-> Loja de calçados femininos. Tom: **fashion editorial** — preto e branco como base sólida e silenciosa, pink como statement de marca. Nada de pink Barbie genérico ou neon SaaS.
+> Loja de calçados femininos. Tom: **fashion editorial** — preto e branco como base sólida e silenciosa, verde como statement de marca. Nada de verde neon genérico ou lima SaaS.
 
 ---
 
@@ -15,7 +15,7 @@
 **Hierarquia de cor:**
 - Preto domina (texto, navegação, footer)
 - Branco/off-white domina superfícies
-- Pink aparece em ações, destaques editoriais e momentos de marca — **nunca em tudo**
+- Verde aparece em ações, destaques editoriais e momentos de marca — **nunca em tudo**
 
 ---
 
@@ -28,7 +28,7 @@ text-primary       hsl(0 0% 8%)        Quase preto. Títulos e corpo.
 text-secondary     hsl(0 0% 35%)       Subtítulos, descrição.
 text-muted         hsl(0 0% 55%)       Captions, metadados.
 text-on-dark       hsl(0 0% 98%)       Texto em superfície escura.
-text-on-accent     hsl(0 0% 100%)      Texto em botão pink.
+text-on-accent     hsl(0 0% 100%)      Texto em botão verde.
 
 surface-page       hsl(30 10% 98%)     Off-white quente (warm white).
 surface-card       hsl(0 0% 100%)      Cards, produtos.
@@ -36,8 +36,8 @@ surface-elevated   hsl(0 0% 100%)      Modal, dropdown.
 surface-inverse    hsl(0 0% 8%)        Footer, blocos editoriais.
 surface-muted      hsl(30 8% 95%)      Seção alternada, skeletons.
 
-action-primary     hsl(335 75% 48%)    Pink fashion — magenta profundo.
-action-primary-hover hsl(335 80% 42%)
+action-primary     hsl(152 75% 28.9%)    Verde fashion — esmeralda profundo.
+action-primary-hover hsl(152 80% 25%)
 action-secondary   hsl(0 0% 8%)        CTA preto (carrinho, checkout).
 action-secondary-hover hsl(0 0% 20%)
 action-ghost-hover hsl(30 10% 94%)
@@ -45,7 +45,7 @@ action-ghost-hover hsl(30 10% 94%)
 border-default     hsl(0 0% 88%)       Card, input.
 border-subtle      hsl(0 0% 93%)       Separadores.
 border-strong      hsl(0 0% 8%)        Inputs focados em formulário editorial.
-border-focus       hsl(335 75% 48%)    Ring de foco — pink.
+border-focus       hsl(152 75% 28.9%)    Ring de foco — verde.
 
 status-success     hsl(150 45% 38%)
 status-warning     hsl(35 90% 50%)
@@ -66,8 +66,8 @@ surface-elevated   hsl(0 0% 12%)
 surface-inverse    hsl(0 0% 98%)
 surface-muted      hsl(0 0% 11%)
 
-action-primary     hsl(335 80% 58%)    Levemente clareado pra contraste.
-action-primary-hover hsl(335 85% 64%)
+action-primary     hsl(152 80% 32.7%)    Levemente clareado pra contraste.
+action-primary-hover hsl(152 85% 34.8%)
 action-secondary   hsl(0 0% 96%)
 action-secondary-hover hsl(0 0% 85%)
 action-ghost-hover hsla(0 0% 100% / 0.06)
@@ -75,28 +75,28 @@ action-ghost-hover hsla(0 0% 100% / 0.06)
 border-default     hsla(0 0% 100% / 0.1)
 border-subtle      hsla(0 0% 100% / 0.06)
 border-strong      hsl(0 0% 96%)
-border-focus       hsl(335 80% 58%)
+border-focus       hsl(152 80% 32.7%)
 ```
 
-### Escala de pink (uso editorial)
+### Escala de verde (uso editorial)
 
 ```
-pink-50    hsl(335 80% 97%)    Background sutil de seção.
-pink-100   hsl(335 75% 92%)    Tag, badge soft.
-pink-300   hsl(335 75% 75%)    Ilustração, ícone.
-pink-500   hsl(335 75% 48%)    Cor de marca canônica.
-pink-700   hsl(335 80% 38%)    Hover profundo.
-pink-900   hsl(335 70% 22%)    Texto sobre pink-50.
+brand-50    hsl(152 80% 92.6%)    Background sutil de seção.
+brand-100   hsl(152 75% 80.7%)    Tag, badge soft.
+brand-300   hsl(152 75% 44.2%)    Ilustração, ícone.
+brand-500   hsl(152 75% 28.9%)    Cor de marca canônica.
+brand-700   hsl(152 80% 22.5%)    Hover profundo.
+brand-900   hsl(152 70% 13.1%)    Texto sobre brand-50.
 ```
 
-**Quando usar pink:**
+**Quando usar verde:**
 - CTA primário (Comprar, Adicionar ao carrinho — opcional, alterna com preto)
 - Tags de coleção (NEW, SALE)
 - Underline editorial em links de marca
 - Borda esquerda de quote/destaque
 - Ícone de favorito ativo
 
-**Quando NÃO usar pink:**
+**Quando NÃO usar verde:**
 - Texto corrido
 - Fundo de página inteira
 - Borda padrão de card
@@ -237,7 +237,7 @@ shadow-product 0 16px 40px rgba(0, 0, 0, 0.10)   Imagem de produto em hover.
 - radius: `radius-md`
 - hover: `action-secondary-hover`
 
-**Primary Pink (statement)**
+**Primary Verde (statement)**
 - bg: `action-primary`
 - text: `text-on-accent`
 - mesmo formato do preto
@@ -256,8 +256,8 @@ shadow-product 0 16px 40px rgba(0, 0, 0, 0.10)   Imagem de produto em hover.
 
 **Link editorial**
 - text: `text-primary`
-- underline pink (`pink-500`) 2px offset 4px
-- hover: text vira `pink-500`
+- underline verde (`brand-500`) 2px offset 4px
+- hover: text vira `brand-500`
 
 ### Card de produto
 
@@ -268,7 +268,7 @@ shadow-product 0 16px 40px rgba(0, 0, 0, 0.10)   Imagem de produto em hover.
 - nome do produto: Inter semibold, text-base
 - preço: Inter semibold, text-lg, tabular-nums
 - preço riscado: Inter regular, text-sm, `text-muted`, line-through
-- tag (NEW/SALE): pill, `pink-500` bg, branco text, tracking-widest, text-xs, uppercase
+- tag (NEW/SALE): pill, `brand-500` bg, branco text, tracking-widest, text-xs, uppercase
 - hover: imagem com shadow-product, transição 300ms
 
 ### Input
@@ -278,7 +278,7 @@ shadow-product 0 16px 40px rgba(0, 0, 0, 0.10)   Imagem de produto em hover.
 - radius: `radius-md`
 - padding: 12px 16px
 - font: Inter regular, text-base
-- focus: border `border-focus` (pink), shadow ring 3px pink-50
+- focus: border `border-focus` (verde), shadow ring 3px brand-50
 
 ### Badge / Tag
 
@@ -286,9 +286,9 @@ shadow-product 0 16px 40px rgba(0, 0, 0, 0.10)   Imagem de produto em hover.
 - padding: 4px 12px
 - text-xs, tracking-widest, uppercase, medium
 - Variantes:
-  - `solid-pink`: bg pink-500, text white
+  - `solid-brand`: bg brand-500, text white
   - `solid-black`: bg preto, text white
-  - `soft-pink`: bg pink-100, text pink-900
+  - `soft-brand`: bg brand-100, text brand-900
   - `outline`: border-default, text-primary
 
 ### Navegação
@@ -298,7 +298,7 @@ shadow-product 0 16px 40px rgba(0, 0, 0, 0.10)   Imagem de produto em hover.
 - altura: 72px desktop / 56px mobile
 - Logo central (Playfair, tracking-widest, uppercase)
 - Links: Inter medium, text-sm, tracking-wide
-- hover: underline pink 2px
+- hover: underline verde 2px
 
 ---
 
@@ -323,20 +323,20 @@ easing-editorial cubic-bezier(0.16, 1, 0.3, 1)    Easing fashion (acelera e desc
 - stroke-width: 1.5
 - Tamanhos: 16 / 20 / 24 / 32 px
 - Cor: herda do contexto (`currentColor`)
-- Ícone de favorito (coração): pink-500 quando ativo, outline `text-muted` quando inativo
+- Ícone de favorito (coração): brand-500 quando ativo, outline `text-muted` quando inativo
 
 ---
 
 ## 10. Anti-patterns evitados
 
-- ❌ Gradiente pink→roxo neon (genérico SaaS)
-- ❌ Pink em fundo de página inteira (vira Barbie)
+- ❌ Gradiente verde→lima neon (genérico SaaS)
+- ❌ Verde em fundo de página inteira (satura e cansa)
 - ❌ Border-radius 24px+ em botão (vira "fofo")
-- ❌ Sombra colorida pink em tudo (glow neon)
-- ❌ Ultra-saturação (`hsl(330 100% 60%)` — chiclete)
+- ❌ Sombra colorida verde em tudo (glow neon)
+- ❌ Ultra-saturação (`hsl(140 100% 50%)` — verde fluorescente)
 - ❌ Gradiente como cor de marca
 
-**Onde pink brilha:**
+**Onde verde brilha:**
 - 1 CTA editorial por seção
 - Underline em link de coleção
 - Borda de destaque em quote
