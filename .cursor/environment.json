@@ -1,0 +1,11 @@
+{
+  "name": "Morenas Store",
+  "install": "npm install",
+  "terminals": [
+    {
+      "name": "web",
+      "command": "PORT=3000 npm start"
+    }
+  ],
+  "ports": [3000]
+}
