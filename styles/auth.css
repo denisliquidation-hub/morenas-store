@@ -51,7 +51,7 @@
   transition: color var(--duration-fast) var(--easing-base);
 }
 
-.auth-page__back:hover { color: var(--brand-500); }
+.auth-page__back:hover { color: var(--pink-500); }
 
 .auth-page__main {
   flex: 1;
@@ -73,17 +73,17 @@
 }
 
 .auth-card--admin {
-  border-color: hsla(152, 75%, 28.9%, 0.25);
+  border-color: hsla(335, 75%, 48%, 0.25);
   box-shadow:
     var(--shadow-lg),
-    0 0 60px hsla(152, 75%, 28.9%, 0.06);
+    0 0 60px hsla(335, 75%, 48%, 0.06);
 }
 
 .auth-card__eyebrow {
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--brand-500);
+  color: var(--pink-500);
   font-weight: var(--font-semibold);
   margin-bottom: var(--space-3);
 }
@@ -99,7 +99,7 @@
 
 .auth-card__title em {
   font-style: italic;
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 .auth-card__sub {
@@ -146,12 +146,12 @@
 }
 
 .auth-form__check input {
-  accent-color: var(--brand-500);
+  accent-color: var(--pink-500);
 }
 
 .auth-form__link {
   font-size: var(--text-sm);
-  color: var(--brand-500);
+  color: var(--pink-500);
   font-weight: var(--font-medium);
 }
 
@@ -215,7 +215,7 @@
 }
 
 .auth-badge--admin {
-  background-color: var(--brand-500);
+  background-color: var(--pink-500);
 }
 
 /* DASHBOARD (área logada) */
@@ -300,7 +300,7 @@
 
 .dash__welcome h1 em {
   font-style: italic;
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 .dash__welcome p {
@@ -328,7 +328,7 @@
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--brand-500);
+  color: var(--pink-500);
   font-weight: var(--font-semibold);
 }
 
@@ -380,7 +380,7 @@
   height: 32px;
   border-radius: var(--radius-full);
   border: 3px solid var(--border-default);
-  border-top-color: var(--brand-500);
+  border-top-color: var(--pink-500);
   animation: spin 700ms linear infinite;
 }
 

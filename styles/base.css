@@ -120,7 +120,7 @@ p {
   line-height: 1.6;
 }
 
-/* Focus visible — ring verde */
+/* Focus visible — pink ring */
 :focus-visible {
   outline: 2px solid var(--border-focus);
   outline-offset: 3px;
@@ -129,7 +129,7 @@ p {
 
 /* Selection */
 ::selection {
-  background-color: var(--brand-500);
+  background-color: var(--pink-500);
   color: var(--text-on-accent);
 }
 
@@ -156,19 +156,19 @@ p {
   color: var(--text-secondary);
 }
 
-.eyebrow--brand {
-  color: var(--brand-500);
+.eyebrow--pink {
+  color: var(--pink-500);
 }
 
 /* Editorial link */
 .link-editorial {
   text-decoration: underline;
-  text-decoration-color: var(--brand-500);
+  text-decoration-color: var(--pink-500);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
   transition: color var(--duration-fast) var(--easing-base);
 }
 
 .link-editorial:hover {
-  color: var(--brand-500);
+  color: var(--pink-500);
 }

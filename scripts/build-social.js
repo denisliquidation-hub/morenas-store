@@ -22,13 +22,13 @@ const C = {
   ink: '#181210',
   inkSoft: '#46352e',
   inkMuted: '#7a665b',
-  brand: '#187e4f',
-  brandDeep: '#116d42',
-  brandLight: '#00c066',
+  pink: '#cf2867',
+  pinkDeep: '#b51d57',
+  pinkLight: '#ff7da4',
   cream: '#ece1d2',
   dark: '#181210',
-  glowBrand: '#198653',
-  glowPurple: '#2f9e8f',
+  glowPink: '#d92f6e',
+  glowPurple: '#a64dbf',
 };
 
 const FONT_SERIF = "Georgia, 'Times New Roman', serif";
@@ -44,9 +44,9 @@ function defs(w, h) {
         <stop offset="100%" stop-color="${C.bgTo}"/>
       </linearGradient>
       <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="${C.glowBrand}" stop-opacity="0.55"/>
-        <stop offset="45%" stop-color="${C.glowBrand}" stop-opacity="0.18"/>
-        <stop offset="100%" stop-color="${C.glowBrand}" stop-opacity="0"/>
+        <stop offset="0%" stop-color="${C.glowPink}" stop-opacity="0.55"/>
+        <stop offset="45%" stop-color="${C.glowPink}" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="${C.glowPink}" stop-opacity="0"/>
       </radialGradient>
       <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
         <stop offset="0%" stop-color="${C.glowPurple}" stop-opacity="0.32"/>
@@ -76,11 +76,11 @@ function seal(cx, cy, r, numero) {
       <text x="0" y="${-r * 0.16}" text-anchor="middle" font-family="${FONT_SERIF}"
             font-style="italic" font-size="${r * 0.20}" fill="${C.cream}">capítulo</text>
       <text x="0" y="${r * 0.32}" text-anchor="middle" font-family="${FONT_SERIF}"
-            font-size="${r * 0.86}" font-weight="900" fill="${C.brandLight}" letter-spacing="-2">${numero}</text>
+            font-size="${r * 0.86}" font-weight="900" fill="${C.pinkLight}" letter-spacing="-2">${numero}</text>
       <text x="0" y="${r * 0.58}" text-anchor="middle" font-family="${FONT_SANS}"
             font-size="${r * 0.10}" font-weight="700" letter-spacing="4" fill="#bda795">DE TRÊS</text>
       <circle cx="0" cy="0" r="${r + 30}" fill="none"
-              stroke="${C.glowBrand}" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="2 6"/>
+              stroke="${C.glowPink}" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="2 6"/>
     </g>
   `;
 }
@@ -89,8 +89,8 @@ function seal(cx, cy, r, numero) {
 function pulseDot(x, y, size = 9) {
   return `
     <g transform="translate(${x}, ${y})">
-      <circle cx="0" cy="0" r="${size}" fill="${C.glowBrand}"/>
-      <circle cx="0" cy="0" r="${size + 11}" fill="none" stroke="${C.glowBrand}" stroke-opacity="0.4"/>
+      <circle cx="0" cy="0" r="${size}" fill="${C.glowPink}"/>
+      <circle cx="0" cy="0" r="${size + 11}" fill="none" stroke="${C.glowPink}" stroke-opacity="0.4"/>
     </g>
   `;
 }
@@ -99,9 +99,9 @@ function pulseDot(x, y, size = 9) {
 function eyebrow(x, y, text, size = 14) {
   return `
     <g transform="translate(${x}, ${y})">
-      <line x1="0" y1="0" x2="34" y2="0" stroke="${C.brand}" stroke-width="2"/>
+      <line x1="0" y1="0" x2="34" y2="0" stroke="${C.pink}" stroke-width="2"/>
       <text x="48" y="${size * 0.4}" font-family="${FONT_SANS}" font-size="${size}"
-            font-weight="700" letter-spacing="4" fill="${C.brandDeep}">${text}</text>
+            font-weight="700" letter-spacing="4" fill="${C.pinkDeep}">${text}</text>
     </g>
   `;
 }
@@ -154,7 +154,7 @@ function feedSvg({ numero, eyebrowText, line1, line2, sub }) {
   <text x="80" y="510" font-family="${FONT_SERIF}" font-size="${titleSize}" font-weight="900"
         fill="${C.ink}" letter-spacing="-3">${line1}</text>
   <text x="80" y="${510 + lineGap}" font-family="${FONT_SERIF}" font-size="${titleSize}" font-weight="900"
-        font-style="italic" fill="${C.brand}" letter-spacing="-3">${line2}</text>
+        font-style="italic" fill="${C.pink}" letter-spacing="-3">${line2}</text>
 
   <!-- Sub -->
   <text x="80" y="${510 + lineGap + 120}" font-family="${FONT_SERIF}" font-size="32" font-style="italic"
@@ -163,7 +163,7 @@ function feedSvg({ numero, eyebrowText, line1, line2, sub }) {
   <!-- Pulse dot -->
   ${pulseDot(80, 510 + lineGap + 200, 9)}
   <text x="110" y="${510 + lineGap + 206}" font-family="${FONT_SANS}" font-size="14" font-weight="700"
-        letter-spacing="4" fill="${C.brandDeep}">EM BREVE</text>
+        letter-spacing="4" fill="${C.pinkDeep}">EM BREVE</text>
 
   <!-- Selo -->
   ${seal(W - 280, H - 360, 165, numero)}
@@ -203,7 +203,7 @@ function storySvg({ numero, eyebrowText, line1, line2, sub, cta }) {
   <text x="90" y="800" font-family="${FONT_SERIF}" font-size="${titleSize}" font-weight="900"
         fill="${C.ink}" letter-spacing="-4">${line1}</text>
   <text x="90" y="${800 + lineGap}" font-family="${FONT_SERIF}" font-size="${titleSize}" font-weight="900"
-        font-style="italic" fill="${C.brand}" letter-spacing="-4">${line2}</text>
+        font-style="italic" fill="${C.pink}" letter-spacing="-4">${line2}</text>
 
   <!-- Sub -->
   <text x="90" y="${800 + lineGap + 140}" font-family="${FONT_SERIF}" font-size="38" font-style="italic"

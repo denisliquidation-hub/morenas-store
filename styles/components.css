@@ -28,19 +28,19 @@
   background-color: var(--action-secondary-hover);
 }
 
-.btn--brand {
+.btn--pink {
   background-color: var(--action-primary);
   color: var(--text-on-accent);
 }
-.btn--brand:hover,
-.btn--brand:focus-visible {
+.btn--pink:hover,
+.btn--pink:focus-visible {
   background-color: var(--action-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px hsla(152, 75%, 28.9%, 0.32);
+  box-shadow: 0 8px 20px hsla(335, 75%, 48%, 0.32);
 }
-.btn--brand:active {
+.btn--pink:active {
   transform: translateY(0);
-  box-shadow: 0 2px 6px hsla(152, 75%, 28.9%, 0.25);
+  box-shadow: 0 2px 6px hsla(335, 75%, 48%, 0.25);
 }
 
 .btn--secondary {
@@ -82,7 +82,7 @@
   border-radius: var(--radius-full);
 }
 
-.tag--brand {
+.tag--pink {
   background-color: var(--action-primary);
   color: var(--text-on-accent);
 }
@@ -93,8 +93,8 @@
 }
 
 .tag--soft {
-  background-color: var(--brand-50);
-  color: var(--brand-900);
+  background-color: var(--pink-50);
+  color: var(--pink-900);
 }
 
 .tag--outline {
@@ -168,7 +168,7 @@
 
 .product__fav:hover,
 .product__fav--active {
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 .product__name {
@@ -225,13 +225,13 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--brand-500);
-  box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.55);
+  background: var(--pink-500);
+  box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55);
   animation: productSoonPulse 1.8s ease-in-out infinite;
 }
 @keyframes productSoonPulse {
-  0%, 100% { box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.55); }
-  50%      { box-shadow: 0 0 0 7px hsla(152, 80%, 31.4%, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55); }
+  50%      { box-shadow: 0 0 0 7px hsla(335, 80%, 55%, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .product__soon-dot { animation: none; }
@@ -303,7 +303,7 @@
 .input:focus {
   outline: none;
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px var(--brand-50);
+  box-shadow: 0 0 0 3px var(--pink-50);
 }
 
 .input-label {
@@ -339,12 +339,12 @@
   text-transform: uppercase;
 }
 
-.top-bar__item--brand {
-  color: var(--brand-300);
+.top-bar__item--pink {
+  color: var(--pink-300);
 }
 
 .top-bar__sep {
-  color: var(--brand-500);
+  color: var(--pink-500);
   font-weight: var(--font-bold);
 }
 
@@ -429,7 +429,7 @@
   right: 0;
   bottom: 0;
   height: 2px;
-  background-color: var(--brand-500);
+  background-color: var(--pink-500);
   transform: scaleX(0);
   transition: transform var(--duration-base) var(--easing-editorial);
   transform-origin: left;
@@ -466,7 +466,7 @@
   min-width: 18px;
   height: 18px;
   padding: 0 5px;
-  background-color: var(--brand-500);
+  background-color: var(--pink-500);
   color: white;
   border-radius: var(--radius-full);
   font-size: 0.6875rem;
@@ -512,7 +512,7 @@
 
 .qty-stepper__btn:hover:not(:disabled) {
   background-color: var(--action-ghost-hover);
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 .qty-stepper__btn:disabled {
@@ -725,9 +725,9 @@
 
 .drawer__search-input:focus {
   outline: none;
-  border-color: var(--brand-500);
+  border-color: var(--pink-500);
   background: hsl(0 0% 14%);
-  box-shadow: 0 0 0 3px hsla(152, 75%, 28.9%, 0.15);
+  box-shadow: 0 0 0 3px hsla(335, 75%, 48%, 0.15);
 }
 
 /* ===== CATEGORIAS ===== */
@@ -764,12 +764,12 @@
 
 .drawer__cat:hover,
 .drawer__cat:focus-visible {
-  background: hsla(152, 75%, 28.9%, 0.08);
+  background: hsla(335, 75%, 48%, 0.08);
   padding-left: var(--space-4);
 }
 
 .drawer__cat:active {
-  background: hsla(152, 75%, 28.9%, 0.16);
+  background: hsla(335, 75%, 48%, 0.16);
   transform: scale(0.99);
 }
 
@@ -784,7 +784,7 @@
 }
 
 .drawer__cat:hover .drawer__cat-icon {
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 .drawer__cat-label {
@@ -801,7 +801,7 @@
 
 .drawer__cat:hover .drawer__cat-arrow {
   transform: translateX(4px);
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 /* Header de subgrupo (TÊNIS, HAVAIANAS) */
@@ -816,8 +816,8 @@
   font-weight: var(--font-semibold);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--brand-500);
-  border-bottom: 1px solid hsla(152, 75%, 28.9%, 0.18);
+  color: var(--pink-500);
+  border-bottom: 1px solid hsla(335, 75%, 48%, 0.18);
   opacity: 0;
   transform: translateX(20px);
 }
@@ -828,7 +828,7 @@
 }
 
 .drawer__subhead svg {
-  color: var(--brand-500);
+  color: var(--pink-500);
   opacity: 0.85;
 }
 
@@ -861,7 +861,7 @@
 }
 
 .drawer__cat--sub:hover::before {
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 .drawer__cat--sub .drawer__cat-arrow {
@@ -872,25 +872,25 @@
 .drawer__cat--promo {
   margin-top: var(--space-3);
   padding: 16px var(--space-3);
-  color: var(--brand-500);
-  background: linear-gradient(90deg, hsla(152, 75%, 28.9%, 0.08), transparent 80%);
-  border: 1px solid hsla(152, 75%, 28.9%, 0.2);
-  box-shadow: 0 0 24px hsla(152, 75%, 28.9%, 0.08);
+  color: var(--pink-500);
+  background: linear-gradient(90deg, hsla(335, 75%, 48%, 0.08), transparent 80%);
+  border: 1px solid hsla(335, 75%, 48%, 0.2);
+  box-shadow: 0 0 24px hsla(335, 75%, 48%, 0.08);
 }
 
 .drawer__cat--promo .drawer__cat-icon,
 .drawer__cat--promo .drawer__cat-arrow {
-  color: var(--brand-500);
+  color: var(--pink-500);
 }
 
 .drawer__cat--promo:hover {
-  background: linear-gradient(90deg, hsla(152, 75%, 28.9%, 0.14), transparent 80%);
-  border-color: hsla(152, 75%, 28.9%, 0.35);
-  box-shadow: 0 0 32px hsla(152, 75%, 28.9%, 0.15);
+  background: linear-gradient(90deg, hsla(335, 75%, 48%, 0.14), transparent 80%);
+  border-color: hsla(335, 75%, 48%, 0.35);
+  box-shadow: 0 0 32px hsla(335, 75%, 48%, 0.15);
 }
 
 .drawer__cat-badge {
-  background: var(--brand-500);
+  background: var(--pink-500);
   color: white;
   font-family: var(--font-body);
   font-size: 0.625rem;
@@ -907,9 +907,9 @@
   padding: var(--space-6);
   background:
     linear-gradient(135deg,
-      hsla(152, 75%, 28.9%, 0.12) 0%,
+      hsla(335, 75%, 48%, 0.12) 0%,
       hsl(0 0% 10%) 60%);
-  border: 1px solid hsla(152, 75%, 28.9%, 0.18);
+  border: 1px solid hsla(335, 75%, 48%, 0.18);
   border-radius: var(--radius-xl);
   display: flex;
   flex-direction: column;
@@ -927,7 +927,7 @@
   font-size: 0.625rem;
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--brand-500);
+  color: var(--pink-500);
   font-weight: var(--font-semibold);
   margin-bottom: var(--space-1);
 }
@@ -1013,7 +1013,7 @@
 }
 
 .drawer__footer-dot {
-  color: var(--brand-500);
+  color: var(--pink-500);
   margin: 0 4px;
 }
 

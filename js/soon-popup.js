@@ -80,7 +80,7 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Glow verde atrás */
+    /* Glow rosa atrás */
     .soon-pop__card::before {
       content: "";
       position: absolute;
@@ -88,8 +88,8 @@
       width: 380px; height: 380px;
       border-radius: 50%;
       background: radial-gradient(circle,
-        hsla(152, 85%, 32.9%, 0.55) 0%,
-        hsla(152, 80%, 31.4%, 0.18) 38%,
+        hsla(335, 85%, 60%, 0.55) 0%,
+        hsla(335, 80%, 55%, 0.18) 38%,
         transparent 70%);
       filter: blur(40px);
       z-index: -1;
@@ -140,18 +140,18 @@
       font-weight: 600;
       letter-spacing: 3.5px;
       text-transform: uppercase;
-      color: hsl(152, 80%, 25%);
+      color: hsl(335, 80%, 42%);
       margin-bottom: 18px;
     }
     .soon-pop__eyebrow-dot {
       width: 8px; height: 8px; border-radius: 50%;
-      background: hsl(152, 80%, 29.9%);
-      box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.55);
+      background: hsl(335, 80%, 50%);
+      box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55);
       animation: soonPopDot 1.6s ease-in-out infinite;
     }
     @keyframes soonPopDot {
-      0%, 100% { box-shadow: 0 0 0 0 hsla(152, 80%, 31.4%, 0.55); }
-      50%      { box-shadow: 0 0 0 9px hsla(152, 80%, 31.4%, 0); }
+      0%, 100% { box-shadow: 0 0 0 0 hsla(335, 80%, 55%, 0.55); }
+      50%      { box-shadow: 0 0 0 9px hsla(335, 80%, 55%, 0); }
     }
 
     .soon-pop__title {
@@ -166,7 +166,7 @@
     .soon-pop__title em {
       font-style: italic;
       font-weight: 900;
-      color: hsl(152, 80%, 28.6%);
+      color: hsl(335, 80%, 48%);
     }
     .soon-pop__sub {
       font-family: 'Inter', system-ui, sans-serif;
@@ -205,9 +205,9 @@
     }
     .soon-pop__input:focus {
       outline: none;
-      border-color: hsl(152, 80%, 31.4%);
+      border-color: hsl(335, 80%, 55%);
       background: white;
-      box-shadow: 0 0 0 4px hsla(152, 80%, 31.4%, 0.15);
+      box-shadow: 0 0 0 4px hsla(335, 80%, 55%, 0.15);
     }
     .soon-pop__submit {
       height: 48px;
@@ -229,9 +229,9 @@
       white-space: nowrap;
     }
     .soon-pop__submit:hover {
-      background: hsl(152, 80%, 26.8%);
+      background: hsl(335, 80%, 45%);
       transform: translateY(-1px);
-      box-shadow: 0 10px 24px -10px hsla(152, 80%, 26.8%, 0.55);
+      box-shadow: 0 10px 24px -10px hsla(335, 80%, 45%, 0.55);
     }
     .soon-pop__submit:active { transform: translateY(0); }
 
@@ -243,7 +243,7 @@
       text-decoration: none;
       transition: color 200ms ease;
     }
-    .soon-pop__wa:hover { color: hsl(152, 80%, 26.8%); }
+    .soon-pop__wa:hover { color: hsl(335, 80%, 45%); }
     .soon-pop__wa-icon {
       width: 16px; height: 16px;
       color: hsl(142, 70%, 40%);
@@ -273,8 +273,8 @@
     .soon-pop__success-icon {
       width: 56px; height: 56px;
       border-radius: 50%;
-      background: hsl(152, 80%, 87.4%);
-      color: hsl(152, 80%, 26.8%);
+      background: hsl(335, 80%, 95%);
+      color: hsl(335, 80%, 45%);
       display: inline-flex; align-items: center; justify-content: center;
       margin: 0 auto 16px;
     }
@@ -317,14 +317,14 @@
     }
     :root.dark .soon-pop__input::placeholder { color: hsl(35, 12%, 55%); }
     :root.dark .soon-pop__submit {
-      background: hsl(152, 80%, 31.4%);
+      background: hsl(335, 80%, 55%);
       color: white;
     }
-    :root.dark .soon-pop__submit:hover { background: hsl(152, 85%, 32.9%); }
+    :root.dark .soon-pop__submit:hover { background: hsl(335, 85%, 60%); }
     :root.dark .soon-pop__wa { color: hsl(35, 12%, 70%); }
     :root.dark .soon-pop__hint { color: hsl(35, 12%, 55%); }
     :root.dark .soon-pop__seal { color: hsl(35, 25%, 90%); }
-    :root.dark .soon-pop__success-icon { background: hsla(152, 80%, 31.4%, 0.18); color: hsl(152, 85%, 38.2%); }
+    :root.dark .soon-pop__success-icon { background: hsla(335, 80%, 55%, 0.18); color: hsl(335, 85%, 70%); }
 
     @media (max-width: 480px) {
       .soon-pop__title { font-size: 30px; letter-spacing: -1px; }
